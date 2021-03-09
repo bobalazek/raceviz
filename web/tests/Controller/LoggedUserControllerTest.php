@@ -203,7 +203,6 @@ class LoggedUserControllerTest extends WebTestCase
             ['/follower-requests'],
             ['/follower-requests?status=ignored'],
             ['/notifications'],
-            ['/messaging'],
             ['/settings'],
             ['/settings/image'],
             ['/settings/password'],

@@ -67,18 +67,6 @@ services:
     networks:
       - rv-app-network
 
-  ws:
-    container_name: rv_ws
-    build: ./docker/ws
-    env_file:
-      - .env
-    volumes:
-      - ./ws:/usr/src/web
-    networks:
-      - rv-app-network
-    ports:
-      - '${WS_PORT_8080:-8080}:8080'
-
   redis:
     container_name: rv_redis
     image: redis

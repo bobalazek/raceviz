@@ -298,11 +298,6 @@ class User implements UserInterface, EquatableInterface, \Serializable, Interfac
      */
     private $userTfaRecoveryCodes;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ThreadUser", mappedBy="user")
-     */
-    private $threadUsers;
-
     public function __construct()
     {
         $this->imageFileEmbedded = new EmbeddedFile();
@@ -318,7 +313,6 @@ class User implements UserInterface, EquatableInterface, \Serializable, Interfac
         $this->userTfaMethods = new ArrayCollection();
         $this->userTfaEmails = new ArrayCollection();
         $this->userTfaRecoveryCodes = new ArrayCollection();
-        $this->threadUsers = new ArrayCollection();
     }
 
     public function __toString()
@@ -1157,36 +1151,6 @@ class User implements UserInterface, EquatableInterface, \Serializable, Interfac
             $this->userTfaRecoveryCodes->removeElement($userTfaRecoveryCode);
             if ($userTfaRecoveryCode->getUser() === $this) {
                 $userTfaRecoveryCode->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|ThreadUser[]
-     */
-    public function getThreadUsers(): Collection
-    {
-        return $this->threadUsers;
-    }
-
-    public function addThreadUser(ThreadUser $threadUser): self
-    {
-        if (!$this->threadUsers->contains($threadUser)) {
-            $this->threadUsers[] = $threadUser;
-            $threadUser->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeThreadUser(ThreadUser $threadUser): self
-    {
-        if ($this->threadUsers->contains($threadUser)) {
-            $this->threadUsers->removeElement($threadUser);
-            if ($threadUser->getUser() === $this) {
-                $threadUser->setUser(null);
             }
         }
 

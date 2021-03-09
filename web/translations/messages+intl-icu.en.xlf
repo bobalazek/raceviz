@@ -469,10 +469,6 @@
         <source>2FA</source>
         <target>2FA</target>
       </trans-unit>
-      <trans-unit id="7r27Jcu" resname="Messaging">
-        <source>Messaging</source>
-        <target>Messaging</target>
-      </trans-unit>
       <trans-unit id="FBOV6zV" resname="Cookies">
         <source>Cookies</source>
         <target>Cookies</target>
@@ -500,10 +496,6 @@
       <trans-unit id="NogNFci" resname="Recovery codes">
         <source>Recovery codes</source>
         <target>Recovery codes</target>
-      </trans-unit>
-      <trans-unit id="Vg0_gmx" resname="Search threads">
-        <source>Search threads</source>
-        <target>Search threads</target>
       </trans-unit>
       <trans-unit id="LUpG82i" resname="Username or email">
         <source>Username or email</source>

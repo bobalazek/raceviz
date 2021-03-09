@@ -2,14 +2,11 @@
 
 namespace App\Controller\Users;
 
-use App\Entity\Thread;
-use App\Entity\ThreadUser;
 use App\Entity\User;
 use App\Entity\UserBlock;
 use App\Entity\UserFollower;
 use App\Entity\UserNotification;
 use App\Manager\UserNotificationManager;
-use App\Repository\ThreadRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -359,67 +356,6 @@ class UsersActionsController extends AbstractUsersController
 
         return $this->redirectToRoute('users.detail', [
             'username' => $userToUnblock->getUsername(),
-        ]);
-    }
-
-    /**
-     * @Route("/users/{username}/message", name="users.message")
-     *
-     * @param mixed $username
-     */
-    public function message($username, Request $request): Response
-    {
-        $this->denyAccessUnlessGranted('ROLE_USER');
-
-        /** @var User $user */
-        $user = $this->getUser();
-
-        /** @var User|null $userToMessage */
-        $userToMessage = $this->em
-            ->getRepository(User::class)
-            ->findOneByUsername($username)
-        ;
-        if (!$userToMessage) {
-            $this->addFlash(
-                'danger',
-                $this->translator->trans('message.flash.user_does_not_exist', [], 'users')
-            );
-
-            return $this->redirectToRoute('home');
-        }
-
-        /** @var ThreadRepository $threadRepository */
-        $threadRepository = $this->em->getRepository(Thread::class);
-
-        /** @var Thread|null $thread */
-        $thread = $threadRepository->getByUserOneAndTwo($user, $userToMessage);
-        if (!$thread) {
-            $threadUserOne = new ThreadUser();
-            $threadUserOne
-                ->setThread($thread)
-                ->setUser($user)
-            ;
-            $this->em->persist($threadUserOne);
-
-            $threadUserTwo = new ThreadUser();
-            $threadUserTwo
-                ->setThread($thread)
-                ->setUser($userToMessage)
-            ;
-            $this->em->persist($threadUserTwo);
-
-            $thread = new Thread();
-            $thread
-                ->addThreadUser($threadUserOne)
-                ->addThreadUser($threadUserTwo)
-            ;
-            $this->em->persist($thread);
-
-            $this->em->flush();
-        }
-
-        return $this->redirectToRoute('messaging.threads.detail', [
-            'id' => $thread->getId(),
         ]);
     }
 

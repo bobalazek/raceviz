@@ -2,9 +2,6 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Thread;
-use App\Entity\ThreadUser;
-use App\Entity\ThreadUserMessage;
 use App\Entity\User;
 use App\Entity\UserAction;
 use App\Entity\UserBlock;
@@ -58,8 +55,5 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('User Followers', 'fas fa-folder-open', UserFollower::class);
         yield MenuItem::linkToCrud('User Points', 'fas fa-folder-open', UserPoint::class);
         yield MenuItem::linkToCrud('User Exports', 'fas fa-folder-open', UserExport::class);
-        yield MenuItem::linkToCrud('Threads', 'fas fa-folder-open', Thread::class);
-        yield MenuItem::linkToCrud('Thread Users', 'fas fa-folder-open', ThreadUser::class);
-        yield MenuItem::linkToCrud('Thread User Messages', 'fas fa-folder-open', ThreadUserMessage::class);
     }
 }

@@ -1,0 +1,56 @@
+name: Development Workflow
+
+on: [push]
+
+jobs:
+  ci:
+    name: CI Pipeline
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      # Docker compose - Prepare containers
+      - name: Docker compose - Prepare .env file
+        run: cp -b .env.ci .env
+      - name: Docker compose - Build & start the containers
+        run: docker-compose up -d
+
+      # App Backend - Install dependencies, lint files & prepare database
+      - name: App Backend - Install dependencies
+        run: docker exec -i s5bp_php composer install
+
+      - name: App Backend - Lint twig template files
+        run: docker exec -i s5bp_php php bin/console lint:twig templates/
+      - name: App Backend - Lint YAML config files
+        run: docker exec -i s5bp_php php bin/console lint:yaml config/
+      - name: App Backend - Lint XLIFF translation files
+        run: docker exec -i s5bp_php php bin/console lint:xliff translations/
+      - name: App Backend - Lint PHP files
+        run: docker exec -i s5bp_php php-cs-fixer fix --dry-run --diff
+
+      - name: App Backend - Update database schema
+        run: docker exec -i s5bp_php php bin/console doctrine:schema:update --force
+      - name: App Backend - Load database fixtures
+        run: docker exec -i s5bp_php php bin/console doctrine:fixtures:load --no-interaction
+
+      # App Frontend - Install dependencies, lint files & build the app
+      - name: App Frontend - Install dependencies
+        run: docker exec -i s5bp_node yarn install --frozen-lockfile
+
+      - name: App Frontend - Lint JS files
+        run: docker exec -i s5bp_node yarn run lint
+
+      - name: App Frontend - Build the app
+        run: docker exec -i s5bp_node yarn run build
+
+      # App Backend - Run tests
+      - name: App Backend - Run tests
+        run: docker exec -i s5bp_php php bin/phpunit
+
+      # App Backend - Lint PHP files (with PHP Stan)
+      # This one needs to be at the end, because the tests above
+      # will create the autoload.php file in /bin/.phpunit/.../vendor
+      - name: App Backend - Prepare to Lint PHP files (with PHPStan)
+        run: cp -b web/phpstan.neon.ci web/phpstan.neon
+      - name: App Backend - Lint PHP files (with PHPStan)
+        run: docker exec -i s5bp_php vendor/bin/phpstan analyse

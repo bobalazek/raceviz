@@ -1,0 +1,22 @@
+{% extends 'contents/settings/_layout.html.twig' %}
+
+{% block title %}{{ 'Blocks' | trans }} | {{ parent() }}{% endblock %}
+
+{% block main %}
+  <h2>{{ 'Blocks' | trans }}</h2>
+  {% if users_blocks %}
+    <div class="row">
+      {% for user_block in users_blocks %}
+        <div class="col-md-4 mb-4">
+          {% include 'contents/_shared/user/user_card.html.twig' with {
+            user: user_block.getUserBlocked(),
+          } %}
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="alert alert-info">
+      {{ 'blocks.alert.no_blocked_users_yet' | trans({}, 'settings') }}
+    </div>
+  {% endif %}
+{% endblock %}

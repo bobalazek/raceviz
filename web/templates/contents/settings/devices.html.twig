@@ -1,0 +1,52 @@
+{% extends 'contents/settings/_layout.html.twig' %}
+
+{% block title %}{{ 'Devices' | trans }} | {{ parent() }}{% endblock %}
+
+{% block main %}
+  <h2>{{ 'Devices' | trans }}</h2>
+  {% if pagination.getTotalItemCount() %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th>{{ 'Name' | trans }}</th>
+          <th>{{ 'First active' | trans }}</th>
+          <th>{{ 'Last active' | trans }}</th>
+          <th>{{ 'Platform' | trans }}</th>
+          <th>{{ 'Platform version' | trans }}</th>
+          <th>{{ 'Actions' | trans }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user_device in pagination.getItems() %}
+          {% set is_current = user_device == user_device_current %}
+          <tr>
+            <td>
+              {{ user_device.getName() }}
+              {% if is_current %}
+                <b>({{ 'current' }})</b>
+              {% endif %}
+            </td>
+            <td>{{ user_device.getCreatedAt() | date() }}</td>
+            <td>{{ user_device.getLastActiveAt() | date() }}</td>
+            <td>{{ user_device.getPlatform() }}</td>
+            <td>{{ user_device.getPlatformVersion() }}</td>
+            <td>
+              <a class="btn btn-danger btn-sm btn-confirm"
+                data-confirm-text="{{ 'Are you sure?' | trans }}"
+                href="{{ url('settings.devices.invalidate', {
+                  id: user_device.getId(),
+                }) }}">
+                {{ 'Invalidate' | trans }}
+              </a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {{ knp_pagination_render(pagination) }}
+  {% else %}
+    <div class="alert alert-info">
+      {{ 'devices.alert.no_user_devices_yet' | trans({}, 'settings') }}
+    </div>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,8 @@
+# Docker related stuff
+/.env
+/docker-compose.override.yml
+debug.log
+
+# IntelliJ stuff
+*.iml
+.idea/

@@ -1,0 +1,148 @@
+{% extends 'layouts/bootstrap4.html.twig' %}
+
+{% block title %}{{ 'Messaging' | trans }} | {{ parent() }}{% endblock %}
+
+{% block body_class %}messaging-page{% endblock %}
+
+{% block body_attr %} data-websocket-url="{{ app_ws_url }}"{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <div id="messaging-threads-wrapper">
+          <h1>{{ 'Messaging' | trans }}</h1>
+          <form method="GET" class="mb-3">
+            <div class="input-group">
+              <input
+                type="search"
+                name="search"
+                class="form-control"
+                placeholder="{{ 'Search threads' | trans }}"
+                value="{{ search }}"
+              >
+              <div class="input-group-append">
+                <button
+                  class="btn btn-outline-secondary"
+                  type="submit"
+                >
+                  {{ 'Search' | trans }}
+                </button>
+              </div>
+            </div>
+            <input type="hidden" name="action" value="search" />
+          </form>
+          {% if threads %}
+            <div id="messaging-threads" class="list-group">
+              {% for threadSingle in threads %}
+                <a
+                  href="{{ url('messaging.threads.detail', {
+                    id: threadSingle.id,
+                    search: search,
+                  }) }}"
+                  class="messaging-thread list-group-item list-group-item-action
+                    {{ thread and thread.getId() == threadSingle.id ? 'active' : '' }}"
+                  data-id="{{ threadSingle.id }}"
+                >
+                  <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-0">{{ threadSingle.title }}</h5>
+                    {% if threadSingle.last_message_datetime %}
+                      <small>{{ threadSingle.last_message_datetime | time_diff }}</small>
+                    {% endif %}
+                  </div>
+                  {% if threadSingle.last_message %}
+                    <p class="messaging-thread-last-message mt-1 mb-0"
+                      title="{{ threadSingle.last_message }}">
+                      {{ threadSingle.last_message }}
+                    </p>
+                  {% endif %}
+                </a>
+              {% endfor %}
+            </div>
+          {% else %}
+            <div class="alert alert-info">
+              {{ 'no_threads_found' | trans({}, 'messaging') }}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div id="messaging-thread-messages-wrapper">
+          {% if thread %}
+            <div id="messaging-thread-messages" data-channel="{{ thread.getChannel() }}">
+              {% if thread_user_messages %}
+                <div id="messaging-thread-messages-down-pusher"></div>
+                <div id="messaging-thread-messages-inner"
+                  data-count="{{ thread_user_messages_count }}"
+                  data-has-more="{{ thread_user_messages_has_more ? 'true' : 'false'}}">
+                  {% for thread_user_message in thread_user_messages %}
+                    {% set thread_message_user = thread_user_message.getThreadUser().getUser() %}
+                    {% set is_myself = app.user == thread_message_user %}
+                    <div
+                      class="thread-user-message mb-4 {{ is_myself ? 'ml-auto text-right' : '' }}"
+                      data-id="{{ thread_user_message.getId() }}"
+                    >
+                      <div>
+                        {% if not is_myself %}
+                          <div class="d-inline-block avatar-image-wrapper">
+                            {% include 'contents/_shared/user/user_avatar.html.twig' with {
+                              user: thread_message_user,
+                              size: '48px',
+                            } %}
+                          </div>
+                        {% endif %}
+                        <div class="d-inline-block">
+                          <div class="card">
+                            <div class="card-body">
+                              {{ thread_user_message.getBody() | nl2br }}
+                            </div>
+                          </div>
+                          <div class="{{ is_myself ? 'text-left' : 'text-right' }}">
+                            <small>{{ thread_user_message.getCreatedAt() | date() }}</small>
+                          </div>
+                        </div>
+                        {% if is_myself %}
+                          <div class="d-inline-block avatar-image-wrapper">
+                            {% include 'contents/_shared/user/user_avatar.html.twig' with {
+                              user: thread_message_user,
+                              size: '48px',
+                            } %}
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              {% else %}
+                <div class="p-4">
+                  <div class="alert alert-info">
+                    {{ 'no_thread_messages_yet' | trans({}, 'messaging') }}
+                  </div>
+                </div>
+              {% endif %}
+            </div>
+            <form method="POST">
+              <div class="row">
+                <div class="col-md-9">
+                  <textarea class="form-control" rows="2" name="text"></textarea>
+                </div>
+                <div class="col-md-3">
+                  <button class="btn btn-lg btn-block btn-primary" type="submit">
+                    {{ 'Send' | trans }}
+                  </button>
+                </div>
+              </div>
+              <input type="hidden" name="action" value="message" />
+            </form>
+          {% else %}
+            <div class="p-4">
+              <div class="alert alert-info">
+                {{ 'no_thread_selected' | trans({}, 'messaging') }}
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

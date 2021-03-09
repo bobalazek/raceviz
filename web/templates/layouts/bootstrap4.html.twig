@@ -1,0 +1,22 @@
+{% extends 'layouts/default.html.twig' %}
+
+{% block head_stylesheets %}
+  {{ encore_entry_link_tags('website') }}
+{% endblock %}
+
+{% block body %}
+  {% block header %}
+    {% include 'layouts/bootstrap4/header.html.twig' %}
+  {% endblock %}
+  {% include 'layouts/bootstrap4/flashes.html.twig' %}
+  <div class="page-content">
+    {% block content %}{% endblock %}
+  </div>
+  {% block footer %}
+    {% include 'layouts/bootstrap4/footer.html.twig' %}
+  {% endblock %}
+{% endblock %}
+
+{% block body_javascripts %}
+  {{ encore_entry_script_tags('website') }}
+{% endblock %}

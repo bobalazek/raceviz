@@ -1,0 +1,24 @@
+{% if app.request.hasPreviousSession %}
+  {% set flashes = app.flashes %}
+  {% if flashes %}
+    <div class="page-flashes">
+      <div class="container">
+        {% for key, messages in flashes %}
+          {% for message in messages %}
+            <div class="alert alert-{{ key }} alert-dismissible fade show mt-4">
+              {{ message }}
+              <button
+                type="button"
+                class="close"
+                data-dismiss="alert"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          {% endfor %}
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+{% endif %}

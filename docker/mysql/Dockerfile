@@ -1,0 +1,7 @@
+ARG MYSQL_VERSION=5.7
+
+FROM mysql:${MYSQL_VERSION}
+
+EXPOSE 3306
+
+CMD ["mysqld"]

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="z6C2YN3" resname="new_email_resend.flash.already_requested_recently">
+        <source>new_email_resend.flash.already_requested_recently</source>
+        <target>You have already requested a new email confirmation few minutes ago. Please check your email</target>
+      </trans-unit>
+      <trans-unit id="g4ahva6" resname="flash.success">
+        <source>flash.success</source>
+        <target>You have successfully saved your settings</target>
+      </trans-unit>
+      <trans-unit id="yQuDm7K" resname="flash.cancel_new_email_success">
+        <source>flash.cancel_new_email_success</source>
+        <target>You have successfully cancelled the new email</target>
+      </trans-unit>
+      <trans-unit id="hTOsMI8" resname="new_email_resend.flash.new_email_not_set">
+        <source>new_email_resend.flash.new_email_not_set</source>
+        <target>New email can not be set, because there is no new email</target>
+      </trans-unit>
+      <trans-unit id="EA0acD1" resname="new_email.flash.already_requested_recently">
+        <source>new_email.flash.already_requested_recently</source>
+        <target>You already requested a new email confirmation recently. Check your email or try again in a couple of minutes</target>
+      </trans-unit>
+      <trans-unit id="wCFenDC" resname="flash.resend_new_email_success">
+        <source>flash.resend_new_email_success</source>
+        <target>The new email confirmation email was successfully sent</target>
+      </trans-unit>
+      <trans-unit id="8I6gkSs" resname="flash.new_email_confirm_code_invalid">
+        <source>flash.new_email_confirm_code_invalid</source>
+        <target>The new email code seems to have been expired. Please try click the link below to send it again</target>
+      </trans-unit>
+      <trans-unit id="3h9LY0x" resname="flash.new_email_confirmed_success">
+        <source>flash.new_email_confirmed_success</source>
+        <target>You have successfully confirmed your new email</target>
+      </trans-unit>
+      <trans-unit id="2_bq7X8" resname="deletion.flash.already_requested_recently">
+        <source>deletion.flash.already_requested_recently</source>
+        <target>You already requested the deletion recently. Please check your email or try again in a couple minutes</target>
+      </trans-unit>
+      <trans-unit id="Ov85qz5" resname="deletion.flash.success">
+        <source>deletion.flash.success</source>
+        <target>You have successfully requested the account deletion. Please check your email to confirm it</target>
+      </trans-unit>
+      <trans-unit id="VDiXwuJ" resname="deletion.flash.cancel_deletion_success">
+        <source>deletion.flash.cancel_deletion_success</source>
+        <target>You have successfully canceled the account deletion</target>
+      </trans-unit>
+      <trans-unit id="1Rcvndr" resname="deletion.deletion_resend.flash.already_requested_recently">
+        <source>deletion.deletion_resend.flash.already_requested_recently</source>
+        <target>You already requested a deletion recently. Check your email or try again in a couple of minutes</target>
+      </trans-unit>
+      <trans-unit id="RjY_hbs" resname="deletion.flash.resend_deletion_email_success">
+        <source>deletion.flash.resend_deletion_email_success</source>
+        <target>You have successfully resend the deletion email</target>
+      </trans-unit>
+      <trans-unit id="P08nxIH" resname="deletion.flash.deletion_confirm_code_invalid">
+        <source>deletion.flash.deletion_confirm_code_invalid</source>
+        <target>Deletion code is invalid</target>
+      </trans-unit>
+      <trans-unit id="PWORgHi" resname="flash.deletion_confirmed_success">
+        <source>flash.deletion_confirmed_success</source>
+        <target>Your account was successfully deleted</target>
+      </trans-unit>
+      <trans-unit id="pQFiczb" resname="export.alert.already_in_progress">
+        <source>export.alert.already_in_progress</source>
+        <target>An export is already in progress</target>
+      </trans-unit>
+      <trans-unit id="RrzSgLH" resname="export.alert.already_requested_recently">
+        <source>export.alert.already_requested_recently</source>
+        <target>You have already requested an export recently. Please wait a few minutes before trying again</target>
+      </trans-unit>
+      <trans-unit id="j9UM_ON" resname="export.flash.success">
+        <source>export.flash.success</source>
+        <target>Export successfully requested</target>
+      </trans-unit>
+      <trans-unit id="SDdUdcx" resname="flash.clear_image_file_success">
+        <source>flash.clear_image_file_success</source>
+        <target>The image was successfully cleared</target>
+      </trans-unit>
+      <trans-unit id="oJ_JQ_x" resname="image.flash.success">
+        <source>image.flash.success</source>
+        <target>You have successfully set your profile picture</target>
+      </trans-unit>
+      <trans-unit id="0ggInpn" resname="oauth.flash.unlinked_success">
+        <source>oauth.flash.unlinked_success</source>
+        <target>You have successfully unlinked your {provider} account</target>
+      </trans-unit>
+      <trans-unit id="c28lmVb" resname="password.flash.success">
+        <source>password.flash.success</source>
+        <target>You have successfully changed your password</target>
+      </trans-unit>
+      <trans-unit id="8D_r.bl" resname="privacy.flash.success">
+        <source>privacy.flash.success</source>
+        <target>Privacy settings were successfully saved</target>
+      </trans-unit>
+      <trans-unit id="NDJnoo8" resname="actions.alert.no_user_actions_yet">
+        <source>actions.alert.no_user_actions_yet</source>
+        <target>No actions yet</target>
+      </trans-unit>
+      <trans-unit id="okKKkiv" resname="blocks.alert.no_blocked_users_yet">
+        <source>blocks.alert.no_blocked_users_yet</source>
+        <target>You are not blocking anyone yet</target>
+      </trans-unit>
+      <trans-unit id="Mp8cv_V" resname="export.alert.text">
+        <source>export.alert.text</source>
+        <target>Here you can request an export of all your data on this platform</target>
+      </trans-unit>
+      <trans-unit id="Ji_Md1s" resname="export.alert.no_exports_yet">
+        <source>export.alert.no_exports_yet</source>
+        <target>No exports yet</target>
+      </trans-unit>
+      <trans-unit id="SeuhF79" resname="oauth.unlink">
+        <source>oauth.unlink</source>
+        <target>Unlink your account</target>
+      </trans-unit>
+      <trans-unit id="Rk155t8" resname="oauth.link">
+        <source>oauth.link</source>
+        <target>Link your account</target>
+      </trans-unit>
+      <trans-unit id="tHt8DjT" resname="deletion.alert.confirmation_sent">
+        <source>deletion.alert.confirmation_sent</source>
+        <target>The deletion confirmation email has been sent to your current email address Please click the link inside to confirm it. In case you did not get any code, click {resend_link_start}here{resend_link_end} and we will resend you the email or cancel it {cancel_link_start}here{cancel_link_end}</target>
+      </trans-unit>
+      <trans-unit id="jl.iN6g" resname="deletion.alert.warning">
+        <source>deletion.alert.warning</source>
+        <target>This action is permanent. You will not be able to retrieve any of the content or information you shared with this platform. An email will be sent to you, so you can confirm your action</target>
+      </trans-unit>
+      <trans-unit id="ETp1jt0" resname="alert.new_email">
+        <source>alert.new_email</source>
+        <target>We have sent you a confirmation email to the new email address ({email}). Please click the link inside to confirm it. In case you did not get any code, click {resend_link_start}here{resend_link_end} and we will resend you the email or cancel it {cancel_link_start}here{cancel_link_end}</target>
+      </trans-unit>
+      <trans-unit id="E9pytB." resname="oauth.unlink.provider_not_found">
+        <source>oauth.unlink.provider_not_found</source>
+        <target>OAuth provider not found</target>
+      </trans-unit>
+      <trans-unit id="qe7MIDa" resname="tfa.flash.success">
+        <source>tfa.flash.success</source>
+        <target>Settings were successfully saved</target>
+      </trans-unit>
+      <trans-unit id="wUavpOA" resname="tfa.recovery_codes.regenerate.flash.success">
+        <source>tfa.recovery_codes.regenerate.flash.success</source>
+        <target>Recovery codes were successfully regenerated</target>
+      </trans-unit>
+      <trans-unit id="WQAt3i6" resname="tfa.flash.code_invald">
+        <source>tfa.flash.code_invald</source>
+        <target>The code you entered is invald</target>
+      </trans-unit>
+      <trans-unit id="kNoYBjw" resname="tfa.alert.no_methods_enabled">
+        <source>tfa.alert.no_methods_enabled</source>
+        <target>You enabled 2FA, but do not have any methods enabled. Please activate at least one method for the functionality to work</target>
+      </trans-unit>
+      <trans-unit id="H_NCitE" resname="tfa.alert.tfa_not_enabled">
+        <source>tfa.alert.tfa_not_enabled</source>
+        <target>You have enabled at least one 2FA method, but the functionality itself is still disabled</target>
+      </trans-unit>
+      <trans-unit id="tRF81bV" resname="devices.alert.no_user_devices_yet">
+        <source>devices.alert.no_user_devices_yet</source>
+        <target>No user devices yet</target>
+      </trans-unit>
+      <trans-unit id="mHCTOLi" resname="devices.flash.invalidate.device_not_found">
+        <source>devices.flash.invalidate.device_not_found</source>
+        <target>Device not found</target>
+      </trans-unit>
+      <trans-unit id="AvZNUQn" resname="devices.flash.invalidate.success">
+        <source>devices.flash.invalidate.success</source>
+        <target>You have successfully invalidated the device</target>
+      </trans-unit>
+      <trans-unit id="_kmoA5i" resname="image.or_select_an_existing_avatar_below">
+        <source>image.or_select_an_existing_avatar_below</source>
+        <target>or select an existing avatar below</target>
+      </trans-unit>
+      <trans-unit id="vDRXGUS" resname="image.or_select_a_new_one_below">
+        <source>image.or_select_a_new_one_below</source>
+        <target>or select a new one below, to replace the existing image</target>
+      </trans-unit>
+      <trans-unit id="l0_hYSk" resname="flash.new_email_already_in_use_by_another_user">
+        <source>flash.new_email_already_in_use_by_another_user</source>
+        <target>The new email is already in use by another user. Please select another email or if that other user is you, change the email there first to another one, before changing it for this user</target>
+      </trans-unit>
+      <trans-unit id="7GzW8vY" resname="image.or_upload_custom_one_below">
+        <source>image.or_upload_custom_one_below</source>
+        <target>or upload a custom one below</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

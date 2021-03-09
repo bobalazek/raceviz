@@ -1,0 +1,91 @@
+{% extends 'layouts/bootstrap4.html.twig' %}
+
+{% block title %}{{ 'Login' | trans }} | {{ parent() }}{% endblock %}
+
+{% block content %}
+  <div class="container pt-4 pb-4">
+    <h1 class="text-center">
+      {{ 'Login' | trans }}
+    </h1>
+    <p>
+      {{ 'Not registered yet?' | trans }}
+      <a href="{{ url('auth.register') }}">
+          {{ 'Signup' | trans }}
+      </a>
+    </p>
+    <form method="post">
+      {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey | trans(error.messageData, 'security') }}</div>
+      {% endif %}
+      <div class="form-group">
+        <label for="username-input">
+          {{ 'Username or email' | trans }}:
+        </label>
+        <input
+          type="text"
+          value="{{ last_username }}"
+          name="username"
+          id="username-input"
+          class="form-control"
+          placeholder="{{ 'Username or email' | trans }}"
+          required
+          autofocus
+        >
+      </div>
+      <div class="form-group">
+        <label for="password-input">
+          {{ 'Password' | trans }}:
+        </label>
+        <input
+          type="password"
+          name="password"
+          id="password-input"
+          class="form-control"
+          placeholder="{{ 'Password' | trans }}"
+          required
+        >
+      </div>
+      <input type="hidden"
+        name="_csrf_token"
+        value="{{ csrf_token('authenticate') }}"
+      >
+      <div class="clearfix mb-3">
+       <div class="float-left">
+         <div class="checkbox">
+           <label>
+             <input
+                type="checkbox"
+                name="_remember_me"
+              >
+             {{ 'Remember me' | trans }}
+           </label>
+         </div>
+       </div>
+       <div class="float-right">
+         <a href="{{ url('auth.password_reset') }}">
+             {{ 'Forgot your password?' | trans }}
+         </a>
+       </div>
+      </div>
+      <button
+        type="submit"
+        class="btn btn-lg btn-block btn-primary"
+      >
+        {{ 'Login' | trans }}
+      </button>
+    </form>
+    <hr />
+    <div class="text-center mb-2">
+      {{ 'login.or_login_with' | trans({}, 'auth') }}
+    </div>
+    {% for key, provider in app_oauth_providers %}
+      <a href="{{ url('auth.oauth', {
+        provider: key,
+        action: 'login',
+      }) }}" class="btn btn-lg btn-block btn-block btn-primary">
+        <i class="{{ provider.fa_icon_class }}"></i>
+        {{ provider.label }}
+      </a>
+    {% endfor %}
+  </div>
+{% endblock %}

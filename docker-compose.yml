@@ -1,0 +1,104 @@
+version: '3.7'
+
+services:
+  php:
+    container_name: s5bp_php
+    build: ./docker/php
+    env_file:
+      - .env
+    volumes:
+      - ./web:/var/www/web
+    links:
+      - mysql
+      - redis
+    depends_on:
+      - mysql
+    networks:
+      - s5bp-app-network
+
+  nginx:
+    container_name: s5bp_nginx
+    build: ./docker/nginx
+    volumes:
+      - ./web:/var/www/web
+    links:
+      - php
+    depends_on:
+      - php
+    networks:
+      - s5bp-app-network
+    ports:
+      - '${NGINX_PORT_80:-80}:80'
+      - '${NGINX_PORT_443:-443}:443'
+
+  mysql:
+    container_name: s5bp_mysql
+    build: ./docker/mysql
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-database}
+      - MYSQL_USER=${MYSQL_USER:-user}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-password}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-password}
+    volumes:
+      - mysql-volume:/var/lib/mysql
+    networks:
+      - s5bp-app-network
+
+  mysql-test:
+    container_name: s5bp_mysql_test
+    build: ./docker/mysql
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-database}
+      - MYSQL_USER=${MYSQL_USER:-user}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-password}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-password}
+    volumes:
+      - mysql-test-volume:/var/lib/mysql
+    networks:
+      - s5bp-app-network
+
+  node:
+    container_name: s5bp_node
+    build: ./docker/node
+    env_file:
+      - .env
+    volumes:
+      - ./web:/usr/src/web
+    networks:
+      - s5bp-app-network
+
+  ws:
+    container_name: s5bp_ws
+    build: ./docker/ws
+    env_file:
+      - .env
+    volumes:
+      - ./ws:/usr/src/web
+    networks:
+      - s5bp-app-network
+    ports:
+      - '${WS_PORT_8080:-8080}:8080'
+
+  redis:
+    container_name: s5bp_redis
+    image: redis
+    volumes:
+      - redis-volume:/data
+    networks:
+      - s5bp-app-network
+
+  smtp-server:
+    container_name: s5bp_smtp_server
+    image: namshi/smtp
+    networks:
+      - s5bp-app-network
+
+networks:
+  s5bp-app-network:
+    name: s5bp_app_network
+    driver: bridge
+
+volumes:
+  mysql-volume:
+  mysql-test-volume:
+  redis-volume:

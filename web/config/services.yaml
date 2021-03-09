@@ -1,0 +1,35 @@
+parameters:
+    google_recaptcha_site_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    # App
+    App\:
+        resource: '../src/*'
+        exclude:
+            - '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+            - '../src/DataFixtures/data/**/*.php'
+
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+
+    App\EventSubscriber\LocaleSubscriber:
+        arguments: ['%kernel.default_locale%']
+
+    App\EventSubscriber\TfaSubscriber:
+        arguments:
+            $allowedRoutes: '%app.tfa.allowed_routes%'
+
+    App\EventListener\UserDeviceListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller }
+            - { name: kernel.event_listener, event: kernel.response }
+
+    # Symfony
+    Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler:
+        arguments:
+            - '%env(DATABASE_URL)%'

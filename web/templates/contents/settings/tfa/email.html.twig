@@ -1,0 +1,20 @@
+{% extends 'contents/settings/_layout.html.twig' %}
+
+{% block title %}{{ 'Email' | trans }} | {{ '2FA' | trans }} | {{ parent() }}{% endblock %}
+
+{% block main %}
+  <h2>
+    {{ '2FA' | trans }}
+    <small>{{ 'Email' | trans }}</small>
+    <a class="btn btn-light btn-sm"
+      href="{{ url('settings.tfa') }}">
+      {{ 'back' | trans }}
+    </a>
+  </h2>
+  {{ form_start(form) }}
+    {{ form_row(form.enabled) }}
+    <button class="btn btn-lg btn-block btn-primary" type="submit">
+      {{ 'Save' | trans }}
+    </button>
+  {{ form_end(form) }}
+{% endblock %}

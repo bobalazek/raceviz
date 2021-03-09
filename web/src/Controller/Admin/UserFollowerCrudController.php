@@ -8,7 +8,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class UserFollowerCrudController extends AbstractCrudController
@@ -21,7 +20,7 @@ class UserFollowerCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setSearchFields(['id', 'status'])
+            ->setSearchFields(['status', 'user.email', 'userFollowing.email'])
         ;
     }
 
@@ -34,14 +33,12 @@ class UserFollowerCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        $id = IdField::new('id');
         $status = TextField::new('status');
         $user = AssociationField::new('user');
         $userFollowing = AssociationField::new('userFollowing');
         $createdAt = DateTimeField::new('createdAt');
 
         return [
-            $id,
             $status,
             $user,
             $userFollowing,

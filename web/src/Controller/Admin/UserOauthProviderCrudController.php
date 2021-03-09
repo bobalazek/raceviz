@@ -9,7 +9,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class UserOauthProviderCrudController extends AbstractCrudController
@@ -22,7 +21,7 @@ class UserOauthProviderCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setSearchFields(['id', 'provider', 'providerId', 'data'])
+            ->setSearchFields(['provider', 'providerId', 'data'])
         ;
     }
 
@@ -35,7 +34,6 @@ class UserOauthProviderCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        $id = IdField::new('id');
         $provider = TextField::new('provider');
         $providerId = TextField::new('providerId');
         $data = ComplexArrayField::new('data');
@@ -43,7 +41,6 @@ class UserOauthProviderCrudController extends AbstractCrudController
         $createdAt = DateTimeField::new('createdAt');
 
         return [
-            $id,
             $provider,
             $providerId,
             $data,

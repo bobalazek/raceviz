@@ -8,7 +8,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class UserTfaRecoveryCodeCrudController extends AbstractCrudController
@@ -21,7 +20,7 @@ class UserTfaRecoveryCodeCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setSearchFields(['id', 'recoveryCode'])
+            ->setSearchFields(['recoveryCode', 'user.email'])
         ;
     }
 
@@ -34,14 +33,12 @@ class UserTfaRecoveryCodeCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        $id = IdField::new('id');
         $recoveryCode = TextField::new('recoveryCode');
         $usedAt = DateTimeField::new('usedAt');
         $user = AssociationField::new('user');
         $createdAt = DateTimeField::new('createdAt');
 
         return [
-            $id,
             $recoveryCode,
             $usedAt,
             $user,

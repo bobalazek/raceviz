@@ -9,7 +9,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class UserNotificationCrudController extends AbstractCrudController
@@ -22,7 +21,7 @@ class UserNotificationCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setSearchFields(['id', 'type', 'data'])
+            ->setSearchFields(['type', 'data'])
         ;
     }
 
@@ -35,7 +34,6 @@ class UserNotificationCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        $id = IdField::new('id');
         $type = TextField::new('type');
         $data = ComplexArrayField::new('data');
         $seenAt = DateTimeField::new('seenAt');
@@ -44,7 +42,6 @@ class UserNotificationCrudController extends AbstractCrudController
         $createdAt = DateTimeField::new('createdAt');
 
         return [
-            $id,
             $type,
             $data,
             $seenAt,

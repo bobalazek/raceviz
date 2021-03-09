@@ -2,13 +2,13 @@
 
 namespace App\Controller\Admin;
 
+use App\Admin\Field\ComplexArrayField;
 use App\Entity\UserPoint;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
@@ -22,7 +22,7 @@ class UserPointCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setSearchFields(['id', 'key', 'amount', 'data'])
+            ->setSearchFields(['key', 'amount', 'data'])
         ;
     }
 
@@ -35,15 +35,13 @@ class UserPointCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        $id = IdField::new('id');
         $key = TextField::new('key');
         $amount = IntegerField::new('amount');
-        $data = TextField::new('data');
+        $data = ComplexArrayField::new('data');
         $user = AssociationField::new('user');
         $createdAt = DateTimeField::new('createdAt');
 
         return [
-            $id,
             $key,
             $amount,
             $data,

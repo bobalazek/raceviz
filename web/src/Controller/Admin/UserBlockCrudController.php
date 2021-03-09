@@ -8,7 +8,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 
 class UserBlockCrudController extends AbstractCrudController
 {
@@ -20,7 +19,7 @@ class UserBlockCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setSearchFields(['id'])
+            ->setSearchFields(['user.email', 'userBlocked.email'])
         ;
     }
 
@@ -33,13 +32,11 @@ class UserBlockCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        $id = IdField::new('id');
         $user = AssociationField::new('user');
         $userBlocked = AssociationField::new('userBlocked');
         $createdAt = DateTimeField::new('createdAt');
 
         return [
-            $id,
             $user,
             $userBlocked,
             $createdAt,

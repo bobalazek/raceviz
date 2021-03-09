@@ -8,7 +8,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
@@ -22,7 +21,7 @@ class UserExportCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setSearchFields(['id', 'status', 'token', 'failedMessage', 'imageFileEmbedded.name', 'imageFileEmbedded.originalName', 'imageFileEmbedded.mimeType', 'imageFileEmbedded.size', 'imageFileEmbedded.dimensions'])
+            ->setSearchFields(['status', 'token', 'failedMessage', 'imageFileEmbedded.name', 'imageFileEmbedded.originalName', 'imageFileEmbedded.mimeType', 'imageFileEmbedded.size', 'imageFileEmbedded.dimensions'])
         ;
     }
 
@@ -35,7 +34,6 @@ class UserExportCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        $id = IdField::new('id');
         $status = TextField::new('status');
         $token = TextField::new('token');
         $failedMessage = TextareaField::new('failedMessage');
@@ -47,7 +45,6 @@ class UserExportCrudController extends AbstractCrudController
         $createdAt = DateTimeField::new('createdAt');
 
         return [
-            $id,
             $status,
             $token,
             $failedMessage,

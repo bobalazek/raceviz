@@ -10,7 +10,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CountryField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\LocaleField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -36,7 +35,7 @@ class UserCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setSearchFields(['id', 'username', 'email', 'name', 'roles', 'locale', 'bio', 'city', 'countryCode', 'lockedReason'])
+            ->setSearchFields(['username', 'email', 'name', 'roles', 'locale', 'bio', 'city', 'countryCode', 'lockedReason'])
         ;
     }
 
@@ -49,7 +48,6 @@ class UserCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        $id = IdField::new('id');
         $name = TextField::new('name');
         $username = TextField::new('username');
         $email = TextField::new('email');
@@ -66,7 +64,7 @@ class UserCrudController extends AbstractCrudController
         $lockedReason = TextField::new('lockedReason');
         $createdAt = DateTimeField::new('createdAt');
 
-        $fields = [
+        return [
             $name,
             $username,
             $email,
@@ -80,11 +78,5 @@ class UserCrudController extends AbstractCrudController
             $lockedReason,
             $createdAt,
         ];
-
-        if (Crud::PAGE_INDEX === $pageName) {
-            $fields = array_merge([$id], $fields);
-        }
-
-        return $fields;
     }
 }

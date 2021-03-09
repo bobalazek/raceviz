@@ -9,7 +9,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
@@ -23,7 +22,7 @@ class UserActionCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setSearchFields(['id', 'key', 'message', 'data', 'ip', 'userAgent', 'sessionId'])
+            ->setSearchFields(['key', 'message', 'data', 'ip', 'userAgent', 'sessionId'])
             ->setDefaultSort(['id' => 'DESC'])
         ;
     }
@@ -37,7 +36,6 @@ class UserActionCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        $id = IdField::new('id');
         $user = AssociationField::new('user');
         $key = TextField::new('key');
         $message = TextareaField::new('message');
@@ -48,7 +46,6 @@ class UserActionCrudController extends AbstractCrudController
         $createdAt = DateTimeField::new('createdAt');
 
         return [
-            $id,
             $user,
             $key,
             $message,

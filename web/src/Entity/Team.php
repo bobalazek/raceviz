@@ -8,10 +8,10 @@ use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\ConstructorRepository")
- * @ORM\Table(name="constructors")
+ * @ORM\Entity(repositoryClass="App\Repository\TeamRepository")
+ * @ORM\Table(name="teams")
  */
-class Constructor implements Interfaces\ArrayInterface, TimestampableInterface
+class Team implements Interfaces\ArrayInterface, TimestampableInterface
 {
     use TimestampableTrait;
 
@@ -161,7 +161,9 @@ class Constructor implements Interfaces\ArrayInterface, TimestampableInterface
             'country_code' => $this->getCountryCode(),
             'url' => $this->getUrl(),
             'debuted_at' => $this->getDebutedAt()->format('Y-m-d'),
-            'defuncted_at' => $this->getDefunctedAt()->format('Y-m-d'),
+            'defuncted_at' => $this->getDefunctedAt()
+                ? $this->getDefunctedAt()->format('Y-m-d')
+                : null,
         ];
     }
 }

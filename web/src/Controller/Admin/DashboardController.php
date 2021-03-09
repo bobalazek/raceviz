@@ -3,8 +3,8 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Circuit;
-use App\Entity\Constructor;
 use App\Entity\Driver;
+use App\Entity\Team;
 use App\Entity\User;
 use App\Entity\UserAction;
 use App\Entity\UserBlock;
@@ -51,9 +51,8 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToDashboard('Dashboard', 'fa fa-home'),
             MenuItem::section('App'),
             MenuItem::linkToCrud('Circuits', 'fas fa-folder-open', Circuit::class),
-            MenuItem::linkToCrud('Constructors', 'fas fa-folder-open', Constructor::class),
+            MenuItem::linkToCrud('Teams', 'fas fa-folder-open', Team::class),
             MenuItem::linkToCrud('Drivers', 'fas fa-folder-open', Driver::class),
-            // TODO
             MenuItem::section('Users'),
             MenuItem::linkToCrud('Users', 'fas fa-folder-open', User::class),
             MenuItem::linkToCrud('User Actions', 'fas fa-folder-open', UserAction::class),

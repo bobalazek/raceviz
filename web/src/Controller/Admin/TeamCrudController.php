@@ -2,32 +2,32 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Constructor;
+use App\Admin\Field\SeriesField;
+use App\Entity\Team;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CountryField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-class ConstructorCrudController extends AbstractCrudController
+class TeamCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Constructor::class;
+        return Team::class;
     }
 
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setSearchFields(['id', 'firstName', 'lastName', 'countryCode'])
+            ->setSearchFields(['id', 'series', 'name', 'location', 'countryCode'])
         ;
     }
 
     public function configureFields(string $pageName): iterable
     {
-        $id = IdField::new('id');
         $name = TextField::new('name');
+        $series = SeriesField::new('series');
         $location = TextField::new('location');
         $countryCode = CountryField::new('countryCode');
         $url = TextField::new('url');
@@ -35,8 +35,8 @@ class ConstructorCrudController extends AbstractCrudController
         $defunctedAt = DateField::new('defunctedAt');
 
         return [
-            $id,
             $name,
+            $series,
             $location,
             $countryCode,
             $url,

@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Circuit;
 use App\Entity\User;
 use App\Entity\UserAction;
 use App\Entity\UserBlock;
@@ -44,16 +45,23 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToCrud('Users', 'fas fa-folder-open', User::class);
-        yield MenuItem::linkToCrud('User Actions', 'fas fa-folder-open', UserAction::class);
-        yield MenuItem::linkToCrud('User Devices', 'fas fa-folder-open', UserDevice::class);
-        yield MenuItem::linkToCrud('User OAuth Providers', 'fas fa-folder-open', UserOauthProvider::class);
-        yield MenuItem::linkToCrud('User TFA Methods', 'fas fa-folder-open', UserTfaMethod::class);
-        yield MenuItem::linkToCrud('User TFA Recovery Codes', 'fas fa-folder-open', UserTfaRecoveryCode::class);
-        yield MenuItem::linkToCrud('User Notifications', 'fas fa-folder-open', UserNotification::class);
-        yield MenuItem::linkToCrud('User Blocks', 'fas fa-folder-open', UserBlock::class);
-        yield MenuItem::linkToCrud('User Followers', 'fas fa-folder-open', UserFollower::class);
-        yield MenuItem::linkToCrud('User Points', 'fas fa-folder-open', UserPoint::class);
-        yield MenuItem::linkToCrud('User Exports', 'fas fa-folder-open', UserExport::class);
+        return [
+            MenuItem::linkToDashboard('Dashboard', 'fa fa-home'),
+            MenuItem::section('App'),
+            MenuItem::linkToCrud('Circuits', 'fas fa-road', Circuit::class),
+            // TODO
+            MenuItem::section('Users'),
+            MenuItem::linkToCrud('Users', 'fas fa-folder-open', User::class),
+            MenuItem::linkToCrud('User Actions', 'fas fa-folder-open', UserAction::class),
+            MenuItem::linkToCrud('User Devices', 'fas fa-folder-open', UserDevice::class),
+            MenuItem::linkToCrud('User OAuth Providers', 'fas fa-folder-open', UserOauthProvider::class),
+            MenuItem::linkToCrud('User TFA Methods', 'fas fa-folder-open', UserTfaMethod::class),
+            MenuItem::linkToCrud('User TFA Recovery Codes', 'fas fa-folder-open', UserTfaRecoveryCode::class),
+            MenuItem::linkToCrud('User Notifications', 'fas fa-folder-open', UserNotification::class),
+            MenuItem::linkToCrud('User Blocks', 'fas fa-folder-open', UserBlock::class),
+            MenuItem::linkToCrud('User Followers', 'fas fa-folder-open', UserFollower::class),
+            MenuItem::linkToCrud('User Points', 'fas fa-folder-open', UserPoint::class),
+            MenuItem::linkToCrud('User Exports', 'fas fa-folder-open', UserExport::class),
+        ];
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
@@ -57,6 +59,16 @@ class Team implements Interfaces\ArrayInterface, TimestampableInterface
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $defunctedAt;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Car", mappedBy="team")
+     */
+    private $cars;
+
+    public function __construct()
+    {
+        $this->cars = new ArrayCollection();
+    }
 
     public function __toString()
     {
@@ -148,6 +160,36 @@ class Team implements Interfaces\ArrayInterface, TimestampableInterface
     public function setDefunctedAt(?\DateTimeInterface $defunctedAt): self
     {
         $this->defunctedAt = $defunctedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Car[]
+     */
+    public function getCars(): Collection
+    {
+        return $this->cars;
+    }
+
+    public function addCar(Car $car): self
+    {
+        if (!$this->cars->contains($car)) {
+            $this->cars[] = $car;
+            $car->setTeam($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCar(Car $car): self
+    {
+        if ($this->cars->contains($car)) {
+            $this->cars->removeElement($car);
+            if ($car->getTeam() === $this) {
+                $car->setTeam(null);
+            }
+        }
 
         return $this;
     }

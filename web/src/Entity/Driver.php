@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
@@ -42,6 +44,22 @@ class Driver implements Interfaces\ArrayInterface, TimestampableInterface
      * @ORM\Column(type="text", nullable=true)
      */
     private $url;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Car", mappedBy="driver")
+     */
+    private $cars;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\RaceCarDriver", mappedBy="driver")
+     */
+    private $raceCarDrivers;
+
+    public function __construct()
+    {
+        $this->cars = new ArrayCollection();
+        $this->raceCarDrivers = new ArrayCollection();
+    }
 
     public function __toString()
     {
@@ -97,6 +115,66 @@ class Driver implements Interfaces\ArrayInterface, TimestampableInterface
     public function setUrl(?string $url): self
     {
         $this->url = $url;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Car[]
+     */
+    public function getCars(): Collection
+    {
+        return $this->cars;
+    }
+
+    public function addCar(Car $car): self
+    {
+        if (!$this->cars->contains($car)) {
+            $this->cars[] = $car;
+            $car->setDriver($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCar(Car $car): self
+    {
+        if ($this->cars->contains($car)) {
+            $this->cars->removeElement($car);
+            if ($car->getDriver() === $this) {
+                $car->setDriver(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Car[]
+     */
+    public function getRaceCarDrivers(): Collection
+    {
+        return $this->raceCarDrivers;
+    }
+
+    public function addRaceCarDriver(RaceCarDriver $raceCarDriver): self
+    {
+        if (!$this->raceCarDrivers->contains($raceCarDriver)) {
+            $this->raceCarDrivers[] = $raceCarDriver;
+            $raceCarDriver->setDriver($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRaceCarDriver(RaceCarDriver $raceCarDriver): self
+    {
+        if ($this->raceCarDrivers->contains($raceCarDriver)) {
+            $this->cars->removeElement($raceCarDriver);
+            if ($raceCarDriver->getDriver() === $this) {
+                $raceCarDriver->setDriver(null);
+            }
+        }
 
         return $this;
     }

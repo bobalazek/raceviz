@@ -9,10 +9,10 @@ use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\RaceRepository")
- * @ORM\Table(name="races")
+ * @ORM\Entity(repositoryClass="App\Repository\CarRepository")
+ * @ORM\Table(name="cars")
  */
-class Race implements Interfaces\ArrayInterface, TimestampableInterface
+class Car implements Interfaces\ArrayInterface, TimestampableInterface
 {
     use TimestampableTrait;
 
@@ -24,11 +24,6 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=16)
-     */
-    private $series;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $name;
@@ -36,26 +31,22 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
     /**
      * @ORM\Column(type="smallint")
      */
-    private $laps;
+    private $number;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $url;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $startedAt;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Circuit", inversedBy="races")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Driver", inversedBy="cars")
      * @ORM\JoinColumn()
      */
-    private $circuit;
+    private $driver;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\RaceCarDriver", mappedBy="race")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Team", inversedBy="cars")
+     * @ORM\JoinColumn()
+     */
+    private $team;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\RaceCarDriver", mappedBy="car")
      */
     private $raceCarDrivers;
 
@@ -74,18 +65,6 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
         return $this->id;
     }
 
-    public function getSeries(): ?string
-    {
-        return $this->series;
-    }
-
-    public function setSeries(string $series): self
-    {
-        $this->series = $series;
-
-        return $this;
-    }
-
     public function getName(): ?string
     {
         return $this->name;
@@ -98,50 +77,38 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
         return $this;
     }
 
-    public function getLaps(): ?int
+    public function getNumber(): ?string
     {
-        return $this->laps;
+        return $this->number;
     }
 
-    public function setLaps(string $laps): self
+    public function setNumber(string $number): self
     {
-        $this->laps = $laps;
+        $this->number = $number;
 
         return $this;
     }
 
-    public function getUrl(): ?string
+    public function getDriver(): ?Driver
     {
-        return $this->url;
+        return $this->driver;
     }
 
-    public function setUrl(?string $url): self
+    public function setDriver(?Driver $driver): self
     {
-        $this->url = $url;
+        $this->driver = $driver;
 
         return $this;
     }
 
-    public function getStartedAt(): ?\DateTimeInterface
+    public function getTeam(): ?Team
     {
-        return $this->startedAt;
+        return $this->team;
     }
 
-    public function setStartedAt(?\DateTimeInterface $startedAt): self
+    public function setTeam(?Team $team): self
     {
-        $this->startedAt = $startedAt;
-
-        return $this;
-    }
-
-    public function getCircuit(): ?Circuit
-    {
-        return $this->circuit;
-    }
-
-    public function setCircuit(?Circuit $circuit): self
-    {
-        $this->circuit = $circuit;
+        $this->team = $team;
 
         return $this;
     }
@@ -158,7 +125,7 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
     {
         if (!$this->raceCarDrivers->contains($raceCarDriver)) {
             $this->raceCarDrivers[] = $raceCarDriver;
-            $raceCarDriver->setRace($this);
+            $raceCarDriver->setCar($this);
         }
 
         return $this;
@@ -168,8 +135,8 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
     {
         if ($this->raceCarDrivers->contains($raceCarDriver)) {
             $this->cars->removeElement($raceCarDriver);
-            if ($raceCarDriver->getRace() === $this) {
-                $raceCarDriver->setRace(null);
+            if ($raceCarDriver->getCar() === $this) {
+                $raceCarDriver->setCar(null);
             }
         }
 
@@ -181,10 +148,7 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
         return [
             'id' => $this->getId(),
             'name' => $this->getName(),
-            'series' => $this->getSeries(),
-            'laps' => $this->getLaps(),
-            'url' => $this->getUrl(),
-            'started_at' => $this->getStartedAt()->format('Y-m-d'),
+            'number' => $this->getNumber(),
         ];
     }
 }

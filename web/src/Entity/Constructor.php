@@ -8,10 +8,10 @@ use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\CircuitRepository")
- * @ORM\Table(name="circuits")
+ * @ORM\Entity(repositoryClass="App\Repository\ConstructorRepository")
+ * @ORM\Table(name="constructors")
  */
-class Circuit implements Interfaces\ArrayInterface, TimestampableInterface
+class Constructor implements Interfaces\ArrayInterface, TimestampableInterface
 {
     use TimestampableTrait;
 
@@ -21,6 +21,11 @@ class Circuit implements Interfaces\ArrayInterface, TimestampableInterface
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @ORM\Column(type="string", length=16)
+     */
+    private $series;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -43,9 +48,31 @@ class Circuit implements Interfaces\ArrayInterface, TimestampableInterface
      */
     private $url;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $debutedAt;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $defunctedAt;
+
     public function __toString()
     {
         return $this->getName();
+    }
+
+    public function getSeries(): ?string
+    {
+        return $this->series;
+    }
+
+    public function setSeries(string $series): self
+    {
+        $this->series = $series;
+
+        return $this;
     }
 
     public function getId(): ?int
@@ -101,6 +128,30 @@ class Circuit implements Interfaces\ArrayInterface, TimestampableInterface
         return $this;
     }
 
+    public function getDebutedAt(): ?\DateTimeInterface
+    {
+        return $this->debutedAt;
+    }
+
+    public function setDebutedAt(?\DateTimeInterface $debutedAt): self
+    {
+        $this->debutedAt = $debutedAt;
+
+        return $this;
+    }
+
+    public function getDefunctedAt(): ?\DateTimeInterface
+    {
+        return $this->defunctedAt;
+    }
+
+    public function setDefunctedAt(?\DateTimeInterface $defunctedAt): self
+    {
+        $this->defunctedAt = $defunctedAt;
+
+        return $this;
+    }
+
     public function toArray(): array
     {
         return [
@@ -109,6 +160,8 @@ class Circuit implements Interfaces\ArrayInterface, TimestampableInterface
             'location' => $this->getLocation(),
             'country_code' => $this->getCountryCode(),
             'url' => $this->getUrl(),
+            'debuted_at' => $this->getDebutedAt()->format('Y-m-d'),
+            'defuncted_at' => $this->getDefunctedAt()->format('Y-m-d'),
         ];
     }
 }

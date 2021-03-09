@@ -2,24 +2,25 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Circuit;
+use App\Entity\Constructor;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CountryField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-class CircuitCrudController extends AbstractCrudController
+class ConstructorCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Circuit::class;
+        return Constructor::class;
     }
 
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setSearchFields(['id', 'name', 'location', 'countryCode'])
+            ->setSearchFields(['id', 'firstName', 'lastName', 'countryCode'])
         ;
     }
 
@@ -30,6 +31,8 @@ class CircuitCrudController extends AbstractCrudController
         $location = TextField::new('location');
         $countryCode = CountryField::new('countryCode');
         $url = TextField::new('url');
+        $debutedAt = DateField::new('debutedAt');
+        $defunctedAt = DateField::new('defunctedAt');
 
         return [
             $id,
@@ -37,6 +40,8 @@ class CircuitCrudController extends AbstractCrudController
             $location,
             $countryCode,
             $url,
+            $debutedAt,
+            $defunctedAt,
         ];
     }
 }

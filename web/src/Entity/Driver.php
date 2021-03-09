@@ -8,10 +8,10 @@ use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\CircuitRepository")
- * @ORM\Table(name="circuits")
+ * @ORM\Entity(repositoryClass="App\Repository\DriverRepository")
+ * @ORM\Table(name="drivers")
  */
-class Circuit implements Interfaces\ArrayInterface, TimestampableInterface
+class Driver implements Interfaces\ArrayInterface, TimestampableInterface
 {
     use TimestampableTrait;
 
@@ -25,12 +25,12 @@ class Circuit implements Interfaces\ArrayInterface, TimestampableInterface
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $location;
+    private $lastName;
 
     /**
      * @ORM\Column(type="string", length=2)
@@ -45,7 +45,7 @@ class Circuit implements Interfaces\ArrayInterface, TimestampableInterface
 
     public function __toString()
     {
-        return $this->getName();
+        return $this->getFirstName() . ' ' . $this->getLastName();
     }
 
     public function getId(): ?int
@@ -53,26 +53,26 @@ class Circuit implements Interfaces\ArrayInterface, TimestampableInterface
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getFirstName(): ?string
     {
-        return $this->name;
+        return $this->firstName;
     }
 
-    public function setName(string $name): self
+    public function setFirstName(string $firstName): self
     {
-        $this->name = $name;
+        $this->firstName = $firstName;
 
         return $this;
     }
 
-    public function getLocation(): ?string
+    public function getLastName(): ?string
     {
-        return $this->location;
+        return $this->lastName;
     }
 
-    public function setLocation(string $location): self
+    public function setLastName(string $lastName): self
     {
-        $this->location = $location;
+        $this->lastName = $lastName;
 
         return $this;
     }
@@ -105,8 +105,8 @@ class Circuit implements Interfaces\ArrayInterface, TimestampableInterface
     {
         return [
             'id' => $this->getId(),
-            'name' => $this->getName(),
-            'location' => $this->getLocation(),
+            'first_name' => $this->getFirstName(),
+            'last_name' => $this->getLastName(),
             'country_code' => $this->getCountryCode(),
             'url' => $this->getUrl(),
         ];

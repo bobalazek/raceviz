@@ -36,7 +36,7 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('S5BP Admin')
+            ->setTitle('RaceViz Admin')
         ;
     }
 

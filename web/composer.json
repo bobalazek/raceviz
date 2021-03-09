@@ -1,6 +1,6 @@
 {
-    "name": "bobalazek/symfony5-boilerplate",
-    "description": "Symfony5 boilerplate",
+    "name": "bobalazek/raceviz",
+    "description": "RaceViz",
     "type": "project",
     "license": "proprietary",
     "require": {

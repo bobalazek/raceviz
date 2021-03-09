@@ -1,4 +1,4 @@
-# Symfony5 boilerplate
+# RaceViz
 
 ## TODO
 

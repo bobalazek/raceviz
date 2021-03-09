@@ -1,6 +1,6 @@
-# Symfony5 boilerplate
+# RaceViz
 
-![CI](https://github.com/bobalazek/symfony5-boilerplate/workflows/Development%20Workflow/badge.svg)
+![CI](https://github.com/bobalazek/raceviz/workflows/Development%20Workflow/badge.svg)
 
 ## Features
 

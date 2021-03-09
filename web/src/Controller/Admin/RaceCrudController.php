@@ -3,24 +3,25 @@
 namespace App\Controller\Admin;
 
 use App\Admin\Field\SeriesField;
-use App\Entity\Team;
+use App\Entity\Race;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\CountryField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-class TeamCrudController extends AbstractCrudController
+class RaceCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Team::class;
+        return Race::class;
     }
 
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setSearchFields(['name', 'series', 'location', 'countryCode'])
+            ->setSearchFields(['name', 'series'])
         ;
     }
 
@@ -28,20 +29,18 @@ class TeamCrudController extends AbstractCrudController
     {
         $name = TextField::new('name');
         $series = SeriesField::new('series');
-        $location = TextField::new('location');
-        $countryCode = CountryField::new('countryCode');
+        $laps = NumberField::new('laps');
         $url = TextField::new('url');
-        $debutedAt = DateField::new('debutedAt');
-        $defunctedAt = DateField::new('defunctedAt');
+        $startedAt = DateTimeField::new('startedAt');
+        $circuit = AssociationField::new('circuit');
 
         return [
             $name,
             $series,
-            $location,
-            $countryCode,
+            $laps,
             $url,
-            $debutedAt,
-            $defunctedAt,
+            $startedAt,
+            $circuit,
         ];
     }
 }

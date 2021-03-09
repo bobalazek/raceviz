@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
@@ -42,6 +44,16 @@ class Circuit implements Interfaces\ArrayInterface, TimestampableInterface
      * @ORM\Column(type="text", nullable=true)
      */
     private $url;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Race", mappedBy="circuit")
+     */
+    private $races;
+
+    public function __construct()
+    {
+        $this->races = new ArrayCollection();
+    }
 
     public function __toString()
     {
@@ -97,6 +109,36 @@ class Circuit implements Interfaces\ArrayInterface, TimestampableInterface
     public function setUrl(?string $url): self
     {
         $this->url = $url;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Race[]
+     */
+    public function getRaces(): Collection
+    {
+        return $this->races;
+    }
+
+    public function addRace(Race $race): self
+    {
+        if (!$this->races->contains($race)) {
+            $this->races[] = $race;
+            $race->setCircuit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRace(Race $race): self
+    {
+        if ($this->races->contains($race)) {
+            $this->races->removeElement($race);
+            if ($race->getCircuit() === $this) {
+                $race->setCircuit(null);
+            }
+        }
 
         return $this;
     }

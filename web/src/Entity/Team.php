@@ -23,14 +23,14 @@ class Team implements Interfaces\ArrayInterface, TimestampableInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=16)
-     */
-    private $series;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $name;
+
+    /**
+     * @ORM\Column(type="string", length=16)
+     */
+    private $series;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -63,18 +63,6 @@ class Team implements Interfaces\ArrayInterface, TimestampableInterface
         return $this->getName();
     }
 
-    public function getSeries(): ?string
-    {
-        return $this->series;
-    }
-
-    public function setSeries(string $series): self
-    {
-        $this->series = $series;
-
-        return $this;
-    }
-
     public function getId(): ?int
     {
         return $this->id;
@@ -88,6 +76,18 @@ class Team implements Interfaces\ArrayInterface, TimestampableInterface
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getSeries(): ?string
+    {
+        return $this->series;
+    }
+
+    public function setSeries(string $series): self
+    {
+        $this->series = $series;
 
         return $this;
     }
@@ -157,6 +157,7 @@ class Team implements Interfaces\ArrayInterface, TimestampableInterface
         return [
             'id' => $this->getId(),
             'name' => $this->getName(),
+            'series' => $this->getSeries(),
             'location' => $this->getLocation(),
             'country_code' => $this->getCountryCode(),
             'url' => $this->getUrl(),

@@ -18,7 +18,7 @@ class DriverCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setSearchFields(['id', 'firstName', 'lastName', 'countryCode'])
+            ->setSearchFields(['firstName', 'lastName', 'countryCode'])
         ;
     }
 

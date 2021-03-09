@@ -18,7 +18,7 @@ class CircuitCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setSearchFields(['id', 'name', 'location', 'countryCode'])
+            ->setSearchFields(['name', 'location', 'countryCode'])
         ;
     }
 

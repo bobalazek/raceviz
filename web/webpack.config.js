@@ -9,6 +9,7 @@ Encore
     .setPublicPath('/build')
 
     .addEntry('website', './assets/apps/website/index.js')
+    .addEntry('app', './assets/apps/app/index.ts')
 
     .splitEntryChunks()
 
@@ -36,4 +37,19 @@ Encore.configureWatchOptions(watchOptions => {
     watchOptions.poll = 250;
 });
 
-module.exports = Encore.getWebpackConfig();
+let config = Encore.getWebpackConfig();
+
+config.module.rules.push({
+  test: /\/Resources\/(.*)\.(jpg|png|gif|glb|gltf)$/i,
+  use: [
+    {
+      loader: 'url-loader',
+      options: {
+        limit: false,
+        name: 'resources/[name].[hash:8].[ext]',
+      },
+    },
+  ],
+});
+
+module.exports = config;

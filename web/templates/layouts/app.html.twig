@@ -1,0 +1,21 @@
+{% extends 'layouts/default.html.twig' %}
+
+{% block head_javascripts %}
+  <script>
+    var app = {{ app_data | json_encode | raw }};
+    window.app = app;
+  </script>
+{% endblock %}
+
+{% block head_stylesheets %}
+  {{ encore_entry_link_tags('app') }}
+{% endblock %}
+
+{% block body %}
+  <noscript>Whooopsie! This website will only work if you have Javascript enabled. Sorry :(</noscript>
+  <canvas id="canvas"></canvas>
+{% endblock %}
+
+{% block body_javascripts %}
+  {{ encore_entry_script_tags('app') }}
+{% endblock %}

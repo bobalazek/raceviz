@@ -65,6 +65,14 @@ class HomeController extends AbstractController
     }
 
     /**
+     * @Route("/app", name="app")
+     */
+    public function app()
+    {
+        return $this->render('contents/app/index.html.twig');
+    }
+
+    /**
      * @Route("/privacy", name="privacy")
      */
     public function privacy()

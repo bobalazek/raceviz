@@ -26,7 +26,12 @@ Encore
     })
 
     .enableSassLoader()
-    .enableTypeScriptLoader()
+    .enableTypeScriptLoader(function(tsConfig) {
+      tsConfig.compilerOptions = {
+        sourceMap: true,
+        esModuleInterop: true,
+      };
+    })
 
     .enableIntegrityHashes(Encore.isProduction())
 

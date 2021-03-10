@@ -17,7 +17,7 @@ final class ComplexArrayField implements FieldInterface
             ->setLabel($label)
             ->setTemplatePath('contents/admin/fields/complex_array.html.twig')
             ->setFormType(CollectionType::class)
-            ->addCssClass('field-array')
+            ->addCssClass('field-complex-array')
             ->addJsFiles('bundles/easyadmin/form-type-collection.js')
         ;
     }

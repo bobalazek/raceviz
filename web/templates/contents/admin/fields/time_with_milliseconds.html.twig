@@ -1,0 +1,5 @@
+{% if field.getValue() %}
+  <time datetime="{{ field.getValue().format('H:i:s.v') }}">{{ field.getValue().format('H:i:s.v') }}</time>
+{% else %}
+  <span class="badge badge-secondary">Null</span>
+{% endif %}

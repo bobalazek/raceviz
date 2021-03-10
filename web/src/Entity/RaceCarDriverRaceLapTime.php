@@ -32,6 +32,16 @@ class RaceCarDriverRaceLapTime implements Interfaces\ArrayInterface, Timestampab
     private $position;
 
     /**
+     * @ORM\Column(type="time_with_milliseconds")
+     */
+    private $time;
+
+    /**
+     * @ORM\Column(type="time", nullable=true)
+     */
+    private $timeOfDay;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\RaceCarDriver", inversedBy="raceCarDriverRaceLapTimes")
      * @ORM\JoinColumn()
      */
@@ -71,6 +81,30 @@ class RaceCarDriverRaceLapTime implements Interfaces\ArrayInterface, Timestampab
     public function setPosition(string $position): self
     {
         $this->position = $position;
+
+        return $this;
+    }
+
+    public function getTime(): ?\DateTimeInterface
+    {
+        return $this->time;
+    }
+
+    public function setTime(?\DateTimeInterface $time): self
+    {
+        $this->time = $time;
+
+        return $this;
+    }
+
+    public function getTimeOfDay(): ?\DateTimeInterface
+    {
+        return $this->timeOfDay;
+    }
+
+    public function setTimeOfDay(?\DateTimeInterface $timeOfDay): self
+    {
+        $this->timeOfDay = $timeOfDay;
 
         return $this;
     }

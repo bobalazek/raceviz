@@ -8,6 +8,10 @@ doctrine:
             collate: utf8mb4_unicode_ci
         url: '%env(DATABASE_URL)%'
         schema_filter: '~^(?!messenger_messages)~'
+        types:
+            time_with_milliseconds: App\Doctrine\DBAL\Types\TimeWithMilliseconds
+        mapping_types:
+            time_with_milliseconds: time_with_milliseconds
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware

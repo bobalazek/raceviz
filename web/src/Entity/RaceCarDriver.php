@@ -46,9 +46,15 @@ class RaceCarDriver implements Interfaces\ArrayInterface, TimestampableInterface
      */
     private $raceCarDriverRaceGridPositions;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\RaceCarDriverRaceLapTime", mappedBy="raceCarDriver")
+     */
+    private $raceCarDriverRaceLapTime;
+
     public function __construct()
     {
         $this->raceCarDriverRaceGridPositions = new ArrayCollection();
+        $this->raceCarDriverRaceLapTimes = new ArrayCollection();
     }
 
     public function __toString()
@@ -100,7 +106,7 @@ class RaceCarDriver implements Interfaces\ArrayInterface, TimestampableInterface
     /**
      * @return Collection|RaceCarDriverRaceGridPosition[]
      */
-    public function getRaces(): Collection
+    public function getRaceCarDriverRaceGridPositions(): Collection
     {
         return $this->raceCarDriverRaceGridPositions;
     }
@@ -121,6 +127,36 @@ class RaceCarDriver implements Interfaces\ArrayInterface, TimestampableInterface
             $this->raceCarDriverRaceGridPositions->removeElement($raceCarDriverRaceGridPosition);
             if ($raceCarDriverRaceGridPosition->getRaceCarDriver() === $this) {
                 $raceCarDriverRaceGridPosition->setRaceCarDriver(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RaceCarDriverRaceLapTime[]
+     */
+    public function getRaceCarDriverRaceLapTimes(): Collection
+    {
+        return $this->raceCarDriverRaceLapTimes;
+    }
+
+    public function addRaceCarDriverRaceLapTime(RaceCarDriverRaceLapTime $raceCarDriverRaceLapTime): self
+    {
+        if (!$this->raceCarDriverRaceLapTimes->contains($raceCarDriverRaceLapTime)) {
+            $this->raceCarDriverRaceLapTimes[] = $raceCarDriverRaceLapTime;
+            $raceCarDriverRaceLapTime->setRaceCarDriver($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRaceCarDriverRaceLapTime(RaceCarDriverRaceLapTime $raceCarDriverRaceLapTime): self
+    {
+        if ($this->raceCarDriverRaceLapTimes->contains($raceCarDriverRaceLapTime)) {
+            $this->raceCarDriverRaceLapTimes->removeElement($raceCarDriverRaceLapTime);
+            if ($raceCarDriverRaceLapTime->getRaceCarDriver() === $this) {
+                $raceCarDriverRaceLapTime->setRaceCarDriver(null);
             }
         }
 

@@ -8,9 +8,9 @@ use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CircuitRepository")
- * @ORM\Table(name="race_car_driver_race_grid_positions")
+ * @ORM\Table(name="race_car_driver_race_lap_times")
  */
-class RaceCarDriverRaceGridPosition implements Interfaces\ArrayInterface, TimestampableInterface
+class RaceCarDriverRaceLapTime implements Interfaces\ArrayInterface, TimestampableInterface
 {
     use TimestampableTrait;
 
@@ -24,10 +24,15 @@ class RaceCarDriverRaceGridPosition implements Interfaces\ArrayInterface, Timest
     /**
      * @ORM\Column(type="smallint")
      */
+    private $lap;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
     private $position;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\RaceCarDriver", inversedBy="raceCarDriverRaceGridPositions")
+     * @ORM\ManyToOne(targetEntity="App\Entity\RaceCarDriver", inversedBy="raceCarDriverRaceLapTimes")
      * @ORM\JoinColumn()
      */
     private $raceCarDriver;
@@ -36,14 +41,26 @@ class RaceCarDriverRaceGridPosition implements Interfaces\ArrayInterface, Timest
     {
         $race = $this->getRaceCarDriver()->getRace();
         $driver = $this->getRaceCarDriver()->getDriver();
-        $position = $this->getPosition();
+        $lap = $this->getLap();
 
-        return $driver . ' @ ' . $race . '( ' . $position . ' position)';
+        return $driver . ' @ ' . $race . '( ' . $lap . ' lap)';
     }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getLap(): ?int
+    {
+        return $this->lap;
+    }
+
+    public function setLap(string $lap): self
+    {
+        $this->lap = $lap;
+
+        return $this;
     }
 
     public function getPosition(): ?int
@@ -74,6 +91,7 @@ class RaceCarDriverRaceGridPosition implements Interfaces\ArrayInterface, Timest
     {
         return [
             'id' => $this->getId(),
+            'lap' => $this->getLap(),
             'position' => $this->getPosition(),
         ];
     }

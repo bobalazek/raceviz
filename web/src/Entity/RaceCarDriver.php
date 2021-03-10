@@ -42,18 +42,18 @@ class RaceCarDriver implements Interfaces\ArrayInterface, TimestampableInterface
     private $driver;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\RaceCarDriverRaceGridPosition", mappedBy="raceCarDriver")
+     * @ORM\OneToMany(targetEntity="App\Entity\RaceCarDriverRaceStartingGridPosition", mappedBy="raceCarDriver")
      */
-    private $raceCarDriverRaceGridPositions;
+    private $raceCarDriverRaceStartingGridPositions;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\RaceCarDriverRaceLapTime", mappedBy="raceCarDriver")
      */
-    private $raceCarDriverRaceLapTime;
+    private $raceCarDriverRaceLapTimes;
 
     public function __construct()
     {
-        $this->raceCarDriverRaceGridPositions = new ArrayCollection();
+        $this->RaceCarDriverRaceStartingGridPositions = new ArrayCollection();
         $this->raceCarDriverRaceLapTimes = new ArrayCollection();
     }
 
@@ -104,29 +104,29 @@ class RaceCarDriver implements Interfaces\ArrayInterface, TimestampableInterface
     }
 
     /**
-     * @return Collection|RaceCarDriverRaceGridPosition[]
+     * @return Collection|RaceCarDriverRaceStartingGridPosition[]
      */
-    public function getRaceCarDriverRaceGridPositions(): Collection
+    public function getRaceCarDriverRaceStartingGridPositions(): Collection
     {
-        return $this->raceCarDriverRaceGridPositions;
+        return $this->RaceCarDriverRaceStartingGridPositions;
     }
 
-    public function addRaceCarDriverRaceGridPosition(RaceCarDriverRaceGridPosition $raceCarDriverRaceGridPosition): self
+    public function addRaceCarDriverRaceStartingGridPosition(RaceCarDriverRaceStartingGridPosition $raceCarDriverRaceStartingGridPosition): self
     {
-        if (!$this->raceCarDriverRaceGridPositions->contains($raceCarDriverRaceGridPosition)) {
-            $this->raceCarDriverRaceGridPositions[] = $raceCarDriverRaceGridPosition;
-            $raceCarDriverRaceGridPosition->setRaceCarDriver($this);
+        if (!$this->RaceCarDriverRaceStartingGridPositions->contains($raceCarDriverRaceStartingGridPosition)) {
+            $this->RaceCarDriverRaceStartingGridPositions[] = $raceCarDriverRaceStartingGridPosition;
+            $raceCarDriverRaceStartingGridPosition->setRaceCarDriver($this);
         }
 
         return $this;
     }
 
-    public function removeRaceCarDriverRaceGridPosition(RaceCarDriverRaceGridPosition $raceCarDriverRaceGridPosition): self
+    public function removeRaceCarDriverRaceStartingGridPosition(RaceCarDriverRaceStartingGridPosition $raceCarDriverRaceStartingGridPosition): self
     {
-        if ($this->raceCarDriverRaceGridPositions->contains($raceCarDriverRaceGridPosition)) {
-            $this->raceCarDriverRaceGridPositions->removeElement($raceCarDriverRaceGridPosition);
-            if ($raceCarDriverRaceGridPosition->getRaceCarDriver() === $this) {
-                $raceCarDriverRaceGridPosition->setRaceCarDriver(null);
+        if ($this->RaceCarDriverRaceStartingGridPositions->contains($raceCarDriverRaceStartingGridPosition)) {
+            $this->RaceCarDriverRaceStartingGridPositions->removeElement($raceCarDriverRaceStartingGridPosition);
+            if ($raceCarDriverRaceStartingGridPosition->getRaceCarDriver() === $this) {
+                $raceCarDriverRaceStartingGridPosition->setRaceCarDriver(null);
             }
         }
 

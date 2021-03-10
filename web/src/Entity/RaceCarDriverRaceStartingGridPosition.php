@@ -8,9 +8,9 @@ use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CircuitRepository")
- * @ORM\Table(name="race_car_driver_race_grid_positions")
+ * @ORM\Table(name="race_car_driver_race_starting_grid_positions")
  */
-class RaceCarDriverRaceGridPosition implements Interfaces\ArrayInterface, TimestampableInterface
+class RaceCarDriverRaceStartingGridPosition implements Interfaces\ArrayInterface, TimestampableInterface
 {
     use TimestampableTrait;
 
@@ -27,7 +27,7 @@ class RaceCarDriverRaceGridPosition implements Interfaces\ArrayInterface, Timest
     private $position;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\RaceCarDriver", inversedBy="raceCarDriverRaceGridPositions")
+     * @ORM\ManyToOne(targetEntity="App\Entity\RaceCarDriver", inversedBy="raceCarDriverRaceStartingGridPositions")
      * @ORM\JoinColumn()
      */
     private $raceCarDriver;

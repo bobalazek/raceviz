@@ -168,7 +168,7 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
     public function removeRaceCarDriver(RaceCarDriver $raceCarDriver): self
     {
         if ($this->raceCarDrivers->contains($raceCarDriver)) {
-            $this->cars->removeElement($raceCarDriver);
+            $this->raceCarDrivers->removeElement($raceCarDriver);
             if ($raceCarDriver->getRace() === $this) {
                 $raceCarDriver->setRace(null);
             }

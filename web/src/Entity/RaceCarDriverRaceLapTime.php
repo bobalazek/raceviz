@@ -7,7 +7,7 @@ use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\CircuitRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\RaceCarDriverRaceLapTimeRepository")
  * @ORM\Table(name="race_car_driver_race_lap_times")
  */
 class RaceCarDriverRaceLapTime implements Interfaces\ArrayInterface, TimestampableInterface

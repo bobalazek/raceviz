@@ -25,14 +25,14 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=16)
-     */
-    private $series;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $name;
+
+    /**
+     * @ORM\Column(type="string", length=16)
+     */
+    private $series;
 
     /**
      * @ORM\Column(type="smallint")
@@ -75,18 +75,6 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
         return $this->id;
     }
 
-    public function getSeries(): ?string
-    {
-        return $this->series;
-    }
-
-    public function setSeries(string $series): self
-    {
-        $this->series = $series;
-
-        return $this;
-    }
-
     public function getName(): ?string
     {
         return $this->name;
@@ -95,6 +83,18 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getSeries(): ?string
+    {
+        return $this->series;
+    }
+
+    public function setSeries(string $series): self
+    {
+        $this->series = $series;
 
         return $this;
     }

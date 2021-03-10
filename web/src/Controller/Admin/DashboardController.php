@@ -6,6 +6,7 @@ use App\Entity\Circuit;
 use App\Entity\Driver;
 use App\Entity\Race;
 use App\Entity\RaceCarDriver;
+use App\Entity\RaceCarDriverRaceLapTime;
 use App\Entity\RaceCarDriverRaceStartingGridPosition;
 use App\Entity\Team;
 use App\Entity\User;
@@ -59,6 +60,7 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Races', 'fas fa-folder-open', Race::class),
             MenuItem::linkToCrud('Race Car Drivers', 'fas fa-folder-open', RaceCarDriver::class),
             MenuItem::linkToCrud('Race Car Drivers - Race - Starting Grid Positions', 'fas fa-folder-open', RaceCarDriverRaceStartingGridPosition::class),
+            MenuItem::linkToCrud('Race Car Drivers - Race - Lap Times', 'fas fa-folder-open', RaceCarDriverRaceLapTime::class),
             MenuItem::section('Users'),
             MenuItem::linkToCrud('Users', 'fas fa-folder-open', User::class),
             MenuItem::linkToCrud('User Actions', 'fas fa-folder-open', UserAction::class),

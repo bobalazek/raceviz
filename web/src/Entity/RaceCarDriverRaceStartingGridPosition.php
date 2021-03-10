@@ -38,7 +38,7 @@ class RaceCarDriverRaceStartingGridPosition implements Interfaces\ArrayInterface
         $driver = $this->getRaceCarDriver()->getDriver();
         $position = $this->getPosition();
 
-        return $driver . ' @ ' . $race . '( ' . $position . ' position)';
+        return $driver . ' @ ' . $race . ' ( ' . $position . ' position)';
     }
 
     public function getId(): ?int

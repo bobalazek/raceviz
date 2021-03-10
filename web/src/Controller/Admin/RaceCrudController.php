@@ -28,6 +28,7 @@ class RaceCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         $name = TextField::new('name');
+        $slug = TextField::new('slug');
         $series = SeriesField::new('series');
         $laps = NumberField::new('laps');
         $url = TextField::new('url');
@@ -36,6 +37,7 @@ class RaceCrudController extends AbstractCrudController
 
         return [
             $name,
+            $slug,
             $series,
             $laps,
             $url,

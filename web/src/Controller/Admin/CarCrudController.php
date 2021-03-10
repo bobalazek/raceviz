@@ -2,40 +2,36 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Driver;
+use App\Entity\Car;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\CountryField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-class DriverCrudController extends AbstractCrudController
+class CarCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Driver::class;
+        return Car::class;
     }
 
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setSearchFields(['firstName', 'lastName', 'countryCode'])
+            ->setSearchFields(['name', 'number'])
         ;
     }
 
     public function configureFields(string $pageName): iterable
     {
-        $firstName = TextField::new('firstName');
-        $lastName = TextField::new('lastName');
+        $name = TextField::new('name');
         $slug = TextField::new('slug');
-        $countryCode = CountryField::new('countryCode');
-        $url = TextField::new('url');
+        $number = NumberField::new('number');
 
         return [
-            $firstName,
-            $lastName,
+            $name,
             $slug,
-            $countryCode,
-            $url,
+            $number,
         ];
     }
 }

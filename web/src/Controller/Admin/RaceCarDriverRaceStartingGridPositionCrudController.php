@@ -3,7 +3,6 @@
 namespace App\Controller\Admin;
 
 use App\Entity\RaceCarDriverRaceStartingGridPosition;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
@@ -13,11 +12,6 @@ class RaceCarDriverRaceStartingGridPositionCrudController extends AbstractCrudCo
     public static function getEntityFqcn(): string
     {
         return RaceCarDriverRaceStartingGridPosition::class;
-    }
-
-    public function configureCrud(Crud $crud): Crud
-    {
-        return $crud;
     }
 
     public function configureFields(string $pageName): iterable

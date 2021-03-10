@@ -27,6 +27,7 @@ class TeamCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         $name = TextField::new('name');
+        $slug = TextField::new('slug');
         $series = SeriesField::new('series');
         $location = TextField::new('location');
         $countryCode = CountryField::new('countryCode');
@@ -36,6 +37,7 @@ class TeamCrudController extends AbstractCrudController
 
         return [
             $name,
+            $slug,
             $series,
             $location,
             $countryCode,

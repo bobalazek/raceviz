@@ -25,12 +25,14 @@ class CircuitCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         $name = TextField::new('name');
+        $slug = TextField::new('slug');
         $location = TextField::new('location');
         $countryCode = CountryField::new('countryCode');
         $url = TextField::new('url');
 
         return [
             $name,
+            $slug,
             $location,
             $countryCode,
             $url,

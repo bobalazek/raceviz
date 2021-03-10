@@ -15,6 +15,7 @@ use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 class Race implements Interfaces\ArrayInterface, TimestampableInterface
 {
     use TimestampableTrait;
+    use Traits\SlugTrait;
 
     /**
      * @ORM\Id()

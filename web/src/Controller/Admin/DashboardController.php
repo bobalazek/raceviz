@@ -5,6 +5,8 @@ namespace App\Controller\Admin;
 use App\Entity\Circuit;
 use App\Entity\Driver;
 use App\Entity\Race;
+use App\Entity\RaceCarDriver;
+use App\Entity\RaceCarDriverRaceGridPosition;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Entity\UserAction;
@@ -55,6 +57,8 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Teams', 'fas fa-folder-open', Team::class),
             MenuItem::linkToCrud('Drivers', 'fas fa-folder-open', Driver::class),
             MenuItem::linkToCrud('Races', 'fas fa-folder-open', Race::class),
+            MenuItem::linkToCrud('RaceCarDrivers', 'fas fa-folder-open', RaceCarDriver::class),
+            MenuItem::linkToCrud('RaceCarDriverRAceGridPositions', 'fas fa-folder-open', RaceCarDriverRaceGridPosition::class),
             MenuItem::section('Users'),
             MenuItem::linkToCrud('Users', 'fas fa-folder-open', User::class),
             MenuItem::linkToCrud('User Actions', 'fas fa-folder-open', UserAction::class),

@@ -15,6 +15,7 @@ use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 class Car implements Interfaces\ArrayInterface, TimestampableInterface
 {
     use TimestampableTrait;
+    use Traits\SlugTrait;
 
     /**
      * @ORM\Id()

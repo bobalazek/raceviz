@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
@@ -38,6 +40,16 @@ class RaceCarDriver implements Interfaces\ArrayInterface, TimestampableInterface
      * @ORM\JoinColumn()
      */
     private $driver;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\RaceCarDriverRaceGridPosition", mappedBy="raceCarDriver")
+     */
+    private $raceCarDriverRaceGridPositions;
+
+    public function __construct()
+    {
+        $this->raceCarDriverRaceGridPositions = new ArrayCollection();
+    }
 
     public function __toString()
     {
@@ -81,6 +93,36 @@ class RaceCarDriver implements Interfaces\ArrayInterface, TimestampableInterface
     public function setDriver(?Driver $driver): self
     {
         $this->driver = $driver;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RaceCarDriverRaceGridPosition[]
+     */
+    public function getRaces(): Collection
+    {
+        return $this->raceCarDriverRaceGridPositions;
+    }
+
+    public function addRaceCarDriverRaceGridPosition(RaceCarDriverRaceGridPosition $raceCarDriverRaceGridPosition): self
+    {
+        if (!$this->raceCarDriverRaceGridPositions->contains($raceCarDriverRaceGridPosition)) {
+            $this->raceCarDriverRaceGridPositions[] = $raceCarDriverRaceGridPosition;
+            $raceCarDriverRaceGridPosition->setRaceCarDriver($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRaceCarDriverRaceGridPosition(RaceCarDriverRaceGridPosition $raceCarDriverRaceGridPosition): self
+    {
+        if ($this->raceCarDriverRaceGridPositions->contains($raceCarDriverRaceGridPosition)) {
+            $this->raceCarDriverRaceGridPositions->removeElement($raceCarDriverRaceGridPosition);
+            if ($raceCarDriverRaceGridPosition->getRaceCarDriver() === $this) {
+                $raceCarDriverRaceGridPosition->setRaceCarDriver(null);
+            }
+        }
 
         return $this;
     }

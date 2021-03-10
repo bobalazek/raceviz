@@ -16,6 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Driver implements Interfaces\ArrayInterface, TimestampableInterface
 {
     use TimestampableTrait;
+    use Traits\SlugTrait;
 
     /**
      * @ORM\Id()

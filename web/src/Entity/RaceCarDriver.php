@@ -53,7 +53,7 @@ class RaceCarDriver implements Interfaces\ArrayInterface, TimestampableInterface
 
     public function __construct()
     {
-        $this->RaceCarDriverRaceStartingGridPositions = new ArrayCollection();
+        $this->raceCarDriverRaceStartingGridPositions = new ArrayCollection();
         $this->raceCarDriverRaceLapTimes = new ArrayCollection();
     }
 
@@ -108,13 +108,13 @@ class RaceCarDriver implements Interfaces\ArrayInterface, TimestampableInterface
      */
     public function getRaceCarDriverRaceStartingGridPositions(): Collection
     {
-        return $this->RaceCarDriverRaceStartingGridPositions;
+        return $this->raceCarDriverRaceStartingGridPositions;
     }
 
     public function addRaceCarDriverRaceStartingGridPosition(RaceCarDriverRaceStartingGridPosition $raceCarDriverRaceStartingGridPosition): self
     {
-        if (!$this->RaceCarDriverRaceStartingGridPositions->contains($raceCarDriverRaceStartingGridPosition)) {
-            $this->RaceCarDriverRaceStartingGridPositions[] = $raceCarDriverRaceStartingGridPosition;
+        if (!$this->raceCarDriverRaceStartingGridPositions->contains($raceCarDriverRaceStartingGridPosition)) {
+            $this->raceCarDriverRaceStartingGridPositions[] = $raceCarDriverRaceStartingGridPosition;
             $raceCarDriverRaceStartingGridPosition->setRaceCarDriver($this);
         }
 
@@ -123,8 +123,8 @@ class RaceCarDriver implements Interfaces\ArrayInterface, TimestampableInterface
 
     public function removeRaceCarDriverRaceStartingGridPosition(RaceCarDriverRaceStartingGridPosition $raceCarDriverRaceStartingGridPosition): self
     {
-        if ($this->RaceCarDriverRaceStartingGridPositions->contains($raceCarDriverRaceStartingGridPosition)) {
-            $this->RaceCarDriverRaceStartingGridPositions->removeElement($raceCarDriverRaceStartingGridPosition);
+        if ($this->raceCarDriverRaceStartingGridPositions->contains($raceCarDriverRaceStartingGridPosition)) {
+            $this->raceCarDriverRaceStartingGridPositions->removeElement($raceCarDriverRaceStartingGridPosition);
             if ($raceCarDriverRaceStartingGridPosition->getRaceCarDriver() === $this) {
                 $raceCarDriverRaceStartingGridPosition->setRaceCarDriver(null);
             }

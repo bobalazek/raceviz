@@ -42,9 +42,15 @@ class Season implements Interfaces\ArrayInterface, TimestampableInterface
      */
     private $races;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\SeasonDriver", mappedBy="season")
+     */
+    private $seasonDrivers;
+
     public function __construct()
     {
         $this->races = new ArrayCollection();
+        $this->seasonDrivers = new ArrayCollection();
     }
 
     public function __toString()
@@ -105,6 +111,36 @@ class Season implements Interfaces\ArrayInterface, TimestampableInterface
             $this->races->removeElement($race);
             if ($race->getSeason() === $this) {
                 $race->setSeason(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SeasonDriver[]
+     */
+    public function getSeasonDrivers(): Collection
+    {
+        return $this->seasonDrivers;
+    }
+
+    public function addSeasonDriver(SeasonDriver $seasonDriver): self
+    {
+        if (!$this->seasonDrivers->contains($seasonDriver)) {
+            $this->seasonDrivers[] = $seasonDriver;
+            $seasonDriver->setSeason($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSeasonDriver(SeasonDriver $seasonDriver): self
+    {
+        if ($this->seasonDrivers->contains($seasonDriver)) {
+            $this->seasonDrivers->removeElement($seasonDriver);
+            if ($seasonDriver->getSeason() === $this) {
+                $seasonDriver->setSeason(null);
             }
         }
 

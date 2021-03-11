@@ -83,12 +83,12 @@ class Car implements Interfaces\ArrayInterface, TimestampableInterface
         return $this;
     }
 
-    public function getNumber(): ?string
+    public function getNumber(): ?int
     {
         return $this->number;
     }
 
-    public function setNumber(string $number): self
+    public function setNumber(int $number): self
     {
         $this->number = $number;
 

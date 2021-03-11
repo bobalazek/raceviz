@@ -11,6 +11,7 @@ use App\Entity\RaceCarDriverRaceLap;
 use App\Entity\RaceCarDriverRacePitStop;
 use App\Entity\Season;
 use App\Entity\SeasonDriver;
+use App\Entity\SeasonTeam;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Entity\UserAction;
@@ -59,6 +60,7 @@ class DashboardController extends AbstractDashboardController
             MenuItem::section('App'),
             MenuItem::linkToCrud('Circuits', 'fas fa-folder-open', Circuit::class),
             MenuItem::linkToCrud('Seasons', 'fas fa-folder-open', Season::class),
+            MenuItem::linkToCrud('Season Teams', 'fas fa-folder-open', SeasonTeam::class),
             MenuItem::linkToCrud('Season Drivers', 'fas fa-folder-open', SeasonDriver::class),
             MenuItem::linkToCrud('Teams', 'fas fa-folder-open', Team::class),
             MenuItem::linkToCrud('Drivers', 'fas fa-folder-open', Driver::class),

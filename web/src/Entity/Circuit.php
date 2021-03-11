@@ -27,17 +27,20 @@ class Circuit implements Interfaces\ArrayInterface, TimestampableInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $location;
 
     /**
      * @ORM\Column(type="string", length=2)
      * @Assert\Country()
+     * @Assert\NotBlank()
      */
     private $countryCode;
 

@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RaceCarDriverRaceStartingGridPositionRepository")
@@ -23,12 +24,14 @@ class RaceCarDriverRaceStartingGridPosition implements Interfaces\ArrayInterface
 
     /**
      * @ORM\Column(type="smallint")
+     * @Assert\NotBlank()
      */
     private $position;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\RaceCarDriver", inversedBy="raceCarDriverRaceStartingGridPositions")
      * @ORM\JoinColumn()
+     * @Assert\NotBlank()
      */
     private $raceCarDriver;
 

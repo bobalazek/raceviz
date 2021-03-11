@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RaceRepository")
@@ -26,16 +27,19 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=16)
+     * @Assert\NotBlank()
      */
     private $series;
 
     /**
      * @ORM\Column(type="smallint")
+     * @Assert\NotBlank()
      */
     private $laps;
 
@@ -46,12 +50,14 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\NotBlank()
      */
     private $startedAt;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Circuit", inversedBy="races")
      * @ORM\JoinColumn()
+     * @Assert\NotBlank()
      */
     private $circuit;
 

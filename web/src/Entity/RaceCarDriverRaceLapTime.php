@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RaceCarDriverRaceLapTimeRepository")
@@ -23,16 +24,19 @@ class RaceCarDriverRaceLapTime implements Interfaces\ArrayInterface, Timestampab
 
     /**
      * @ORM\Column(type="smallint")
+     * @Assert\NotBlank()
      */
     private $lap;
 
     /**
      * @ORM\Column(type="smallint")
+     * @Assert\NotBlank()
      */
     private $position;
 
     /**
      * @ORM\Column(type="time_with_milliseconds")
+     * @Assert\NotBlank()
      */
     private $time;
 

@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RaceCarDriverRepository")
@@ -26,18 +27,21 @@ class RaceCarDriver implements Interfaces\ArrayInterface, TimestampableInterface
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Race", inversedBy="raceCarDrivers")
      * @ORM\JoinColumn()
+     * @Assert\NotBlank()
      */
     private $race;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Car", inversedBy="raceCarDrivers")
      * @ORM\JoinColumn()
+     * @Assert\NotBlank()
      */
     private $car;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Driver", inversedBy="raceCarDrivers")
      * @ORM\JoinColumn()
+     * @Assert\NotBlank()
      */
     private $driver;
 

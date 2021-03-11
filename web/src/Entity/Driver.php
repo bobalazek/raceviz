@@ -27,17 +27,20 @@ class Driver implements Interfaces\ArrayInterface, TimestampableInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $lastName;
 
     /**
      * @ORM\Column(type="string", length=2)
      * @Assert\Country()
+     * @Assert\NotBlank()
      */
     private $countryCode;
 

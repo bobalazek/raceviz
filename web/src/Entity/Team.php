@@ -27,22 +27,26 @@ class Team implements Interfaces\ArrayInterface, TimestampableInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=16)
+     * @Assert\NotBlank()
      */
     private $series;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $location;
 
     /**
      * @ORM\Column(type="string", length=2)
      * @Assert\Country()
+     * @Assert\NotBlank()
      */
     private $countryCode;
 
@@ -53,6 +57,7 @@ class Team implements Interfaces\ArrayInterface, TimestampableInterface
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\NotBlank()
      */
     private $debutedAt;
 

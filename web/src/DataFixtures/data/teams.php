@@ -4,7 +4,6 @@ return [
     [
         'name' => 'Mercedes-AMG Petronas F1 Team',
         'slug' => 'mercedes',
-        'series' => 'f1',
         'location' => 'Brackley',
         'country_code' => 'GB',
         'url' => 'https://www.formula1.com/en/teams/Mercedes.html',
@@ -13,7 +12,6 @@ return [
     [
         'name' => 'Alpine F1 Team',
         'slug' => 'alpine',
-        'series' => 'f1',
         'location' => 'Enstone',
         'country_code' => 'GB',
         'url' => 'https://www.formula1.com/en/teams/Alpine.html',
@@ -22,7 +20,6 @@ return [
     [
         'name' => 'Haas F1 Team',
         'slug' => 'haas',
-        'series' => 'f1',
         'location' => 'Kannapolis',
         'country_code' => 'US',
         'url' => 'https://www.formula1.com/en/teams/Haas-F1-Team.html',
@@ -31,7 +28,6 @@ return [
     [
         'name' => 'McLaren F1 Team',
         'slug' => 'mclaren',
-        'series' => 'f1',
         'location' => 'Woking',
         'country_code' => 'GB',
         'url' => 'https://www.formula1.com/en/teams/McLaren.html',
@@ -40,7 +36,6 @@ return [
     [
         'name' => 'Alfa Romeo Racing ORLEN',
         'slug' => 'alfa-romeo',
-        'series' => 'f1',
         'location' => 'Hinwil',
         'country_code' => 'CH',
         'url' => 'https://www.formula1.com/en/teams/Alfa-Romeo-Racing.html',
@@ -49,7 +44,6 @@ return [
     [
         'name' => 'Red Bull Racing',
         'slug' => 'red-bull',
-        'series' => 'f1',
         'location' => 'Milton Keynes',
         'country_code' => 'GB',
         'url' => 'https://www.formula1.com/en/teams/Red-Bull-Racing.html',
@@ -58,7 +52,6 @@ return [
     [
         'name' => 'Aston Martin Cognizant Formula One Team',
         'slug' => 'aston-martin',
-        'series' => 'f1',
         'location' => 'Silverstone',
         'country_code' => 'GB',
         'url' => 'https://www.formula1.com/en/teams/Aston-Martin.html',
@@ -67,7 +60,6 @@ return [
     [
         'name' => 'Scuderia Ferrari Mission Winnow',
         'slug' => 'ferrari',
-        'series' => 'f1',
         'location' => 'Maranello',
         'country_code' => 'IT',
         'url' => 'https://www.formula1.com/en/teams/Ferrari.html',
@@ -76,7 +68,6 @@ return [
     [
         'name' => 'Scuderia AlphaTauri Honda',
         'slug' => 'alpha-tauri',
-        'series' => 'f1',
         'location' => 'Faenza',
         'country_code' => 'IT',
         'url' => 'https://www.formula1.com/en/teams/AlphaTauri.html',
@@ -85,7 +76,6 @@ return [
     [
         'name' => 'Williams Racing',
         'slug' => 'williams',
-        'series' => 'f1',
         'location' => 'Grove',
         'country_code' => 'GB',
         'url' => 'https://www.formula1.com/en/teams/Williams.html',

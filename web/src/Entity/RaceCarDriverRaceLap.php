@@ -9,14 +9,14 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\RaceCarDriverRaceLapTimeRepository")
- * @ORM\Table(name="race_car_driver_race_lap_times")
+ * @ORM\Entity(repositoryClass="App\Repository\RaceCarDriverRaceLapRepository")
+ * @ORM\Table(name="race_car_driver_race_laps")
  * @UniqueEntity(
  *   fields={"raceCarDriver", "lap"},
  *   message="This Race Car Driver Lap was already added"
  * )
  */
-class RaceCarDriverRaceLapTime implements Interfaces\ArrayInterface, TimestampableInterface
+class RaceCarDriverRaceLap implements Interfaces\ArrayInterface, TimestampableInterface
 {
     use TimestampableTrait;
 
@@ -51,7 +51,7 @@ class RaceCarDriverRaceLapTime implements Interfaces\ArrayInterface, Timestampab
     private $timeOfDay;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\RaceCarDriver", inversedBy="raceCarDriverRaceLapTimes")
+     * @ORM\ManyToOne(targetEntity="App\Entity\RaceCarDriver", inversedBy="raceCarDriverRaceLaps")
      * @ORM\JoinColumn()
      */
     private $raceCarDriver;

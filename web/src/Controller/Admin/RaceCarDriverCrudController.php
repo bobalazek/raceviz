@@ -6,6 +6,7 @@ use App\Entity\RaceCarDriver;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 
 class RaceCarDriverCrudController extends AbstractCrudController
 {
@@ -26,11 +27,13 @@ class RaceCarDriverCrudController extends AbstractCrudController
         $race = AssociationField::new('race');
         $car = AssociationField::new('car');
         $driver = AssociationField::new('driver');
+        $raceStartingGridPosition = NumberField::new('raceStartingGridPosition');
 
         return [
             $race,
             $car,
             $driver,
+            $raceStartingGridPosition,
         ];
     }
 }

@@ -5,11 +5,16 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RaceCarDriverRaceLapTimeRepository")
  * @ORM\Table(name="race_car_driver_race_lap_times")
+ * @UniqueEntity(
+ *   fields={"raceCarDriver", "lap"},
+ *   message="This Race Car Driver Lap was already added"
+ * )
  */
 class RaceCarDriverRaceLapTime implements Interfaces\ArrayInterface, TimestampableInterface
 {

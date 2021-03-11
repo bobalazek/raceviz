@@ -7,11 +7,16 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RaceCarDriverRepository")
  * @ORM\Table(name="race_car_drivers")
+ * @UniqueEntity(
+ *   fields={"race", "car", "driver"},
+ *   message="This Race Car Driver was already added"
+ * )
  */
 class RaceCarDriver implements Interfaces\ArrayInterface, TimestampableInterface
 {
@@ -23,6 +28,11 @@ class RaceCarDriver implements Interfaces\ArrayInterface, TimestampableInterface
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    private $raceStartingGridPosition;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Race", inversedBy="raceCarDrivers")
@@ -46,18 +56,12 @@ class RaceCarDriver implements Interfaces\ArrayInterface, TimestampableInterface
     private $driver;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\RaceCarDriverRaceStartingGridPosition", mappedBy="raceCarDriver")
-     */
-    private $raceCarDriverRaceStartingGridPositions;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\RaceCarDriverRaceLapTime", mappedBy="raceCarDriver")
      */
     private $raceCarDriverRaceLapTimes;
 
     public function __construct()
     {
-        $this->raceCarDriverRaceStartingGridPositions = new ArrayCollection();
         $this->raceCarDriverRaceLapTimes = new ArrayCollection();
     }
 
@@ -69,6 +73,18 @@ class RaceCarDriver implements Interfaces\ArrayInterface, TimestampableInterface
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getRaceStartingGridPosition(): ?int
+    {
+        return $this->raceStartingGridPosition;
+    }
+
+    public function setRaceStartingGridPosition(?int $raceStartingGridPosition): self
+    {
+        $this->raceStartingGridPosition = $raceStartingGridPosition;
+
+        return $this;
     }
 
     public function getRace(): ?Race
@@ -103,36 +119,6 @@ class RaceCarDriver implements Interfaces\ArrayInterface, TimestampableInterface
     public function setDriver(?Driver $driver): self
     {
         $this->driver = $driver;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|RaceCarDriverRaceStartingGridPosition[]
-     */
-    public function getRaceCarDriverRaceStartingGridPositions(): Collection
-    {
-        return $this->raceCarDriverRaceStartingGridPositions;
-    }
-
-    public function addRaceCarDriverRaceStartingGridPosition(RaceCarDriverRaceStartingGridPosition $raceCarDriverRaceStartingGridPosition): self
-    {
-        if (!$this->raceCarDriverRaceStartingGridPositions->contains($raceCarDriverRaceStartingGridPosition)) {
-            $this->raceCarDriverRaceStartingGridPositions[] = $raceCarDriverRaceStartingGridPosition;
-            $raceCarDriverRaceStartingGridPosition->setRaceCarDriver($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRaceCarDriverRaceStartingGridPosition(RaceCarDriverRaceStartingGridPosition $raceCarDriverRaceStartingGridPosition): self
-    {
-        if ($this->raceCarDriverRaceStartingGridPositions->contains($raceCarDriverRaceStartingGridPosition)) {
-            $this->raceCarDriverRaceStartingGridPositions->removeElement($raceCarDriverRaceStartingGridPosition);
-            if ($raceCarDriverRaceStartingGridPosition->getRaceCarDriver() === $this) {
-                $raceCarDriverRaceStartingGridPosition->setRaceCarDriver(null);
-            }
-        }
 
         return $this;
     }

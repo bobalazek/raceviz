@@ -35,6 +35,36 @@ class RaceCarDriver implements Interfaces\ArrayInterface, TimestampableInterface
     private $raceStartingGridPosition;
 
     /**
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    private $raceResultPosition;
+
+    /**
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    private $raceResultPoints;
+
+    /**
+     * @ORM\Column(type="time_with_milliseconds", nullable=true)
+     */
+    private $raceResultTime;
+
+    /**
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    private $raceResultLapsBehind;
+
+    /**
+     * @ORM\Column(type="string", length=16, nullable=true)
+     */
+    private $raceResultStatus;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $raceResultStatusNote;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Race", inversedBy="raceCarDrivers")
      * @ORM\JoinColumn()
      * @Assert\NotBlank()
@@ -83,6 +113,78 @@ class RaceCarDriver implements Interfaces\ArrayInterface, TimestampableInterface
     public function setRaceStartingGridPosition(?int $raceStartingGridPosition): self
     {
         $this->raceStartingGridPosition = $raceStartingGridPosition;
+
+        return $this;
+    }
+
+    public function getRaceResultPosition(): ?int
+    {
+        return $this->raceResultPosition;
+    }
+
+    public function setRaceResultPosition(?int $raceResultPosition): self
+    {
+        $this->raceResultPosition = $raceResultPosition;
+
+        return $this;
+    }
+
+    public function getRaceResultPoints(): ?int
+    {
+        return $this->raceResultPoints;
+    }
+
+    public function setRaceResultPoints(?int $raceResultPoints): self
+    {
+        $this->raceResultPoints = $raceResultPoints;
+
+        return $this;
+    }
+
+    public function getRaceResultTime(): ?\DateTimeInterface
+    {
+        return $this->raceResultTime;
+    }
+
+    public function setRaceResultTime(?\DateTimeInterface $raceResultTime): self
+    {
+        $this->raceResultTime = $raceResultTime;
+
+        return $this;
+    }
+
+    public function getRaceResultLapsBehind(): ?int
+    {
+        return $this->raceResultLapsBehind;
+    }
+
+    public function setRaceResultLapsBehind(?int $raceResultLapsBehind): self
+    {
+        $this->raceResultLapsBehind = $raceResultLapsBehind;
+
+        return $this;
+    }
+
+    public function getRaceResultStatus(): ?string
+    {
+        return $this->raceResultStatus;
+    }
+
+    public function setRaceResultStatus(?string $raceResultStatus): self
+    {
+        $this->raceResultStatus = $raceResultStatus;
+
+        return $this;
+    }
+
+    public function getRaceResultStatusNote(): ?string
+    {
+        return $this->raceResultStatusNote;
+    }
+
+    public function setRaceResultStatusNote(?string $raceResultStatusNote): self
+    {
+        $this->raceResultStatusNote = $raceResultStatusNote;
 
         return $this;
     }

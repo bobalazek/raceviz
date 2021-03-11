@@ -17,10 +17,10 @@ final class SeriesField implements FieldInterface
             ->setLabel($label)
             ->setFormType(ChoiceType::class)
             ->setFormTypeOption('choices', [
-                'Formula 1' => 'f1',
-                'Formula 2' => 'f2',
-                'Formula 3' => 'f3',
-                'Formula E' => 'fe',
+                'Formula 1' => 'F1',
+                'Formula 2' => 'F2',
+                'Formula 3' => 'F3',
+                'Formula E' => 'FE',
             ])
         ;
     }

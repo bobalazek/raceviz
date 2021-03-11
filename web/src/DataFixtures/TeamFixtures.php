@@ -28,7 +28,6 @@ class TeamFixtures extends Fixture
             $entity
                 ->setName($entry['name'])
                 ->setSlug($entry['slug'])
-                ->setSeries($entry['series'])
                 ->setLocation($entry['location'])
                 ->setCountryCode($entry['country_code'])
                 ->setUrl($entry['url'])

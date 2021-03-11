@@ -2,7 +2,6 @@
 
 namespace App\Controller\Admin;
 
-use App\Admin\Field\SeriesField;
 use App\Entity\Team;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -20,7 +19,7 @@ class TeamCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setSearchFields(['name', 'series', 'location', 'countryCode'])
+            ->setSearchFields(['name', 'location', 'countryCode'])
         ;
     }
 
@@ -28,7 +27,6 @@ class TeamCrudController extends AbstractCrudController
     {
         $name = TextField::new('name');
         $slug = TextField::new('slug');
-        $series = SeriesField::new('series');
         $location = TextField::new('location');
         $countryCode = CountryField::new('countryCode');
         $url = TextField::new('url');
@@ -38,7 +36,6 @@ class TeamCrudController extends AbstractCrudController
         return [
             $name,
             $slug,
-            $series,
             $location,
             $countryCode,
             $url,

@@ -30,6 +30,7 @@ class DriverFixtures extends Fixture
                 ->setLastName($entry['last_name'])
                 ->setSlug($entry['slug'])
                 ->setCountryCode($entry['country_code'])
+                ->setUrl($entry['url'])
             ;
 
             $manager->persist($entity);

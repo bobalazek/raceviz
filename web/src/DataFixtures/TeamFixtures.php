@@ -31,6 +31,7 @@ class TeamFixtures extends Fixture
                 ->setSeries($entry['series'])
                 ->setLocation($entry['location'])
                 ->setCountryCode($entry['country_code'])
+                ->setUrl($entry['url'])
                 ->setDebutedAt(new \DateTime($entry['debuted_at']))
                 ->setDefunctedAt(isset($entry['defuncted_at'])
                     ? new \DateTime($entry['defuncted_at'])

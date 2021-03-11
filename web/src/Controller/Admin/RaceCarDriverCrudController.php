@@ -31,9 +31,15 @@ class RaceCarDriverCrudController extends AbstractCrudController
         $race = AssociationField::new('race');
         $car = AssociationField::new('car');
         $driver = AssociationField::new('driver');
-        $raceStartingGridPosition = NumberField::new('raceStartingGridPosition');
-        $raceResultPosition = NumberField::new('raceResultPosition');
-        $raceResultPoints = NumberField::new('raceResultPoints');
+        $raceStartingGridPosition = NumberField::new('raceStartingGridPosition')
+            ->setFormTypeOption('html5', true)
+        ;
+        $raceResultPosition = NumberField::new('raceResultPosition')
+            ->setFormTypeOption('html5', true)
+        ;
+        $raceResultPoints = NumberField::new('raceResultPoints')
+            ->setFormTypeOption('html5', true)
+        ;
         $raceResultTime = TimeWithMillisecondsField::new('raceResultTime');
         $raceResultLapsBehind = NumberField::new('raceResultLapsBehind');
         $raceResultStatus = RaceResultStatusField::new('raceResultStatus');

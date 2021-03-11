@@ -21,6 +21,7 @@ class TimeDurationType extends AbstractType
             'compound' => false,
             'invalid_message' => 'Invalid input.',
             'format' => 'H:i:s.v',
+            'help' => 'Enter a valid duration time (1:06:20.123 or 1:09.456 or 55.789).',
         ]);
     }
 

@@ -2,14 +2,15 @@
 
 namespace App\Controller\Admin;
 
+use App\Admin\Field\RaceResultStatusField;
 use App\Admin\Field\TimeWithMillisecondsField;
 use App\Entity\RaceCarDriver;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class RaceCarDriverCrudController extends AbstractCrudController
 {
@@ -35,13 +36,22 @@ class RaceCarDriverCrudController extends AbstractCrudController
         $raceResultPoints = NumberField::new('raceResultPoints');
         $raceResultTime = TimeWithMillisecondsField::new('raceResultTime');
         $raceResultLapsBehind = NumberField::new('raceResultLapsBehind');
-        $raceResultStatus = TextField::new('raceResultStatus');
+        $raceResultStatus = RaceResultStatusField::new('raceResultStatus');
         $raceResultStatusNote = TextareaField::new('raceResultStatusNote');
+
+        if (Crud::PAGE_INDEX === $pageName) {
+            return [
+                $race,
+                $car,
+                $driver,
+            ];
+        }
 
         return [
             $race,
             $car,
             $driver,
+            FormField::addPanel('Race information'),
             $raceStartingGridPosition,
             $raceResultPosition,
             $raceResultPoints,

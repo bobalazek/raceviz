@@ -57,7 +57,7 @@ class RaceCarDriverRaceLapTime implements Interfaces\ArrayInterface, Timestampab
         $driver = $this->getRaceCarDriver()->getDriver();
         $lap = $this->getLap();
 
-        return $driver . ' @ ' . $race . ' (' . $lap . ' lap)';
+        return $driver . ' @ ' . $race . ' (lap ' . $lap . ')';
     }
 
     public function getId(): ?int

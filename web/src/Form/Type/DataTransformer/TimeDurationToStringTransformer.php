@@ -11,6 +11,7 @@ class TimeDurationToStringTransformer implements DataTransformerInterface
         'H:i:s.v',
         'G:i:s.v',
         'i:s.v',
+        's.v',
     ];
 
     public $format;

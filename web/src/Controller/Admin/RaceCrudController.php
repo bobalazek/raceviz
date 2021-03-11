@@ -21,7 +21,7 @@ class RaceCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setSearchFields(['name', 'series'])
+            ->setSearchFields(['name', 'season.name', 'circuit.name'])
         ;
     }
 
@@ -29,19 +29,19 @@ class RaceCrudController extends AbstractCrudController
     {
         $name = TextField::new('name');
         $slug = TextField::new('slug');
-        $series = SeriesField::new('series');
         $laps = NumberField::new('laps');
         $url = TextField::new('url');
         $startedAt = DateTimeField::new('startedAt');
+        $season = AssociationField::new('season');
         $circuit = AssociationField::new('circuit');
 
         return [
             $name,
             $slug,
-            $series,
             $laps,
             $url,
             $startedAt,
+            $season,
             $circuit,
         ];
     }

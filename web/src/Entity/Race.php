@@ -32,12 +32,6 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=16)
-     * @Assert\NotBlank()
-     */
-    private $series;
-
-    /**
      * @ORM\Column(type="smallint")
      * @Assert\NotBlank()
      */
@@ -53,6 +47,13 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
      * @Assert\NotBlank()
      */
     private $startedAt;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Season", inversedBy="races")
+     * @ORM\JoinColumn()
+     * @Assert\NotBlank()
+     */
+    private $season;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Circuit", inversedBy="races")
@@ -93,18 +94,6 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
         return $this;
     }
 
-    public function getSeries(): ?string
-    {
-        return $this->series;
-    }
-
-    public function setSeries(string $series): self
-    {
-        $this->series = $series;
-
-        return $this;
-    }
-
     public function getLaps(): ?int
     {
         return $this->laps;
@@ -137,6 +126,18 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
     public function setStartedAt(?\DateTimeInterface $startedAt): self
     {
         $this->startedAt = $startedAt;
+
+        return $this;
+    }
+
+    public function getSeason(): ?Season
+    {
+        return $this->season;
+    }
+
+    public function setSeason(?Season $season): self
+    {
+        $this->season = $season;
 
         return $this;
     }
@@ -188,7 +189,6 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
         return [
             'id' => $this->getId(),
             'name' => $this->getName(),
-            'series' => $this->getSeries(),
             'laps' => $this->getLaps(),
             'url' => $this->getUrl(),
             'started_at' => $this->getStartedAt()->format('Y-m-d'),

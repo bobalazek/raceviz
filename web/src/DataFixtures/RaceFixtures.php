@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Circuit;
 use App\Entity\Race;
+use App\Entity\Season;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -30,7 +31,6 @@ class RaceFixtures extends Fixture implements DependentFixtureInterface
             $entity
                 ->setName($entry['name'])
                 ->setSlug($entry['slug'])
-                ->setSeries($entry['series'])
                 ->setLaps($entry['laps'])
                 ->setStartedAt(new \DateTime($entry['debuted_at']))
                 ->setCircuit(
@@ -38,6 +38,13 @@ class RaceFixtures extends Fixture implements DependentFixtureInterface
                         ->getRepository(Circuit::class)
                         ->findOneBy([
                             'slug' => $entry['circuit_slug'],
+                        ])
+                )
+                ->setSeason(
+                    $manager
+                        ->getRepository(Season::class)
+                        ->findOneBy([
+                            'slug' => $entry['season_slug'],
                         ])
                 )
             ;
@@ -52,6 +59,7 @@ class RaceFixtures extends Fixture implements DependentFixtureInterface
     {
         return [
             CircuitFixtures::class,
+            SeasonFixtures::class,
         ];
     }
 }

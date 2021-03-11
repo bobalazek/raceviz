@@ -9,6 +9,7 @@ use App\Entity\Race;
 use App\Entity\RaceCarDriver;
 use App\Entity\RaceCarDriverRaceLapTime;
 use App\Entity\RaceCarDriverRaceStartingGridPosition;
+use App\Entity\Season;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Entity\UserAction;
@@ -56,6 +57,7 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToDashboard('Dashboard', 'fa fa-home'),
             MenuItem::section('App'),
             MenuItem::linkToCrud('Circuits', 'fas fa-folder-open', Circuit::class),
+            MenuItem::linkToCrud('Seasons', 'fas fa-folder-open', Season::class),
             MenuItem::linkToCrud('Teams', 'fas fa-folder-open', Team::class),
             MenuItem::linkToCrud('Drivers', 'fas fa-folder-open', Driver::class),
             MenuItem::linkToCrud('Cars', 'fas fa-folder-open', Car::class),

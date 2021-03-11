@@ -33,7 +33,11 @@ class RaceCarDriverCrudController extends AbstractCrudController
         $raceStartingGridPosition = NumberField::new('raceStartingGridPosition');
         $raceResultPosition = NumberField::new('raceResultPosition');
         $raceResultPoints = NumberField::new('raceResultPoints');
-        $raceResultTime = TimeWithMillisecondsField::new('raceResultTime'); // TODO: allow hours
+        $raceResultTime = TimeWithMillisecondsField::new('raceResultTime')
+            ->setFormatWithHours()
+            ->setFormTypeOption('with_hours', true)
+            ->setHelp('This MUST be the following format: "hours:minutes:seconds.miliseconds" (1:09:45.950)')
+        ;
         $raceResultLapsBehind = NumberField::new('raceResultLapsBehind');
         $raceResultStatus = TextField::new('raceResultStatus');
         $raceResultStatusNote = TextareaField::new('raceResultStatusNote');

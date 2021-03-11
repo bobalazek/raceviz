@@ -20,7 +20,9 @@ class RaceCarDriverRaceLapCrudController extends AbstractCrudController
     {
         $lap = NumberField::new('lap');
         $position = NumberField::new('position');
-        $time = TimeWithMillisecondsField::new('time');
+        $time = TimeWithMillisecondsField::new('time')
+            ->setHelp('This MUST be the following format: "minutes:seconds.miliseconds" (1:40.950)')
+        ;
         $timeOfDay = TimeField::new('timeOfDay')
             ->setFormTypeOption('with_seconds', true)
         ;

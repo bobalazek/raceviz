@@ -10,7 +10,7 @@ final class TimeWithMillisecondsField implements FieldInterface
 {
     use FieldTrait;
 
-    public const OPTION_WIDGET = 'widget';
+    public const OPTION_FORMAT_WITH_HOURS = 'format_with_hours';
 
     public static function new(string $propertyName, ?string $label = null): self
     {
@@ -20,7 +20,17 @@ final class TimeWithMillisecondsField implements FieldInterface
             ->setFormType(TimeDurationType::class)
             ->setTemplatePath('contents/admin/fields/time_with_milliseconds.html.twig')
             ->addCssClass('field-time-with-milliseconds')
-            ->setHelp('This MUST be the following format: "minutes:seconds.miliseconds" (1:40.950)')
+            ->setCustomOption(self::OPTION_FORMAT_WITH_HOURS, false)
         ;
+    }
+
+    /**
+     * Will format the output with hours.
+     */
+    public function setFormatWithHours(): self
+    {
+        $this->setCustomOption(self::OPTION_FORMAT_WITH_HOURS, true);
+
+        return $this;
     }
 }

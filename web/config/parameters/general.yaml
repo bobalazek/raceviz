@@ -14,6 +14,19 @@ parameters:
         ROLE_ADMIN: Admin
         ROLE_SUPER_ADMIN: Super Admin
 
+    # Data
+    app.series:
+        F1: Formula 1
+        F2: Formula 2
+        F3: Formula 3
+        FE: Formula E
+    app.tyres:
+        hard: Hard
+        medium: Medium
+        soft: Soft
+        intermediate: Intermediate
+        wet: Wet
+
     # Credentials
     app.oauth.facebook:
         id: '%env(OAUTH_FACEBOOK_ID)%'

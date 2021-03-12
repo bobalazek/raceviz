@@ -1,0 +1,28 @@
+{% extends 'layouts/bootstrap4.html.twig' %}
+
+{% block content %}
+  <div class="container my-4">
+    <h1>Seasons</h2>
+    <h2>{{ season.name }}</h2>
+    {% if races %}
+      <div class="list-group">
+        {% for race in races %}
+          <a href="{{ url('races.detail', {
+            slug: race.getSlug(),
+          }) }}" class="list-group-item list-group-item-action">
+            <h5 class="mb-1">
+              {{ race.getName() }}
+            </h5>
+            <p class="mb-1">
+              Start: {{ race.getStartedAt() | date }}
+            </p>
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="alert alert-info">
+        This season has no races added yet, sorry! :(
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}

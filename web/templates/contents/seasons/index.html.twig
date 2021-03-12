@@ -1,0 +1,29 @@
+{% extends 'layouts/bootstrap4.html.twig' %}
+
+{% block content %}
+  <div class="container my-4">
+    <h1>Seasons</h1>
+    <div class="row">
+      {% for series_by_sesson in season_by_series %}
+        <div class="col-md-4">
+          <h3>{{ series_by_sesson.name }}</h3>
+          {% if series_by_sesson.seasons %}
+            <div class="list-group">
+              {% for season in series_by_sesson.seasons %}
+                <a href="{{ url('seasons.detail', {
+                  slug: season.getSlug(),
+                }) }}" class="list-group-item list-group-item-action">
+                  {{ season.getName() }}
+                </a>
+              {% endfor %}
+            </div>
+          {% else %}
+            <div class="alert alert-info">
+              We have not added any seasons for this series yet, sorry! :(
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

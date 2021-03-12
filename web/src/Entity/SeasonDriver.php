@@ -47,9 +47,19 @@ class SeasonDriver implements Interfaces\ArrayInterface, TimestampableInterface
      */
     private $driver;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Team", inversedBy="seasonDrivers")
+     * @ORM\JoinColumn()
+     */
+    private $team;
+
     public function __toString()
     {
-        return $this->getSeason() . ' @ ' . $this->getDriver();
+        $season = $this->getSeason();
+        $driver = $this->getDriver();
+        $team = $this->getTeam();
+
+        return $season . ' @ ' . $driver . ($team ? ' (' . $team . ')' : '');
     }
 
     public function getId(): ?int
@@ -89,6 +99,18 @@ class SeasonDriver implements Interfaces\ArrayInterface, TimestampableInterface
     public function setDriver(?Driver $driver): self
     {
         $this->driver = $driver;
+
+        return $this;
+    }
+
+    public function getTeam(): ?Team
+    {
+        return $this->team;
+    }
+
+    public function setTeam(?Team $team): self
+    {
+        $this->team = $team;
 
         return $this;
     }

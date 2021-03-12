@@ -18,7 +18,7 @@ class SeasonDriverCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setSearchFields(['number', 'season.name', 'driver.firstName', 'driver.lastName'])
+            ->setSearchFields(['number', 'season.name', 'driver.firstName', 'driver.lastName', 'team.name'])
         ;
     }
 
@@ -26,11 +26,13 @@ class SeasonDriverCrudController extends AbstractCrudController
     {
         $season = AssociationField::new('season');
         $driver = AssociationField::new('driver');
+        $team = AssociationField::new('team');
         $number = NumberField::new('number');
 
         return [
             $season,
             $driver,
+            $team,
             $number,
         ];
     }

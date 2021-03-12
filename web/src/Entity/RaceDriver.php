@@ -14,8 +14,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="App\Repository\RaceDriverRepository")
  * @ORM\Table(name="race_drivers")
  * @UniqueEntity(
- *   fields={"race", "team", "driver"},
- *   message="This Race Driver was already added"
+ *   fields={"race", "driver"},
+ *   message="This Driver was already added to this Race."
  * )
  */
 class RaceDriver implements Interfaces\ArrayInterface, TimestampableInterface

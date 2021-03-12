@@ -75,10 +75,16 @@ class Team implements Interfaces\ArrayInterface, TimestampableInterface
      */
     private $seasonTeams;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\SeasonDriver", mappedBy="team")
+     */
+    private $seasonDrivers;
+
     public function __construct()
     {
         $this->raceDrivers = new ArrayCollection();
         $this->seasonTeams = new ArrayCollection();
+        $this->seasonDrivers = new ArrayCollection();
     }
 
     public function __toString()
@@ -229,6 +235,36 @@ class Team implements Interfaces\ArrayInterface, TimestampableInterface
             $this->seasonTeams->removeElement($seasonTeam);
             if ($seasonTeam->getTeam() === $this) {
                 $seasonTeam->setTeam(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SeasonDriver[]
+     */
+    public function getSeasonDrivers(): Collection
+    {
+        return $this->seasonDrivers;
+    }
+
+    public function addSeasonDriver(SeasonDriver $seasonDriver): self
+    {
+        if (!$this->seasonDrivers->contains($seasonDriver)) {
+            $this->seasonDrivers[] = $seasonDriver;
+            $seasonDriver->setTeam($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSeasonDriver(SeasonDriver $seasonDriver): self
+    {
+        if ($this->seasonDrivers->contains($seasonDriver)) {
+            $this->seasonDrivers->removeElement($seasonDriver);
+            if ($seasonDriver->getTeam() === $this) {
+                $seasonDriver->setTeam(null);
             }
         }
 

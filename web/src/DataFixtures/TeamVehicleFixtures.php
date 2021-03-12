@@ -4,15 +4,15 @@ namespace App\DataFixtures;
 
 use App\Entity\Driver;
 use App\Entity\Team;
-use App\Entity\Vehicle;
+use App\Entity\TeamVehicle;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
 /**
- * Class VehicleFixtures.
+ * Class TeamVehicleFixtures.
  */
-class VehicleFixtures extends Fixture implements DependentFixtureInterface
+class TeamVehicleFixtures extends Fixture implements DependentFixtureInterface
 {
     /**
      * @var array
@@ -21,13 +21,13 @@ class VehicleFixtures extends Fixture implements DependentFixtureInterface
 
     public function __construct()
     {
-        $this->entries = include __DIR__ . '/data/vehicles.php';
+        $this->entries = include __DIR__ . '/data/team_vehicles.php';
     }
 
     public function load(ObjectManager $manager)
     {
         foreach ($this->entries as $entry) {
-            $entity = new Vehicle();
+            $entity = new TeamVehicle();
             $entity
                 ->setName($entry['name'])
                 ->setSlug($entry['slug'])

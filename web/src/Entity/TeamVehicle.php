@@ -10,10 +10,10 @@ use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\VehicleRepository")
- * @ORM\Table(name="vehicles")
+ * @ORM\Entity(repositoryClass="App\Repository\TeamVehicleRepository")
+ * @ORM\Table(name="team_vehicles")
  */
-class Vehicle implements Interfaces\ArrayInterface, TimestampableInterface
+class TeamVehicle implements Interfaces\ArrayInterface, TimestampableInterface
 {
     use TimestampableTrait;
     use Traits\SlugTrait;
@@ -38,21 +38,21 @@ class Vehicle implements Interfaces\ArrayInterface, TimestampableInterface
     private $number;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Driver", inversedBy="vehicles")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Driver", inversedBy="teamVehicles")
      * @ORM\JoinColumn()
      * @Assert\NotBlank()
      */
     private $driver;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Team", inversedBy="vehicles")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Team", inversedBy="teamVehicles")
      * @ORM\JoinColumn()
      * @Assert\NotBlank()
      */
     private $team;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\RaceDriver", mappedBy="vehicle")
+     * @ORM\OneToMany(targetEntity="App\Entity\RaceDriver", mappedBy="teamVehicle")
      */
     private $raceDrivers;
 
@@ -120,7 +120,7 @@ class Vehicle implements Interfaces\ArrayInterface, TimestampableInterface
     }
 
     /**
-     * @return Collection|Vehicle[]
+     * @return Collection|TeamVehicle[]
      */
     public function getRaceDrivers(): Collection
     {
@@ -131,7 +131,7 @@ class Vehicle implements Interfaces\ArrayInterface, TimestampableInterface
     {
         if (!$this->raceDrivers->contains($raceDriver)) {
             $this->raceDrivers[] = $raceDriver;
-            $raceDriver->setVehicle($this);
+            $raceDriver->setTeamVehicle($this);
         }
 
         return $this;
@@ -141,8 +141,8 @@ class Vehicle implements Interfaces\ArrayInterface, TimestampableInterface
     {
         if ($this->raceDrivers->contains($raceDriver)) {
             $this->raceDrivers->removeElement($raceDriver);
-            if ($raceDriver->getVehicle() === $this) {
-                $raceDriver->setVehicle(null);
+            if ($raceDriver->getTeamVehicle() === $this) {
+                $raceDriver->setTeamVehicle(null);
             }
         }
 

@@ -12,6 +12,7 @@ use App\Entity\Season;
 use App\Entity\SeasonDriver;
 use App\Entity\SeasonTeam;
 use App\Entity\Team;
+use App\Entity\TeamVehicle;
 use App\Entity\User;
 use App\Entity\UserAction;
 use App\Entity\UserBlock;
@@ -23,7 +24,6 @@ use App\Entity\UserOauthProvider;
 use App\Entity\UserPoint;
 use App\Entity\UserTfaMethod;
 use App\Entity\UserTfaRecoveryCode;
-use App\Entity\Vehicle;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -63,8 +63,8 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Season Teams', 'fas fa-folder-open', SeasonTeam::class),
             MenuItem::linkToCrud('Season Drivers', 'fas fa-folder-open', SeasonDriver::class),
             MenuItem::linkToCrud('Teams', 'fas fa-folder-open', Team::class),
+            MenuItem::linkToCrud('Team Vehicles', 'fas fa-folder-open', TeamVehicle::class),
             MenuItem::linkToCrud('Drivers', 'fas fa-folder-open', Driver::class),
-            MenuItem::linkToCrud('Vehicles', 'fas fa-folder-open', Vehicle::class),
             MenuItem::linkToCrud('Races', 'fas fa-folder-open', Race::class),
             MenuItem::linkToCrud('Race Drivers', 'fas fa-folder-open', RaceDriver::class),
             MenuItem::linkToCrud('Race Drivers - Race - Laps', 'fas fa-folder-open', RaceDriverRaceLap::class),

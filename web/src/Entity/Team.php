@@ -66,9 +66,9 @@ class Team implements Interfaces\ArrayInterface, TimestampableInterface
     private $defunctedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Vehicle", mappedBy="team")
+     * @ORM\OneToMany(targetEntity="App\Entity\TeamVehicle", mappedBy="team")
      */
-    private $vehicles;
+    private $teamVehicles;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\SeasonTeam", mappedBy="team")
@@ -77,7 +77,7 @@ class Team implements Interfaces\ArrayInterface, TimestampableInterface
 
     public function __construct()
     {
-        $this->vehicles = new ArrayCollection();
+        $this->teamVehicles = new ArrayCollection();
         $this->seasonTeams = new ArrayCollection();
     }
 
@@ -176,29 +176,29 @@ class Team implements Interfaces\ArrayInterface, TimestampableInterface
     }
 
     /**
-     * @return Collection|Vehicle[]
+     * @return Collection|TeamVehicle[]
      */
-    public function getVehicles(): Collection
+    public function getTeamVehicles(): Collection
     {
-        return $this->vehicles;
+        return $this->teamVehicles;
     }
 
-    public function addVehicle(Vehicle $vehicle): self
+    public function addTeamVehicle(TeamVehicle $teamVehicle): self
     {
-        if (!$this->vehicles->contains($vehicle)) {
-            $this->vehicles[] = $vehicle;
-            $vehicle->setTeam($this);
+        if (!$this->teamVehicles->contains($teamVehicle)) {
+            $this->teamVehicles[] = $teamVehicle;
+            $teamVehicle->setTeam($this);
         }
 
         return $this;
     }
 
-    public function removeVehicle(Vehicle $vehicle): self
+    public function removeTeamVehicle(TeamVehicle $teamVehicle): self
     {
-        if ($this->vehicles->contains($vehicle)) {
-            $this->vehicles->removeElement($vehicle);
-            if ($vehicle->getTeam() === $this) {
-                $vehicle->setTeam(null);
+        if ($this->teamVehicles->contains($teamVehicle)) {
+            $this->teamVehicles->removeElement($teamVehicle);
+            if ($teamVehicle->getTeam() === $this) {
+                $teamVehicle->setTeam(null);
             }
         }
 

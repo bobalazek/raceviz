@@ -50,9 +50,9 @@ class Driver implements Interfaces\ArrayInterface, TimestampableInterface
     private $url;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Vehicle", mappedBy="driver")
+     * @ORM\OneToMany(targetEntity="App\Entity\TeamVehicle", mappedBy="driver")
      */
-    private $vehicles;
+    private $teamVehicles;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\RaceDriver", mappedBy="driver")
@@ -66,7 +66,7 @@ class Driver implements Interfaces\ArrayInterface, TimestampableInterface
 
     public function __construct()
     {
-        $this->vehicles = new ArrayCollection();
+        $this->teamVehicles = new ArrayCollection();
         $this->raceDrivers = new ArrayCollection();
         $this->seasonDrivers = new ArrayCollection();
     }
@@ -130,29 +130,29 @@ class Driver implements Interfaces\ArrayInterface, TimestampableInterface
     }
 
     /**
-     * @return Collection|Vehicle[]
+     * @return Collection|TeamVehicle[]
      */
-    public function getVehicles(): Collection
+    public function getTeamVehicles(): Collection
     {
-        return $this->vehicles;
+        return $this->teamVehicles;
     }
 
-    public function addVehicle(Vehicle $vehicle): self
+    public function addTeamVehicle(TeamVehicle $teamVehicle): self
     {
-        if (!$this->vehicles->contains($vehicle)) {
-            $this->vehicles[] = $vehicle;
-            $vehicle->setDriver($this);
+        if (!$this->teamVehicles->contains($teamVehicle)) {
+            $this->teamVehicles[] = $teamVehicle;
+            $teamVehicle->setDriver($this);
         }
 
         return $this;
     }
 
-    public function removeVehicle(Vehicle $vehicle): self
+    public function removeTeamVehicle(TeamVehicle $teamVehicle): self
     {
-        if ($this->vehicles->contains($vehicle)) {
-            $this->vehicles->removeElement($vehicle);
-            if ($vehicle->getDriver() === $this) {
-                $vehicle->setDriver(null);
+        if ($this->teamVehicles->contains($teamVehicle)) {
+            $this->teamVehicles->removeElement($teamVehicle);
+            if ($teamVehicle->getDriver() === $this) {
+                $teamVehicle->setDriver(null);
             }
         }
 
@@ -160,7 +160,7 @@ class Driver implements Interfaces\ArrayInterface, TimestampableInterface
     }
 
     /**
-     * @return Collection|Vehicle[]
+     * @return Collection|TeamVehicle[]
      */
     public function getRaceDrivers(): Collection
     {

@@ -22,14 +22,14 @@ class RaceDriverCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setSearchFields(['race.name', 'car.name', 'driver.firstName', 'driver.lastName'])
+            ->setSearchFields(['race.name', 'vehicle.name', 'driver.firstName', 'driver.lastName'])
         ;
     }
 
     public function configureFields(string $pageName): iterable
     {
         $race = AssociationField::new('race');
-        $car = AssociationField::new('car');
+        $vehicle = AssociationField::new('vehicle');
         $driver = AssociationField::new('driver');
         $raceStartingGridPosition = NumberField::new('raceStartingGridPosition')
             ->setFormTypeOption('html5', true)
@@ -48,14 +48,14 @@ class RaceDriverCrudController extends AbstractCrudController
         if (Crud::PAGE_INDEX === $pageName) {
             return [
                 $race,
-                $car,
+                $vehicle,
                 $driver,
             ];
         }
 
         return [
             $race,
-            $car,
+            $vehicle,
             $driver,
             FormField::addPanel('Race information'),
             $raceStartingGridPosition,

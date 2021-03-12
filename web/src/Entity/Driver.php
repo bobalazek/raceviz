@@ -50,9 +50,9 @@ class Driver implements Interfaces\ArrayInterface, TimestampableInterface
     private $url;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Car", mappedBy="driver")
+     * @ORM\OneToMany(targetEntity="App\Entity\Vehicle", mappedBy="driver")
      */
-    private $cars;
+    private $vehicles;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\RaceDriver", mappedBy="driver")
@@ -66,7 +66,7 @@ class Driver implements Interfaces\ArrayInterface, TimestampableInterface
 
     public function __construct()
     {
-        $this->cars = new ArrayCollection();
+        $this->vehicles = new ArrayCollection();
         $this->raceDrivers = new ArrayCollection();
         $this->seasonDrivers = new ArrayCollection();
     }
@@ -130,29 +130,29 @@ class Driver implements Interfaces\ArrayInterface, TimestampableInterface
     }
 
     /**
-     * @return Collection|Car[]
+     * @return Collection|Vehicle[]
      */
-    public function getCars(): Collection
+    public function getVehicles(): Collection
     {
-        return $this->cars;
+        return $this->vehicles;
     }
 
-    public function addCar(Car $car): self
+    public function addVehicle(Vehicle $vehicle): self
     {
-        if (!$this->cars->contains($car)) {
-            $this->cars[] = $car;
-            $car->setDriver($this);
+        if (!$this->vehicles->contains($vehicle)) {
+            $this->vehicles[] = $vehicle;
+            $vehicle->setDriver($this);
         }
 
         return $this;
     }
 
-    public function removeCar(Car $car): self
+    public function removeVehicle(Vehicle $vehicle): self
     {
-        if ($this->cars->contains($car)) {
-            $this->cars->removeElement($car);
-            if ($car->getDriver() === $this) {
-                $car->setDriver(null);
+        if ($this->vehicles->contains($vehicle)) {
+            $this->vehicles->removeElement($vehicle);
+            if ($vehicle->getDriver() === $this) {
+                $vehicle->setDriver(null);
             }
         }
 
@@ -160,7 +160,7 @@ class Driver implements Interfaces\ArrayInterface, TimestampableInterface
     }
 
     /**
-     * @return Collection|Car[]
+     * @return Collection|Vehicle[]
      */
     public function getRaceDrivers(): Collection
     {

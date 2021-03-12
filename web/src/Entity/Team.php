@@ -61,9 +61,9 @@ class Team implements Interfaces\ArrayInterface, TimestampableInterface
     private $defunctedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Car", mappedBy="team")
+     * @ORM\OneToMany(targetEntity="App\Entity\Vehicle", mappedBy="team")
      */
-    private $cars;
+    private $vehicles;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\SeasonTeam", mappedBy="team")
@@ -72,7 +72,7 @@ class Team implements Interfaces\ArrayInterface, TimestampableInterface
 
     public function __construct()
     {
-        $this->cars = new ArrayCollection();
+        $this->vehicles = new ArrayCollection();
         $this->seasonTeams = new ArrayCollection();
     }
 
@@ -159,29 +159,29 @@ class Team implements Interfaces\ArrayInterface, TimestampableInterface
     }
 
     /**
-     * @return Collection|Car[]
+     * @return Collection|Vehicle[]
      */
-    public function getCars(): Collection
+    public function getVehicles(): Collection
     {
-        return $this->cars;
+        return $this->vehicles;
     }
 
-    public function addCar(Car $car): self
+    public function addVehicle(Vehicle $vehicle): self
     {
-        if (!$this->cars->contains($car)) {
-            $this->cars[] = $car;
-            $car->setTeam($this);
+        if (!$this->vehicles->contains($vehicle)) {
+            $this->vehicles[] = $vehicle;
+            $vehicle->setTeam($this);
         }
 
         return $this;
     }
 
-    public function removeCar(Car $car): self
+    public function removeVehicle(Vehicle $vehicle): self
     {
-        if ($this->cars->contains($car)) {
-            $this->cars->removeElement($car);
-            if ($car->getTeam() === $this) {
-                $car->setTeam(null);
+        if ($this->vehicles->contains($vehicle)) {
+            $this->vehicles->removeElement($vehicle);
+            if ($vehicle->getTeam() === $this) {
+                $vehicle->setTeam(null);
             }
         }
 

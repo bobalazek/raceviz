@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="App\Repository\RaceDriverRepository")
  * @ORM\Table(name="race_drivers")
  * @UniqueEntity(
- *   fields={"race", "car", "driver"},
+ *   fields={"race", "vehicle", "driver"},
  *   message="This Race Driver was already added"
  * )
  */
@@ -72,11 +72,11 @@ class RaceDriver implements Interfaces\ArrayInterface, TimestampableInterface
     private $race;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Car", inversedBy="raceDrivers")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Vehicle", inversedBy="raceDrivers")
      * @ORM\JoinColumn()
      * @Assert\NotBlank()
      */
-    private $car;
+    private $vehicle;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Driver", inversedBy="raceDrivers")
@@ -207,14 +207,14 @@ class RaceDriver implements Interfaces\ArrayInterface, TimestampableInterface
         return $this;
     }
 
-    public function getCar(): ?Car
+    public function getVehicle(): ?Vehicle
     {
-        return $this->car;
+        return $this->vehicle;
     }
 
-    public function setCar(?Car $car): self
+    public function setVehicle(?Vehicle $vehicle): self
     {
-        $this->car = $car;
+        $this->vehicle = $vehicle;
 
         return $this;
     }

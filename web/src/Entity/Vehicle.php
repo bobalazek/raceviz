@@ -10,10 +10,10 @@ use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\CarRepository")
- * @ORM\Table(name="cars")
+ * @ORM\Entity(repositoryClass="App\Repository\VehicleRepository")
+ * @ORM\Table(name="vehicles")
  */
-class Car implements Interfaces\ArrayInterface, TimestampableInterface
+class Vehicle implements Interfaces\ArrayInterface, TimestampableInterface
 {
     use TimestampableTrait;
     use Traits\SlugTrait;
@@ -38,21 +38,21 @@ class Car implements Interfaces\ArrayInterface, TimestampableInterface
     private $number;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Driver", inversedBy="cars")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Driver", inversedBy="vehicles")
      * @ORM\JoinColumn()
      * @Assert\NotBlank()
      */
     private $driver;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Team", inversedBy="cars")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Team", inversedBy="vehicles")
      * @ORM\JoinColumn()
      * @Assert\NotBlank()
      */
     private $team;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\RaceDriver", mappedBy="car")
+     * @ORM\OneToMany(targetEntity="App\Entity\RaceDriver", mappedBy="vehicle")
      */
     private $raceDrivers;
 
@@ -120,7 +120,7 @@ class Car implements Interfaces\ArrayInterface, TimestampableInterface
     }
 
     /**
-     * @return Collection|Car[]
+     * @return Collection|Vehicle[]
      */
     public function getRaceDrivers(): Collection
     {
@@ -131,7 +131,7 @@ class Car implements Interfaces\ArrayInterface, TimestampableInterface
     {
         if (!$this->raceDrivers->contains($raceDriver)) {
             $this->raceDrivers[] = $raceDriver;
-            $raceDriver->setCar($this);
+            $raceDriver->setVehicle($this);
         }
 
         return $this;
@@ -141,8 +141,8 @@ class Car implements Interfaces\ArrayInterface, TimestampableInterface
     {
         if ($this->raceDrivers->contains($raceDriver)) {
             $this->raceDrivers->removeElement($raceDriver);
-            if ($raceDriver->getCar() === $this) {
-                $raceDriver->setCar(null);
+            if ($raceDriver->getVehicle() === $this) {
+                $raceDriver->setVehicle(null);
             }
         }
 

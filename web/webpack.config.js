@@ -9,6 +9,7 @@ Encore
     .setPublicPath('/build')
 
     .addEntry('website', './assets/apps/website/index.js')
+    .addEntry('race-editor', './assets/apps/race-editor/index.js')
     .addEntry('app', './assets/apps/app/index.ts')
 
     .splitEntryChunks()
@@ -19,6 +20,7 @@ Encore
     .enableBuildNotifications()
     .enableSourceMaps(!Encore.isProduction())
     .enableVersioning(Encore.isProduction())
+    .enableReactPreset()
 
     .configureBabel(() => {}, {
         useBuiltIns: 'usage',

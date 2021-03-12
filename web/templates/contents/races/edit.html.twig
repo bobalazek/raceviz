@@ -1,38 +1,17 @@
 {% extends 'layouts/bootstrap4.html.twig' %}
 
+{% block head_stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('race-editor') }}
+{% endblock %}
+
 {% block content %}
   <div class="container my-4">
-    <h1>{{ race.getName() }}</h1>
-    <h2>Drivers</h2>
-    {% if race_drivers %}
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Driver</th>
-            <th>Team</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for race_driver in race_drivers %}
-            <tr>
-              <td>{{ race_driver.getDriver() }}</td>
-              <td>{{ race_driver.getTeam() }}</td>
-              <td>
-                <a href="#">Edit</a> |
-                <a href="#" class="text-danger btn-confirm"
-                  data-confirm-text="Are you sure?">Remove</a>
-              </td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    {% else %}
-      <div class="alert alert-info">
-        No drivers were added for this race yet.
-      </div>
-    {% endif %}
-    <h3>New Driver</h3>
-    {% include 'contents/races/_form.html.twig' %}
+    <div id="root"></div>
   </div>
+{% endblock %}
+
+{% block body_javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('race-editor') }}
 {% endblock %}

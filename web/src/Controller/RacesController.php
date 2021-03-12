@@ -3,13 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Race;
-use App\Entity\RaceDriver;
-use App\Form\Type\RaceDriverType;
 use App\Repository\RaceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -48,9 +45,6 @@ class RacesController extends AbstractController
      */
     public function detail(string $slug)
     {
-        /** @var RaceRepository $raceRepository */
-        $raceRepository = $this->em->getRepository(Race::class);
-
         $race = $this->_getRace($slug);
 
         return $this->render('contents/races/detail.html.twig', [
@@ -61,7 +55,7 @@ class RacesController extends AbstractController
     /**
      * @Route("/races/{slug}/edit", name="races.edit")
      */
-    public function edit(string $slug, Request $request)
+    public function edit(string $slug)
     {
         if (!$this->isGranted('ROLE_ADMIN')) {
             return $this->redirectToRoute('home');
@@ -69,36 +63,8 @@ class RacesController extends AbstractController
 
         $race = $this->_getRace($slug);
 
-        /** @var RaceRepository $raceDriverRepository */
-        $raceRepository = $this->em->getRepository(RaceDriver::class);
-        $raceDrivers = $raceRepository->findBy([
-            'race' => $race,
-        ]);
-
-        $raceDriver = new RaceDriver();
-        $raceDriver
-            ->setRace($race)
-        ;
-
-        // Form
-        $form = $this->createForm(RaceDriverType::class, $raceDriver, [
-            'filter_race' => $race,
-        ]);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->em->persist($raceDriver);
-            $this->em->flush();
-
-            return $this->redirectToRoute('races.edit', [
-                'slug' => $slug,
-            ]);
-        }
-
         return $this->render('contents/races/edit.html.twig', [
             'race' => $race,
-            'race_drivers' => $raceDrivers,
-            'form' => $form->createView(),
         ]);
     }
 

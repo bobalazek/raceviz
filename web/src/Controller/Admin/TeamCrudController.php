@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Team;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ColorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CountryField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -32,6 +33,7 @@ class TeamCrudController extends AbstractCrudController
         $url = TextField::new('url');
         $debutedAt = DateField::new('debutedAt');
         $defunctedAt = DateField::new('defunctedAt');
+        $color = ColorField::new('color');
 
         return [
             $name,
@@ -41,6 +43,7 @@ class TeamCrudController extends AbstractCrudController
             $url,
             $debutedAt,
             $defunctedAt,
+            $color,
         ];
     }
 }

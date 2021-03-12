@@ -30,7 +30,12 @@ class TeamFixtures extends Fixture
                 ->setSlug($entry['slug'])
                 ->setLocation($entry['location'])
                 ->setCountryCode($entry['country_code'])
-                ->setUrl($entry['url'])
+                ->setUrl(isset($entry['url'])
+                    ? $entry['url']
+                    : null)
+                ->setColor(isset($entry['color'])
+                    ? $entry['color']
+                    : null)
                 ->setDebutedAt(new \DateTime($entry['debuted_at']))
                 ->setDefunctedAt(isset($entry['defuncted_at'])
                     ? new \DateTime($entry['defuncted_at'])

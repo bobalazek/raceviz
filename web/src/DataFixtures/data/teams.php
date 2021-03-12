@@ -8,6 +8,7 @@ return [
         'country_code' => 'GB',
         'url' => 'https://www.formula1.com/en/teams/Mercedes.html',
         'debuted_at' => '1970-01-01',
+        'color' => '#00C7B9',
     ],
     [
         'name' => 'Alpine F1 Team',
@@ -16,6 +17,7 @@ return [
         'country_code' => 'GB',
         'url' => 'https://www.formula1.com/en/teams/Alpine.html',
         'debuted_at' => '1986-01-01',
+        'color' => '#0088D7',
     ],
     [
         'name' => 'Haas F1 Team',
@@ -24,6 +26,7 @@ return [
         'country_code' => 'US',
         'url' => 'https://www.formula1.com/en/teams/Haas-F1-Team.html',
         'debuted_at' => '2016-01-01',
+        'color' => '#FAF9FB',
     ],
     [
         'name' => 'McLaren F1 Team',
@@ -32,6 +35,7 @@ return [
         'country_code' => 'GB',
         'url' => 'https://www.formula1.com/en/teams/McLaren.html',
         'debuted_at' => '1966-01-01',
+        'color' => '#F38704',
     ],
     [
         'name' => 'Alfa Romeo Racing ORLEN',
@@ -40,6 +44,7 @@ return [
         'country_code' => 'CH',
         'url' => 'https://www.formula1.com/en/teams/Alfa-Romeo-Racing.html',
         'debuted_at' => '1993-01-01',
+        'color' => '#73050A',
     ],
     [
         'name' => 'Red Bull Racing',
@@ -48,6 +53,7 @@ return [
         'country_code' => 'GB',
         'url' => 'https://www.formula1.com/en/teams/Red-Bull-Racing.html',
         'debuted_at' => '1997-01-01',
+        'color' => '#06029B',
     ],
     [
         'name' => 'Aston Martin Cognizant Formula One Team',
@@ -56,6 +62,7 @@ return [
         'country_code' => 'GB',
         'url' => 'https://www.formula1.com/en/teams/Aston-Martin.html',
         'debuted_at' => '2021-01-01',
+        'color' => '#00665A',
     ],
     [
         'name' => 'Scuderia Ferrari Mission Winnow',
@@ -64,6 +71,7 @@ return [
         'country_code' => 'IT',
         'url' => 'https://www.formula1.com/en/teams/Ferrari.html',
         'debuted_at' => '1950-01-01',
+        'color' => '#CA0000',
     ],
     [
         'name' => 'Scuderia AlphaTauri Honda',
@@ -72,6 +80,7 @@ return [
         'country_code' => 'IT',
         'url' => 'https://www.formula1.com/en/teams/AlphaTauri.html',
         'debuted_at' => '1985-01-01',
+        'color' => '#3A404E',
     ],
     [
         'name' => 'Williams Racing',
@@ -80,5 +89,6 @@ return [
         'country_code' => 'GB',
         'url' => 'https://www.formula1.com/en/teams/Williams.html',
         'debuted_at' => '1978-01-01',
+        'color' => '#32B3E4',
     ],
 ];

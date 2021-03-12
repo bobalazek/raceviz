@@ -50,6 +50,11 @@ class Team implements Interfaces\ArrayInterface, TimestampableInterface
     private $url;
 
     /**
+     * @ORM\Column(type="string", length=16, nullable=true)
+     */
+    private $color;
+
+    /**
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank()
      */
@@ -130,6 +135,18 @@ class Team implements Interfaces\ArrayInterface, TimestampableInterface
     public function setUrl(?string $url): self
     {
         $this->url = $url;
+
+        return $this;
+    }
+
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    public function setColor(?string $color): self
+    {
+        $this->color = $color;
 
         return $this;
     }

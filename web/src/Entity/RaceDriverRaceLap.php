@@ -58,6 +58,7 @@ class RaceDriverRaceLap implements Interfaces\ArrayInterface, TimestampableInter
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\RaceDriver", inversedBy="raceDriverRaceLaps")
      * @ORM\JoinColumn()
+     * @Assert\NotBlank()
      */
     private $raceDriver;
 

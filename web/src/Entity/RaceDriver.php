@@ -11,14 +11,14 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\RaceCarDriverRepository")
- * @ORM\Table(name="race_car_drivers")
+ * @ORM\Entity(repositoryClass="App\Repository\RaceDriverRepository")
+ * @ORM\Table(name="race_drivers")
  * @UniqueEntity(
  *   fields={"race", "car", "driver"},
- *   message="This Race Car Driver was already added"
+ *   message="This Race Driver was already added"
  * )
  */
-class RaceCarDriver implements Interfaces\ArrayInterface, TimestampableInterface
+class RaceDriver implements Interfaces\ArrayInterface, TimestampableInterface
 {
     use TimestampableTrait;
 
@@ -65,40 +65,40 @@ class RaceCarDriver implements Interfaces\ArrayInterface, TimestampableInterface
     private $raceResultStatusNote;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Race", inversedBy="raceCarDrivers")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Race", inversedBy="raceDrivers")
      * @ORM\JoinColumn()
      * @Assert\NotBlank()
      */
     private $race;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Car", inversedBy="raceCarDrivers")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Car", inversedBy="raceDrivers")
      * @ORM\JoinColumn()
      * @Assert\NotBlank()
      */
     private $car;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Driver", inversedBy="raceCarDrivers")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Driver", inversedBy="raceDrivers")
      * @ORM\JoinColumn()
      * @Assert\NotBlank()
      */
     private $driver;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\RaceCarDriverRaceLap", mappedBy="raceCarDriver")
+     * @ORM\OneToMany(targetEntity="App\Entity\RaceDriverRaceLap", mappedBy="raceDriver")
      */
-    private $raceCarDriverRaceLaps;
+    private $raceDriverRaceLaps;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\RaceCarDriverRacePitStop", mappedBy="raceCarDriver")
+     * @ORM\OneToMany(targetEntity="App\Entity\RaceDriverRacePitStop", mappedBy="raceDriver")
      */
-    private $raceCarDriverRacePitStops;
+    private $raceDriverRacePitStops;
 
     public function __construct()
     {
-        $this->raceCarDriverRaceLaps = new ArrayCollection();
-        $this->raceCarDriverRacePitStops = new ArrayCollection();
+        $this->raceDriverRaceLaps = new ArrayCollection();
+        $this->raceDriverRacePitStops = new ArrayCollection();
     }
 
     public function __toString()
@@ -232,29 +232,29 @@ class RaceCarDriver implements Interfaces\ArrayInterface, TimestampableInterface
     }
 
     /**
-     * @return Collection|RaceCarDriverRaceLap[]
+     * @return Collection|RaceDriverRaceLap[]
      */
-    public function getRaceCarDriverRaceLaps(): Collection
+    public function getRaceDriverRaceLaps(): Collection
     {
-        return $this->raceCarDriverRaceLaps;
+        return $this->raceDriverRaceLaps;
     }
 
-    public function addRaceCarDriverRaceLap(RaceCarDriverRaceLap $raceCarDriverRaceLap): self
+    public function addRaceDriverRaceLap(RaceDriverRaceLap $raceDriverRaceLap): self
     {
-        if (!$this->raceCarDriverRaceLaps->contains($raceCarDriverRaceLap)) {
-            $this->raceCarDriverRaceLaps[] = $raceCarDriverRaceLap;
-            $raceCarDriverRaceLap->setRaceCarDriver($this);
+        if (!$this->raceDriverRaceLaps->contains($raceDriverRaceLap)) {
+            $this->raceDriverRaceLaps[] = $raceDriverRaceLap;
+            $raceDriverRaceLap->setRaceDriver($this);
         }
 
         return $this;
     }
 
-    public function removeRaceCarDriverRaceLap(RaceCarDriverRaceLap $raceCarDriverRaceLap): self
+    public function removeRaceDriverRaceLap(RaceDriverRaceLap $raceDriverRaceLap): self
     {
-        if ($this->raceCarDriverRaceLaps->contains($raceCarDriverRaceLap)) {
-            $this->raceCarDriverRaceLaps->removeElement($raceCarDriverRaceLap);
-            if ($raceCarDriverRaceLap->getRaceCarDriver() === $this) {
-                $raceCarDriverRaceLap->setRaceCarDriver(null);
+        if ($this->raceDriverRaceLaps->contains($raceDriverRaceLap)) {
+            $this->raceDriverRaceLaps->removeElement($raceDriverRaceLap);
+            if ($raceDriverRaceLap->getRaceDriver() === $this) {
+                $raceDriverRaceLap->setRaceDriver(null);
             }
         }
 
@@ -262,29 +262,29 @@ class RaceCarDriver implements Interfaces\ArrayInterface, TimestampableInterface
     }
 
     /**
-     * @return Collection|RaceCarDriverRacePitStop[]
+     * @return Collection|RaceDriverRacePitStop[]
      */
-    public function getRaceCarDriverRacePitStops(): Collection
+    public function getRaceDriverRacePitStops(): Collection
     {
-        return $this->raceCarDriverRacePitStops;
+        return $this->raceDriverRacePitStops;
     }
 
-    public function addRaceCarDriverRacePitStop(RaceCarDriverRacePitStop $raceCarDriverRacePitStop): self
+    public function addRaceDriverRacePitStop(RaceDriverRacePitStop $raceDriverRacePitStop): self
     {
-        if (!$this->raceCarDriverRacePitStops->contains($raceCarDriverRacePitStop)) {
-            $this->raceCarDriverRacePitStops[] = $raceCarDriverRacePitStop;
-            $raceCarDriverRacePitStop->setRaceCarDriver($this);
+        if (!$this->raceDriverRacePitStops->contains($raceDriverRacePitStop)) {
+            $this->raceDriverRacePitStops[] = $raceDriverRacePitStop;
+            $raceDriverRacePitStop->setRaceDriver($this);
         }
 
         return $this;
     }
 
-    public function removeRaceCarDriverRacePitStop(RaceCarDriverRacePitStop $raceCarDriverRacePitStop): self
+    public function removeRaceDriverRacePitStop(RaceDriverRacePitStop $raceDriverRacePitStop): self
     {
-        if ($this->raceCarDriverRacePitStops->contains($raceCarDriverRacePitStop)) {
-            $this->raceCarDriverRacePitStops->removeElement($raceCarDriverRacePitStop);
-            if ($raceCarDriverRacePitStop->getRaceCarDriver() === $this) {
-                $raceCarDriverRacePitStop->setRaceCarDriver(null);
+        if ($this->raceDriverRacePitStops->contains($raceDriverRacePitStop)) {
+            $this->raceDriverRacePitStops->removeElement($raceDriverRacePitStop);
+            if ($raceDriverRacePitStop->getRaceDriver() === $this) {
+                $raceDriverRacePitStop->setRaceDriver(null);
             }
         }
 

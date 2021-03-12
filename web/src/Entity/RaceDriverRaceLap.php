@@ -9,14 +9,14 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\RaceCarDriverRaceLapRepository")
- * @ORM\Table(name="race_car_driver_race_laps")
+ * @ORM\Entity(repositoryClass="App\Repository\RaceDriverRaceLapRepository")
+ * @ORM\Table(name="race_driver_race_laps")
  * @UniqueEntity(
- *   fields={"raceCarDriver", "lap"},
- *   message="This Race Car Driver Lap was already added"
+ *   fields={"raceDriver", "lap"},
+ *   message="This Race Driver Lap was already added"
  * )
  */
-class RaceCarDriverRaceLap implements Interfaces\ArrayInterface, TimestampableInterface
+class RaceDriverRaceLap implements Interfaces\ArrayInterface, TimestampableInterface
 {
     use TimestampableTrait;
 
@@ -51,15 +51,15 @@ class RaceCarDriverRaceLap implements Interfaces\ArrayInterface, TimestampableIn
     private $timeOfDay;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\RaceCarDriver", inversedBy="raceCarDriverRaceLaps")
+     * @ORM\ManyToOne(targetEntity="App\Entity\RaceDriver", inversedBy="raceDriverRaceLaps")
      * @ORM\JoinColumn()
      */
-    private $raceCarDriver;
+    private $raceDriver;
 
     public function __toString()
     {
-        $race = $this->getRaceCarDriver()->getRace();
-        $driver = $this->getRaceCarDriver()->getDriver();
+        $race = $this->getRaceDriver()->getRace();
+        $driver = $this->getRaceDriver()->getDriver();
         $lap = $this->getLap();
 
         return $driver . ' @ ' . $race . ' (lap ' . $lap . ')';
@@ -118,14 +118,14 @@ class RaceCarDriverRaceLap implements Interfaces\ArrayInterface, TimestampableIn
         return $this;
     }
 
-    public function getRaceCarDriver(): ?RaceCarDriver
+    public function getRaceDriver(): ?RaceDriver
     {
-        return $this->raceCarDriver;
+        return $this->raceDriver;
     }
 
-    public function setRaceCarDriver(?RaceCarDriver $raceCarDriver): self
+    public function setRaceDriver(?RaceDriver $raceDriver): self
     {
-        $this->raceCarDriver = $raceCarDriver;
+        $this->raceDriver = $raceDriver;
 
         return $this;
     }

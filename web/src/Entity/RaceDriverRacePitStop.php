@@ -9,14 +9,14 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\RaceCarDriverRacePitStopRepository")
- * @ORM\Table(name="race_car_driver_race_pit_stops")
+ * @ORM\Entity(repositoryClass="App\Repository\RaceDriverRacePitStopRepository")
+ * @ORM\Table(name="race_driver_race_pit_stops")
  * @UniqueEntity(
- *   fields={"raceCarDriver", "lap"},
- *   message="This Race Car Driver Pit Stop was already added"
+ *   fields={"raceDriver", "lap"},
+ *   message="This Race Driver Pit Stop was already added"
  * )
  */
-class RaceCarDriverRacePitStop implements Interfaces\ArrayInterface, TimestampableInterface
+class RaceDriverRacePitStop implements Interfaces\ArrayInterface, TimestampableInterface
 {
     use TimestampableTrait;
 
@@ -45,15 +45,15 @@ class RaceCarDriverRacePitStop implements Interfaces\ArrayInterface, Timestampab
     private $timeOfDay;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\RaceCarDriver", inversedBy="raceCarDriverRacePitStops")
+     * @ORM\ManyToOne(targetEntity="App\Entity\RaceDriver", inversedBy="raceDriverRacePitStops")
      * @ORM\JoinColumn()
      */
-    private $raceCarDriver;
+    private $raceDriver;
 
     public function __toString()
     {
-        $race = $this->getRaceCarDriver()->getRace();
-        $driver = $this->getRaceCarDriver()->getDriver();
+        $race = $this->getRaceDriver()->getRace();
+        $driver = $this->getRaceDriver()->getDriver();
         $lap = $this->getLap();
 
         return $driver . ' @ ' . $race . ' (pit stop at lap ' . $lap . ')';
@@ -100,14 +100,14 @@ class RaceCarDriverRacePitStop implements Interfaces\ArrayInterface, Timestampab
         return $this;
     }
 
-    public function getRaceCarDriver(): ?RaceCarDriver
+    public function getRaceDriver(): ?RaceDriver
     {
-        return $this->raceCarDriver;
+        return $this->raceDriver;
     }
 
-    public function setRaceCarDriver(?RaceCarDriver $raceCarDriver): self
+    public function setRaceDriver(?RaceDriver $raceDriver): self
     {
-        $this->raceCarDriver = $raceCarDriver;
+        $this->raceDriver = $raceDriver;
 
         return $this;
     }

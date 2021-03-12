@@ -4,7 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Admin\Field\RaceResultStatusField;
 use App\Admin\Field\TimeWithMillisecondsField;
-use App\Entity\RaceCarDriver;
+use App\Entity\RaceDriver;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -12,11 +12,11 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 
-class RaceCarDriverCrudController extends AbstractCrudController
+class RaceDriverCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return RaceCarDriver::class;
+        return RaceDriver::class;
     }
 
     public function configureCrud(Crud $crud): Crud

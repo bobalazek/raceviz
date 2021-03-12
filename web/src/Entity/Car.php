@@ -52,13 +52,13 @@ class Car implements Interfaces\ArrayInterface, TimestampableInterface
     private $team;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\RaceCarDriver", mappedBy="car")
+     * @ORM\OneToMany(targetEntity="App\Entity\RaceDriver", mappedBy="car")
      */
-    private $raceCarDrivers;
+    private $raceDrivers;
 
     public function __construct()
     {
-        $this->raceCarDrivers = new ArrayCollection();
+        $this->raceDrivers = new ArrayCollection();
     }
 
     public function __toString()
@@ -122,27 +122,27 @@ class Car implements Interfaces\ArrayInterface, TimestampableInterface
     /**
      * @return Collection|Car[]
      */
-    public function getRaceCarDrivers(): Collection
+    public function getRaceDrivers(): Collection
     {
-        return $this->raceCarDrivers;
+        return $this->raceDrivers;
     }
 
-    public function addRaceCarDriver(RaceCarDriver $raceCarDriver): self
+    public function addRaceDriver(RaceDriver $raceDriver): self
     {
-        if (!$this->raceCarDrivers->contains($raceCarDriver)) {
-            $this->raceCarDrivers[] = $raceCarDriver;
-            $raceCarDriver->setCar($this);
+        if (!$this->raceDrivers->contains($raceDriver)) {
+            $this->raceDrivers[] = $raceDriver;
+            $raceDriver->setCar($this);
         }
 
         return $this;
     }
 
-    public function removeRaceCarDriver(RaceCarDriver $raceCarDriver): self
+    public function removeRaceDriver(RaceDriver $raceDriver): self
     {
-        if ($this->raceCarDrivers->contains($raceCarDriver)) {
-            $this->raceCarDrivers->removeElement($raceCarDriver);
-            if ($raceCarDriver->getCar() === $this) {
-                $raceCarDriver->setCar(null);
+        if ($this->raceDrivers->contains($raceDriver)) {
+            $this->raceDrivers->removeElement($raceDriver);
+            if ($raceDriver->getCar() === $this) {
+                $raceDriver->setCar(null);
             }
         }
 

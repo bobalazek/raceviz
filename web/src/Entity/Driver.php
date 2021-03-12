@@ -55,9 +55,9 @@ class Driver implements Interfaces\ArrayInterface, TimestampableInterface
     private $cars;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\RaceCarDriver", mappedBy="driver")
+     * @ORM\OneToMany(targetEntity="App\Entity\RaceDriver", mappedBy="driver")
      */
-    private $raceCarDrivers;
+    private $raceDrivers;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\SeasonDriver", mappedBy="driver")
@@ -67,7 +67,7 @@ class Driver implements Interfaces\ArrayInterface, TimestampableInterface
     public function __construct()
     {
         $this->cars = new ArrayCollection();
-        $this->raceCarDrivers = new ArrayCollection();
+        $this->raceDrivers = new ArrayCollection();
         $this->seasonDrivers = new ArrayCollection();
     }
 
@@ -162,27 +162,27 @@ class Driver implements Interfaces\ArrayInterface, TimestampableInterface
     /**
      * @return Collection|Car[]
      */
-    public function getRaceCarDrivers(): Collection
+    public function getRaceDrivers(): Collection
     {
-        return $this->raceCarDrivers;
+        return $this->raceDrivers;
     }
 
-    public function addRaceCarDriver(RaceCarDriver $raceCarDriver): self
+    public function addRaceDriver(RaceDriver $raceDriver): self
     {
-        if (!$this->raceCarDrivers->contains($raceCarDriver)) {
-            $this->raceCarDrivers[] = $raceCarDriver;
-            $raceCarDriver->setDriver($this);
+        if (!$this->raceDrivers->contains($raceDriver)) {
+            $this->raceDrivers[] = $raceDriver;
+            $raceDriver->setDriver($this);
         }
 
         return $this;
     }
 
-    public function removeRaceCarDriver(RaceCarDriver $raceCarDriver): self
+    public function removeRaceDriver(RaceDriver $raceDriver): self
     {
-        if ($this->raceCarDrivers->contains($raceCarDriver)) {
-            $this->raceCarDrivers->removeElement($raceCarDriver);
-            if ($raceCarDriver->getDriver() === $this) {
-                $raceCarDriver->setDriver(null);
+        if ($this->raceDrivers->contains($raceDriver)) {
+            $this->raceDrivers->removeElement($raceDriver);
+            if ($raceDriver->getDriver() === $this) {
+                $raceDriver->setDriver(null);
             }
         }
 

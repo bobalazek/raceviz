@@ -3,23 +3,26 @@
 namespace App\Controller\Admin;
 
 use App\Admin\Field\TimeWithMillisecondsField;
-use App\Entity\RaceCarDriverRacePitStop;
+use App\Entity\RaceDriverRaceLap;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TimeField;
 
-class RaceCarDriverRacePitStopCrudController extends AbstractCrudController
+class RaceDriverRaceLapCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return RaceCarDriverRacePitStop::class;
+        return RaceDriverRaceLap::class;
     }
 
     public function configureFields(string $pageName): iterable
     {
-        $raceCarDriver = AssociationField::new('raceCarDriver');
+        $raceDriver = AssociationField::new('raceDriver');
         $lap = NumberField::new('lap')
+            ->setFormTypeOption('html5', true)
+        ;
+        $position = NumberField::new('position')
             ->setFormTypeOption('html5', true)
         ;
         $time = TimeWithMillisecondsField::new('time');
@@ -28,8 +31,9 @@ class RaceCarDriverRacePitStopCrudController extends AbstractCrudController
         ;
 
         return [
-            $raceCarDriver,
+            $raceDriver,
             $lap,
+            $position,
             $time,
             $timeOfDay,
         ];

@@ -7,6 +7,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CountryField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 
 class CircuitCrudController extends AbstractCrudController
 {
@@ -28,7 +29,7 @@ class CircuitCrudController extends AbstractCrudController
         $slug = TextField::new('slug');
         $location = TextField::new('location');
         $countryCode = CountryField::new('countryCode');
-        $url = TextField::new('url');
+        $url = UrlField::new('url');
 
         return [
             $name,

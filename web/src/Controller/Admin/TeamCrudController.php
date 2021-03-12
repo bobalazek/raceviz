@@ -9,6 +9,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\ColorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CountryField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 
 class TeamCrudController extends AbstractCrudController
 {
@@ -30,7 +31,7 @@ class TeamCrudController extends AbstractCrudController
         $slug = TextField::new('slug');
         $location = TextField::new('location');
         $countryCode = CountryField::new('countryCode');
-        $url = TextField::new('url');
+        $url = UrlField::new('url');
         $debutedAt = DateField::new('debutedAt');
         $defunctedAt = DateField::new('defunctedAt');
         $color = ColorField::new('color');

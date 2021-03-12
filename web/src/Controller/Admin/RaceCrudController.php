@@ -9,6 +9,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 
 class RaceCrudController extends AbstractCrudController
 {
@@ -29,7 +30,7 @@ class RaceCrudController extends AbstractCrudController
         $name = TextField::new('name');
         $slug = TextField::new('slug');
         $laps = NumberField::new('laps');
-        $url = TextField::new('url');
+        $url = UrlField::new('url');
         $startedAt = DateTimeField::new('startedAt');
         $season = AssociationField::new('season');
         $circuit = AssociationField::new('circuit');

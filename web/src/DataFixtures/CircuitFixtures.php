@@ -30,6 +30,7 @@ class CircuitFixtures extends Fixture
                 ->setSlug($entry['slug'])
                 ->setLocation($entry['location'])
                 ->setCountryCode($entry['country_code'])
+                ->setUrl($entry['url'])
             ;
 
             $manager->persist($entity);

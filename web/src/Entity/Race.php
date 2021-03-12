@@ -155,7 +155,7 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
     }
 
     /**
-     * @return Collection|TeamDriver[]
+     * @return Collection|RaceDriver[]
      */
     public function getRaceDrivers(): Collection
     {

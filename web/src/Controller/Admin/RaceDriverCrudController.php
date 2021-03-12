@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Admin\Field\RaceResultStatusField;
 use App\Admin\Field\TimeWithMillisecondsField;
+use App\Admin\Field\TyresField;
 use App\Entity\RaceDriver;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -34,6 +35,7 @@ class RaceDriverCrudController extends AbstractCrudController
         $raceStartingGridPosition = NumberField::new('raceStartingGridPosition')
             ->setFormTypeOption('html5', true)
         ;
+        $raceStartingGridTyres = TyresField::new('raceStartingGridTyres');
         $raceResultPosition = NumberField::new('raceResultPosition')
             ->setFormTypeOption('html5', true)
         ;
@@ -59,6 +61,7 @@ class RaceDriverCrudController extends AbstractCrudController
             $driver,
             FormField::addPanel('Race information'),
             $raceStartingGridPosition,
+            $raceStartingGridTyres,
             $raceResultPosition,
             $raceResultPoints,
             $raceResultTime,

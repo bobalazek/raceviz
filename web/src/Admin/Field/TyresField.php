@@ -2,11 +2,11 @@
 
 namespace App\Admin\Field;
 
-use App\Form\Type\SeriesType;
+use App\Form\Type\TyresType;
 use EasyCorp\Bundle\EasyAdminBundle\Contracts\Field\FieldInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FieldTrait;
 
-final class SeriesField implements FieldInterface
+final class TyresField implements FieldInterface
 {
     use FieldTrait;
 
@@ -15,7 +15,7 @@ final class SeriesField implements FieldInterface
         return (new self())
             ->setProperty($propertyName)
             ->setLabel($label)
-            ->setFormType(SeriesType::class)
+            ->setFormType(TyresType::class)
         ;
     }
 }

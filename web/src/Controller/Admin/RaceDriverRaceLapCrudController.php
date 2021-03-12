@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Admin\Field\TimeWithMillisecondsField;
+use App\Admin\Field\TyresField;
 use App\Entity\RaceDriverRaceLap;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -29,6 +30,7 @@ class RaceDriverRaceLapCrudController extends AbstractCrudController
         $timeOfDay = TimeField::new('timeOfDay')
             ->setFormTypeOption('with_seconds', true)
         ;
+        $tyres = TyresField::new('tyres');
 
         return [
             $raceDriver,
@@ -36,6 +38,7 @@ class RaceDriverRaceLapCrudController extends AbstractCrudController
             $position,
             $time,
             $timeOfDay,
+            $tyres,
         ];
     }
 }

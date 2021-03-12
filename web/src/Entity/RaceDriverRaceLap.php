@@ -51,6 +51,11 @@ class RaceDriverRaceLap implements Interfaces\ArrayInterface, TimestampableInter
     private $timeOfDay;
 
     /**
+     * @ORM\Column(type="string", length=16, nullable=true)
+     */
+    private $tyres;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\RaceDriver", inversedBy="raceDriverRaceLaps")
      * @ORM\JoinColumn()
      */
@@ -114,6 +119,18 @@ class RaceDriverRaceLap implements Interfaces\ArrayInterface, TimestampableInter
     public function setTimeOfDay(?\DateTimeInterface $timeOfDay): self
     {
         $this->timeOfDay = $timeOfDay;
+
+        return $this;
+    }
+
+    public function getTyres(): ?string
+    {
+        return $this->tyres;
+    }
+
+    public function setTyres(?string $tyres): self
+    {
+        $this->tyres = $tyres;
 
         return $this;
     }

@@ -35,6 +35,11 @@ class RaceDriver implements Interfaces\ArrayInterface, TimestampableInterface
     private $raceStartingGridPosition;
 
     /**
+     * @ORM\Column(type="string", length=16, nullable=true)
+     */
+    private $raceStartingGridTyres;
+
+    /**
      * @ORM\Column(type="smallint", nullable=true)
      */
     private $raceResultPosition;
@@ -119,6 +124,18 @@ class RaceDriver implements Interfaces\ArrayInterface, TimestampableInterface
     public function setRaceStartingGridPosition(?int $raceStartingGridPosition): self
     {
         $this->raceStartingGridPosition = $raceStartingGridPosition;
+
+        return $this;
+    }
+
+    public function getRaceStartingGridTyres(): ?string
+    {
+        return $this->raceStartingGridTyres;
+    }
+
+    public function setRaceStartingGridTyres(?string $raceStartingGridTyres): self
+    {
+        $this->raceStartingGridTyres = $raceStartingGridTyres;
 
         return $this;
     }

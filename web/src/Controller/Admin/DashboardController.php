@@ -12,7 +12,6 @@ use App\Entity\Season;
 use App\Entity\SeasonDriver;
 use App\Entity\SeasonTeam;
 use App\Entity\Team;
-use App\Entity\TeamVehicle;
 use App\Entity\User;
 use App\Entity\UserAction;
 use App\Entity\UserBlock;
@@ -63,7 +62,6 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Season Teams', 'fas fa-folder-open', SeasonTeam::class),
             MenuItem::linkToCrud('Season Drivers', 'fas fa-folder-open', SeasonDriver::class),
             MenuItem::linkToCrud('Teams', 'fas fa-folder-open', Team::class),
-            MenuItem::linkToCrud('Team Vehicles', 'fas fa-folder-open', TeamVehicle::class),
             MenuItem::linkToCrud('Drivers', 'fas fa-folder-open', Driver::class),
             MenuItem::linkToCrud('Races', 'fas fa-folder-open', Race::class),
             MenuItem::linkToCrud('Race Drivers', 'fas fa-folder-open', RaceDriver::class),

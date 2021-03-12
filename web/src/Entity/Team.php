@@ -66,9 +66,9 @@ class Team implements Interfaces\ArrayInterface, TimestampableInterface
     private $defunctedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\TeamVehicle", mappedBy="team")
+     * @ORM\OneToMany(targetEntity="App\Entity\RaceDriver", mappedBy="team")
      */
-    private $teamVehicles;
+    private $raceDrivers;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\SeasonTeam", mappedBy="team")
@@ -77,7 +77,7 @@ class Team implements Interfaces\ArrayInterface, TimestampableInterface
 
     public function __construct()
     {
-        $this->teamVehicles = new ArrayCollection();
+        $this->raceDrivers = new ArrayCollection();
         $this->seasonTeams = new ArrayCollection();
     }
 
@@ -176,29 +176,29 @@ class Team implements Interfaces\ArrayInterface, TimestampableInterface
     }
 
     /**
-     * @return Collection|TeamVehicle[]
+     * @return Collection|RaceDriver[]
      */
-    public function getTeamVehicles(): Collection
+    public function getRaceDrivers(): Collection
     {
-        return $this->teamVehicles;
+        return $this->raceDrivers;
     }
 
-    public function addTeamVehicle(TeamVehicle $teamVehicle): self
+    public function addRaceDriver(RaceDriver $raceDriver): self
     {
-        if (!$this->teamVehicles->contains($teamVehicle)) {
-            $this->teamVehicles[] = $teamVehicle;
-            $teamVehicle->setTeam($this);
+        if (!$this->raceDrivers->contains($raceDriver)) {
+            $this->raceDrivers[] = $raceDriver;
+            $raceDriver->setTeam($this);
         }
 
         return $this;
     }
 
-    public function removeTeamVehicle(TeamVehicle $teamVehicle): self
+    public function removeRaceDriver(RaceDriver $raceDriver): self
     {
-        if ($this->teamVehicles->contains($teamVehicle)) {
-            $this->teamVehicles->removeElement($teamVehicle);
-            if ($teamVehicle->getTeam() === $this) {
-                $teamVehicle->setTeam(null);
+        if ($this->raceDrivers->contains($raceDriver)) {
+            $this->raceDrivers->removeElement($raceDriver);
+            if ($raceDriver->getTeam() === $this) {
+                $raceDriver->setTeam(null);
             }
         }
 

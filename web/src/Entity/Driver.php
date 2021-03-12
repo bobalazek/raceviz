@@ -50,11 +50,6 @@ class Driver implements Interfaces\ArrayInterface, TimestampableInterface
     private $url;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\TeamVehicle", mappedBy="driver")
-     */
-    private $teamVehicles;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\RaceDriver", mappedBy="driver")
      */
     private $raceDrivers;
@@ -66,7 +61,6 @@ class Driver implements Interfaces\ArrayInterface, TimestampableInterface
 
     public function __construct()
     {
-        $this->teamVehicles = new ArrayCollection();
         $this->raceDrivers = new ArrayCollection();
         $this->seasonDrivers = new ArrayCollection();
     }
@@ -130,37 +124,7 @@ class Driver implements Interfaces\ArrayInterface, TimestampableInterface
     }
 
     /**
-     * @return Collection|TeamVehicle[]
-     */
-    public function getTeamVehicles(): Collection
-    {
-        return $this->teamVehicles;
-    }
-
-    public function addTeamVehicle(TeamVehicle $teamVehicle): self
-    {
-        if (!$this->teamVehicles->contains($teamVehicle)) {
-            $this->teamVehicles[] = $teamVehicle;
-            $teamVehicle->setDriver($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTeamVehicle(TeamVehicle $teamVehicle): self
-    {
-        if ($this->teamVehicles->contains($teamVehicle)) {
-            $this->teamVehicles->removeElement($teamVehicle);
-            if ($teamVehicle->getDriver() === $this) {
-                $teamVehicle->setDriver(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|TeamVehicle[]
+     * @return Collection|TeamDriver[]
      */
     public function getRaceDrivers(): Collection
     {

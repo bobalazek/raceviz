@@ -21,7 +21,6 @@ function EditDriverFormWrapper() {
     store.dispatch(setSelectedRaceDriver(null));
   };
 
-
   return (
     <div>
       <h2>
@@ -34,7 +33,7 @@ function EditDriverFormWrapper() {
           Back to List
         </Button>
       </h2>
-      <EditDriverForm />
+      <EditDriverForm selectedRaceDriver={selectedRaceDriver} />
     </div>
   )
 }

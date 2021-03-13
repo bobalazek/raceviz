@@ -1,13 +1,13 @@
 import React from 'react';
 
-import DriversTableWrapper from './DriversList/DriversTableWrapper';
-import NewDriverFormWrapper from './DriversList/NewDriverFormWrapper';
+import DriversTableWrapper from './DriversTableWrapper';
+import NewDriverFormWrapper from './NewDriverFormWrapper';
 import {
   useEventListener,
-} from '../../hooks';
+} from '../../../hooks';
 import {
   DriversService,
-} from '../../api';
+} from '../../../api';
 
 function DriversListView() {
   DriversService.load();

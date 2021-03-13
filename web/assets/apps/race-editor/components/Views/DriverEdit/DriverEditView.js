@@ -1,6 +1,6 @@
 import React from 'react';
 
-import EditDriverFormWrapper from './DriverEdit/EditDriverFormWrapper';
+import EditDriverFormWrapper from './EditDriverFormWrapper';
 
 function DriverEditView() {
   return (

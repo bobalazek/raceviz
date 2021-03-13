@@ -17,6 +17,7 @@
   <script>
     var appData = {
       race: {{ race.toArray() | json_encode | raw }},
+      tyres: {{ app_tyres | json_encode | raw }},
     };
   </script>
   {{ encore_entry_script_tags('race-editor') }}

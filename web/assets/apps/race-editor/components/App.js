@@ -3,8 +3,8 @@ import {
   useSelector
 } from 'react-redux';
 
-import DriversListView from './Views/DriversListView';
-import DriverEditView from './Views/DriverEditView';
+import DriversListView from './Views/DriversList/DriversListView';
+import DriverEditView from './Views/DriverEdit/DriverEditView';
 import {
   selectSelectedRaceDriver,
 } from '../store/appSlice';

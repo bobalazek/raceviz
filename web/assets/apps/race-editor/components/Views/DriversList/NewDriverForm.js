@@ -24,6 +24,9 @@ import {
   useSeasonsDriversFetch,
   useSeasonsTeamsFetch,
 } from '../../../hooks';
+import {
+  renderFormErrors,
+} from '../../Shared/helpers';
 
 /* global appData */
 
@@ -105,44 +108,6 @@ function NewDriverForm() {
     }
   };
 
-  const renderFormErrors = (errors, isAlert = false) => {
-    if (!errors) {
-      return;
-    }
-
-    if (isAlert) {
-      return (
-        <>
-          {errors.map((error, index) => {
-            return (
-              <div
-                key={index}
-                className="alert alert-danger"
-              >
-                {error}
-              </div>
-            );
-          })}
-        </>
-      );
-    }
-
-    return (
-      <>
-        {errors.map((error, index) => {
-          return (
-            <Form.Control.Feedback
-              key={index}
-              type="invalid"
-            >
-              {error}
-            </Form.Control.Feedback>
-          );
-        })}
-      </>
-    );
-  };
-
   return (
     <Form noValidate onSubmit={onSubmit}>
       <div className="row">
@@ -200,6 +165,8 @@ function NewDriverForm() {
       </div>
       {renderFormErrors(formErrors?.['*'], true)}
       <Button
+        block
+        size="lg"
         variant="primary"
         type="submit"
         disabled={formSubmitting}

@@ -40,9 +40,15 @@ class RacesController extends AbstractApiController
 
         /** @var RaceRepository $raceRepository */
         $raceRepository = $this->em->getRepository(RaceDriver::class);
-        $raceDrivers = $raceRepository->findBy([
-            'race' => $race,
-        ]);
+        $raceDrivers = $raceRepository
+            ->createQueryBuilder('rd')
+            ->where('rd.race = :race')
+            ->leftJoin('rd.team', 't')
+            ->setParameter('race', $race)
+            ->orderBy('t.name')
+            ->getQuery()
+            ->getResult()
+        ;
 
         $data = [];
         foreach ($raceDrivers as $raceDriver) {

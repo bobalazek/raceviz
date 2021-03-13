@@ -10,13 +10,15 @@ import {
   API_GET_SEASONS_TEAMS,
 } from './api';
 
-export const useSeasonsDriversFetch = (args) => {
+/* global appData */
+
+export const useSeasonsDriversFetch = () => {
   const [loading, setLoading] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
 
-  const seasonSlug = args?.seasonSlug;
+  const seasonSlug = appData.race.season.slug;
 
   useEffect(() => {
     setLoading(true);
@@ -46,13 +48,13 @@ export const useSeasonsDriversFetch = (args) => {
   };
 };
 
-export const useSeasonsTeamsFetch = (args) => {
+export const useSeasonsTeamsFetch = () => {
   const [loading, setLoading] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
 
-  const seasonSlug = args?.seasonSlug;
+  const seasonSlug = appData.race.season.slug;
 
   useEffect(() => {
     setLoading(true);

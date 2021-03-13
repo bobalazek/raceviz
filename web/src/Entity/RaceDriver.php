@@ -312,6 +312,14 @@ class RaceDriver implements Interfaces\ArrayInterface, TimestampableInterface
     {
         return [
             'id' => $this->getId(),
+            'race_starting_grid_position' => $this->getRaceStartingGridPosition(),
+            'race_starting_grid_tyres' => $this->getRaceStartingGridTyres(),
+            'race_result_position' => $this->getRaceResultPosition(),
+            'race_result_points' => $this->getRaceResultPoints(),
+            'race_result_time' => $this->getRaceResultTime(),
+            'race_result_laps_behind' => $this->getRaceResultLapsBehind(),
+            'race_result_status' => $this->getRaceResultStatus(),
+            'race_result_status_note' => $this->getRaceResultStatusNote(),
             'team' => $this->getTeam()
                 ? $this->getTeam()->toArray()
                 : null,

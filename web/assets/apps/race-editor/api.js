@@ -18,12 +18,11 @@ export const API_GET_RACES_DRIVERS = '/api/v1/races/{raceSlug}/drivers';
 export const API_POST_RACES_DRIVERS = '/api/v1/races/{raceSlug}/drivers';
 export const API_DELETE_RACES_DRIVERS = '/api/v1/races/{raceSlug}/drivers/{raceDriverId}';
 
+/* global appData */
+
 export const DriversService = {
-  load: async (args) => {
-    const raceSlug = args?.raceSlug;
-    if (!raceSlug) {
-      throw new Error('Please set a valid slug');
-    }
+  load: async () => {
+    const raceSlug = appData.race.slug;
 
     store.dispatch(setLoading(true));
 
@@ -43,10 +42,7 @@ export const DriversService = {
     }
   },
   delete: async (args) => {
-    const raceSlug = args?.raceSlug;
-    if (!raceSlug) {
-      throw new Error('Please set a valid slug');
-    }
+    const raceSlug = appData.race.slug;
 
     const raceDriverId = args?.raceDriver.id;
     if (!raceDriverId) {

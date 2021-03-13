@@ -1,20 +1,27 @@
 import React from 'react';
+import {
+  useStore,
+} from 'react-redux';
 import PropTypes from 'prop-types';
 
 import {
   DriversService,
 } from '../../../api';
+import {
+  setSelectedRaceDriver,
+} from '../../../store/appSlice';
 import confirm from '../../Shared/ConfirmDialog';
-
-/* global appData */
+import { Button } from 'react-bootstrap';
 
 function DriversTable({
   data,
 }) {
+  const store = useStore();
+
   const onEditButtonClick = (raceDriver, event) => {
     event.preventDefault();
 
-    // TODO
+    store.dispatch(setSelectedRaceDriver(raceDriver));
   };
 
   const onDeleteButtonClick = async (raceDriver, event) => {
@@ -24,7 +31,6 @@ function DriversTable({
       'Are you sure you want to remove the driver?'
     )) {
       DriversService.delete({
-        raceSlug: appData.race.slug,
         raceDriver,
       })
     }
@@ -48,8 +54,20 @@ function DriversTable({
                 <td>{entry.team.name}</td>
                 <td>
                   <div className="btn-group">
-                    <a href="#" className="btn btn-sm btn-primary" onClick={onEditButtonClick.bind(this, entry)}>Edit</a>
-                    <a href="#" className="btn btn-sm btn-danger" onClick={onDeleteButtonClick.bind(this, entry)}>Delete</a>
+                    <Button
+                      size="sm"
+                      variant="primary"
+                      onClick={onEditButtonClick.bind(this, entry)}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="danger"
+                      onClick={onDeleteButtonClick.bind(this, entry)}
+                    >
+                      Delete
+                    </Button>
                   </div>
                 </td>
               </tr>

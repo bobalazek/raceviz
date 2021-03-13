@@ -1,7 +1,7 @@
 import React from 'react';
 
 import DriversTableWrapper from './DriversList/DriversTableWrapper';
-import NewDriverForm from './DriversList/NewDriverForm';
+import NewDriverFormWrapper from './DriversList/NewDriverFormWrapper';
 import {
   useEventListener,
 } from '../../hooks';
@@ -9,21 +9,15 @@ import {
   DriversService,
 } from '../../api';
 
-/* global appData */
-
 function DriversListView() {
-  DriversService.load({
-    raceSlug: appData.race.slug,
-  });
+  DriversService.load();
   useEventListener('driver-editor:new-driver', () => {
-    DriversService.load({
-      raceSlug: appData.race.slug,
-    });
+    DriversService.load();
   });
 
   return (
     <>
-      <NewDriverForm />
+      <NewDriverFormWrapper />
       <hr />
       <DriversTableWrapper />
     </>

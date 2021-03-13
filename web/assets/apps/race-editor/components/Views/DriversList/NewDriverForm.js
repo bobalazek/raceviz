@@ -30,14 +30,10 @@ import {
 function NewDriverForm() {
   const {
     data: seasonDrivers,
-  } = useSeasonsDriversFetch({
-    seasonSlug: appData.race.season.slug,
-  });
+  } = useSeasonsDriversFetch();
   const {
     data: seasonTeams,
-  } = useSeasonsTeamsFetch({
-    seasonSlug: appData.race.season.slug,
-  });
+  } = useSeasonsTeamsFetch();
   const [driverId, setDriverId] = useState(0);
   const [teamId, setTeamId] = useState(0);
   const [formSubmitting, setFormSubmitting] = useState(false);
@@ -148,72 +144,69 @@ function NewDriverForm() {
   };
 
   return (
-    <div>
-      <h3>New Driver</h3>
-      <Form noValidate onSubmit={onSubmit}>
-        <div className="row">
-          <div className="col-md-6">
-            <Form.Group>
-              <Form.Label>Driver</Form.Label>
-              <Form.Control
-                as="select"
-                value={driverId}
-                onChange={onDriverChange}
-                isInvalid={!!formErrors?.['driver']}
-              >
-                <option value="0">-- none --</option>
-                {seasonDrivers.map((entry) => {
-                  const alreadyAddedDriver = addedDriverIds.includes(entry.driver.id);
-                  return (
-                    <option
-                      key={entry.driver.id}
-                      value={entry.driver.id}
-                      disabled={alreadyAddedDriver}
-                    >
-                      {entry.driver.name}
-                      {alreadyAddedDriver && ' (already added)'}
-                    </option>
-                  );
-                })}
-              </Form.Control>
-              {renderFormErrors(formErrors?.['driver'])}
-            </Form.Group>
-          </div>
-          <div className="col-md-6">
-            <Form.Group>
-              <Form.Label>Team</Form.Label>
-              <Form.Control
-                as="select"
-                value={teamId}
-                onChange={onTeamChange}
-                isInvalid={!!formErrors?.['team']}
-              >
-                <option value="0">-- none --</option>
-                {seasonTeams.map((entry) => {
-                  return (
-                    <option
-                      key={entry.team.id}
-                      value={entry.team.id}
-                    >
-                      {entry.team.name}
-                    </option>
-                  );
-                })}
-              </Form.Control>
-              {renderFormErrors(formErrors?.['team'])}
-            </Form.Group>
-          </div>
+    <Form noValidate onSubmit={onSubmit}>
+      <div className="row">
+        <div className="col-md-6">
+          <Form.Group>
+            <Form.Label>Driver</Form.Label>
+            <Form.Control
+              as="select"
+              value={driverId}
+              onChange={onDriverChange}
+              isInvalid={!!formErrors?.['driver']}
+            >
+              <option value="0">-- none --</option>
+              {seasonDrivers.map((entry) => {
+                const alreadyAddedDriver = addedDriverIds.includes(entry.driver.id);
+                return (
+                  <option
+                    key={entry.driver.id}
+                    value={entry.driver.id}
+                    disabled={alreadyAddedDriver}
+                  >
+                    {entry.driver.name}
+                    {alreadyAddedDriver && ' (already added)'}
+                  </option>
+                );
+              })}
+            </Form.Control>
+            {renderFormErrors(formErrors?.['driver'])}
+          </Form.Group>
         </div>
-        {renderFormErrors(formErrors?.['*'], true)}
-        <Button
-          variant="primary"
-          type="submit"
-          disabled={formSubmitting}
-        >
-          Add new Race Driver
-        </Button>
-      </Form>
-    </div>
+        <div className="col-md-6">
+          <Form.Group>
+            <Form.Label>Team</Form.Label>
+            <Form.Control
+              as="select"
+              value={teamId}
+              onChange={onTeamChange}
+              isInvalid={!!formErrors?.['team']}
+            >
+              <option value="0">-- none --</option>
+              {seasonTeams.map((entry) => {
+                return (
+                  <option
+                    key={entry.team.id}
+                    value={entry.team.id}
+                  >
+                    {entry.team.name}
+                  </option>
+                );
+              })}
+            </Form.Control>
+            {renderFormErrors(formErrors?.['team'])}
+          </Form.Group>
+        </div>
+      </div>
+      {renderFormErrors(formErrors?.['*'], true)}
+      <Button
+        variant="primary"
+        type="submit"
+        disabled={formSubmitting}
+      >
+        Add new Race Driver
+      </Button>
+    </Form>
   );
 }
 

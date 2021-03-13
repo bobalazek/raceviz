@@ -5,11 +5,11 @@ function DriversTable({
   data,
 }) {
   const onEditButtonClick = () => {
-
+    // TODO
   };
 
   const onDeleteButtonClick = () => {
-
+    // TODO
   };
 
   return (

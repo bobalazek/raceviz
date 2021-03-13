@@ -188,6 +188,7 @@ class Season implements Interfaces\ArrayInterface, TimestampableInterface
         return [
             'id' => $this->getId(),
             'name' => $this->getName(),
+            'slug' => $this->getSlug(),
         ];
     }
 }

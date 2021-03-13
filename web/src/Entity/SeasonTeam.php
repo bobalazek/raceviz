@@ -79,6 +79,9 @@ class SeasonTeam implements Interfaces\ArrayInterface, TimestampableInterface
     {
         return [
             'id' => $this->getId(),
+            'team' => $this->getTeam()
+                ? $this->getTeam()->toArray()
+                : null,
         ];
     }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {
-  useRaceDriversListFetch,
+  useRacesDriversFetch,
 } from '../hooks';
 import DriversTable from './DriversTable';
 
@@ -13,7 +13,7 @@ function DriversTableWrapper() {
     loading,
     data,
     error,
-  } = useRaceDriversListFetch({
+  } = useRacesDriversFetch({
     slug: appData.race.slug,
   });
 

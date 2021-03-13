@@ -14,7 +14,7 @@ $(document).ready(function () {
 /********** Functions **********/
 function setupEvents() {
   bsCustomFileInput.init();
-  $('select').appSelect();
+  $('.select2').appSelect();
   $('.infinite-scroll-wrapper').appInfiniteScroll();
   $('.autocomplete-input').appAutocomplete();
   $('.custom-file-input, .custom-file-url-input').appCustomFile();

@@ -120,6 +120,12 @@ class SeasonDriver implements Interfaces\ArrayInterface, TimestampableInterface
         return [
             'id' => $this->getId(),
             'number' => $this->getNumber(),
+            'driver' => $this->getDriver()
+                ? $this->getDriver()->toArray()
+                : null,
+            'team' => $this->getTeam()
+                ? $this->getTeam()->toArray()
+                : null,
         ];
     }
 }

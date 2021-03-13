@@ -189,9 +189,13 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
         return [
             'id' => $this->getId(),
             'name' => $this->getName(),
+            'slug' => $this->getSlug(),
             'laps' => $this->getLaps(),
             'url' => $this->getUrl(),
             'started_at' => $this->getStartedAt()->format('Y-m-d'),
+            'season' => $this->getSeason()
+                ? $this->getSeason()->toArray()
+                : null,
         ];
     }
 }

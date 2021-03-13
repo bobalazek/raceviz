@@ -57,9 +57,9 @@ class RacesController extends AbstractApiController
     /**
      * @Route("/api/v1/races/{slug}/drivers", name="api.v1.races.drivers.new", methods={"POST"})
      */
-    public function driversNew(int $slug, Request $request)
+    public function driversNew(string $slug, Request $request)
     {
-        if ($this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException();
         }
 
@@ -72,11 +72,14 @@ class RacesController extends AbstractApiController
 
         $form = $this->createForm(RaceDriverType::class, $raceDriver, [
             'filter_race' => $race,
+            //'csrf_protection' => false,
         ]);
         $form->submit($request->request->all());
 
         if (!$form->isValid()) {
-            // TODO
+            return $this->json([
+                'errors' => $this->getFormErrors($form),
+            ]);
         }
 
         return $this->json([
@@ -91,7 +94,7 @@ class RacesController extends AbstractApiController
      */
     public function driversDelete(int $slug)
     {
-        if ($this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException();
         }
 

@@ -185,10 +185,15 @@ class Driver implements Interfaces\ArrayInterface, TimestampableInterface
 
     public function toArray(): array
     {
+        $firstName = $this->getFirstName();
+        $lastName = $this->getLastName();
+
         return [
             'id' => $this->getId(),
-            'first_name' => $this->getFirstName(),
-            'last_name' => $this->getLastName(),
+            'name' => $firstName . ' ' . $lastName,
+            'first_name' => $firstName,
+            'last_name' => $lastName,
+            'slug' => $this->getSlug(),
             'country_code' => $this->getCountryCode(),
             'url' => $this->getUrl(),
         ];

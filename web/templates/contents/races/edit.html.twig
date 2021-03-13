@@ -16,10 +16,7 @@
   {{ parent() }}
   <script>
     var appData = {
-      race: {
-        id: {{ race.getId() }},
-        slug: '{{ race.getSlug() }}',
-      },
+      race: {{ race.toArray() | json_encode | raw }},
     };
   </script>
   {{ encore_entry_script_tags('race-editor') }}

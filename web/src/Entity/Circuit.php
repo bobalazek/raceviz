@@ -152,6 +152,7 @@ class Circuit implements Interfaces\ArrayInterface, TimestampableInterface
         return [
             'id' => $this->getId(),
             'name' => $this->getName(),
+            'slug' => $this->getSlug(),
             'location' => $this->getLocation(),
             'country_code' => $this->getCountryCode(),
             'url' => $this->getUrl(),

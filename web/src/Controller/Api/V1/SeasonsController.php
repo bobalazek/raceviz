@@ -37,11 +37,11 @@ class SeasonsController extends AbstractApiController
     }
 
     /**
-     * @Route("/api/v1/seasons/{slug}", name="api.v1.seasons.detail", methods={"GET"})
+     * @Route("/api/v1/seasons/{seasonSlug}", name="api.v1.seasons.detail", methods={"GET"})
      */
-    public function detail(int $slug)
+    public function detail(string $seasonSlug)
     {
-        $season = $this->_getSeason($slug);
+        $season = $this->_getSeason($seasonSlug);
 
         $data = $season->toArray();
 
@@ -53,11 +53,11 @@ class SeasonsController extends AbstractApiController
     }
 
     /**
-     * @Route("/api/v1/seasons/{slug}/drivers", name="api.v1.seasons.drivers", methods={"GET"})
+     * @Route("/api/v1/seasons/{seasonSlug}/drivers", name="api.v1.seasons.drivers", methods={"GET"})
      */
-    public function drivers(string $slug)
+    public function drivers(string $seasonSlug)
     {
-        $season = $this->_getSeason($slug);
+        $season = $this->_getSeason($seasonSlug);
 
         /** @var SeasonDriverRepository $seasonDriverRepository */
         $seasonDriverRepository = $this->em->getRepository(SeasonDriver::class);
@@ -78,11 +78,11 @@ class SeasonsController extends AbstractApiController
     }
 
     /**
-     * @Route("/api/v1/seasons/{slug}/teams", name="api.v1.seasons.teams", methods={"GET"})
+     * @Route("/api/v1/seasons/{seasonSlug}/teams", name="api.v1.seasons.teams", methods={"GET"})
      */
-    public function teams(string $slug)
+    public function teams(string $seasonSlug)
     {
-        $season = $this->_getSeason($slug);
+        $season = $this->_getSeason($seasonSlug);
 
         /** @var SeasonTeamRepository $seasonTeamRepository */
         $seasonTeamRepository = $this->em->getRepository(SeasonTeam::class);
@@ -105,13 +105,13 @@ class SeasonsController extends AbstractApiController
     /**
      * @return Season
      */
-    private function _getSeason(string $slug)
+    private function _getSeason(string $seasonSlug)
     {
         /** @var SeasonRepository $seasonRepository */
         $seasonRepository = $this->em->getRepository(Season::class);
 
         $season = $seasonRepository->findOneBy([
-            'slug' => $slug,
+            'slug' => $seasonSlug,
         ]);
         if (!$season) {
             throw $this->createNotFoundException();

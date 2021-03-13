@@ -15,11 +15,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class RacesController extends AbstractApiController
 {
     /**
-     * @Route("/api/v1/races/{slug}", name="api.v1.races.detail", methods={"GET"})
+     * @Route("/api/v1/races/{raceSlug}", name="api.v1.races.detail", methods={"GET"})
      */
-    public function detail(int $slug)
+    public function detail(int $raceSlug)
     {
-        $race = $this->_getRace($slug);
+        $race = $this->_getRace($raceSlug);
 
         $data = $race->toArray();
 
@@ -31,11 +31,11 @@ class RacesController extends AbstractApiController
     }
 
     /**
-     * @Route("/api/v1/races/{slug}/drivers", name="api.v1.races.drivers", methods={"GET"})
+     * @Route("/api/v1/races/{raceSlug}/drivers", name="api.v1.races.drivers", methods={"GET"})
      */
-    public function drivers(string $slug)
+    public function drivers(string $raceSlug)
     {
-        $race = $this->_getRace($slug);
+        $race = $this->_getRace($raceSlug);
 
         /** @var RaceRepository $raceRepository */
         $raceRepository = $this->em->getRepository(RaceDriver::class);
@@ -56,15 +56,15 @@ class RacesController extends AbstractApiController
     }
 
     /**
-     * @Route("/api/v1/races/{slug}/drivers", name="api.v1.races.drivers.new", methods={"POST"})
+     * @Route("/api/v1/races/{raceSlug}/drivers", name="api.v1.races.drivers.new", methods={"POST"})
      */
-    public function driversNew(string $slug, Request $request)
+    public function driversNew(string $raceSlug, Request $request)
     {
         if (!$this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException();
         }
 
-        $race = $this->_getRace($slug);
+        $race = $this->_getRace($raceSlug);
         $data = $request->request->all();
 
         $raceDriver = new RaceDriver();
@@ -95,17 +95,20 @@ class RacesController extends AbstractApiController
     }
 
     /**
-     * @Route("/api/v1/races/{slug}/drivers", name="api.v1.races.drivers.delete", methods={"DELETE"})
+     * @Route("/api/v1/races/{raceSlug}/drivers/{raceDriverId}", name="api.v1.races.drivers.delete", methods={"DELETE"})
      */
-    public function driversDelete(int $slug)
+    public function driversDelete(string $raceSlug, int $raceDriverId)
     {
         if (!$this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException();
         }
 
-        $race = $this->_getRace($slug);
+        $this->_getRace($raceSlug);
 
-        // TODO
+        $raceDriver = $this->_getRaceDriver($raceDriverId);
+
+        $this->em->remove($raceDriver);
+        $this->em->flush();
 
         return $this->json([
             'success' => true,
@@ -117,18 +120,36 @@ class RacesController extends AbstractApiController
     /**
      * @return Race
      */
-    private function _getRace(string $slug)
+    private function _getRace(string $raceSlug)
     {
         /** @var RaceRepository $raceRepository */
         $raceRepository = $this->em->getRepository(Race::class);
 
         $race = $raceRepository->findOneBy([
-            'slug' => $slug,
+            'slug' => $raceSlug,
         ]);
         if (!$race) {
             throw $this->createNotFoundException();
         }
 
         return $race;
+    }
+
+    /**
+     * @return RaceDriver
+     */
+    private function _getRaceDriver(int $raceDriverId)
+    {
+        /** @var RaceDriverRepository $raceDriverRepository */
+        $raceDriverRepository = $this->em->getRepository(RaceDriver::class);
+
+        $raceDriver = $raceDriverRepository->findOneBy([
+            'id' => $raceDriverId,
+        ]);
+        if (!$raceDriver) {
+            throw $this->createNotFoundException();
+        }
+
+        return $raceDriver;
     }
 }

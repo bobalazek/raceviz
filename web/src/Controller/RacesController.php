@@ -41,11 +41,11 @@ class RacesController extends AbstractController
     }
 
     /**
-     * @Route("/races/{slug}", name="races.detail")
+     * @Route("/races/{raceSlug}", name="races.detail")
      */
-    public function detail(string $slug)
+    public function detail(string $raceSlug)
     {
-        $race = $this->_getRace($slug);
+        $race = $this->_getRace($raceSlug);
 
         return $this->render('contents/races/detail.html.twig', [
             'race' => $race,
@@ -53,15 +53,15 @@ class RacesController extends AbstractController
     }
 
     /**
-     * @Route("/races/{slug}/edit", name="races.edit")
+     * @Route("/races/{raceSlug}/edit", name="races.edit")
      */
-    public function edit(string $slug)
+    public function edit(string $raceSlug)
     {
         if (!$this->isGranted('ROLE_ADMIN')) {
             return $this->redirectToRoute('home');
         }
 
-        $race = $this->_getRace($slug);
+        $race = $this->_getRace($raceSlug);
 
         return $this->render('contents/races/edit.html.twig', [
             'race' => $race,
@@ -71,13 +71,13 @@ class RacesController extends AbstractController
     /**
      * @return Race
      */
-    private function _getRace(string $slug)
+    private function _getRace(string $raceSlug)
     {
         /** @var RaceRepository $raceRepository */
         $raceRepository = $this->em->getRepository(Race::class);
 
         $race = $raceRepository->findOneBy([
-            'slug' => $slug,
+            'slug' => $raceSlug,
         ]);
         if (!$race) {
             throw $this->createNotFoundException();

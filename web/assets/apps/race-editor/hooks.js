@@ -24,7 +24,7 @@ export const useSeasonsDriversFetch = (args) => {
     (async () => {
       try {
         const url = API_GET_SEASONS_DRIVERS
-          .replace('{slug}', slug)
+          .replace('{seasonSlug}', slug)
         ;
 
         const response = await axios.get(url);
@@ -60,7 +60,7 @@ export const useSeasonsTeamsFetch = (args) => {
     (async () => {
       try {
         const url = API_GET_SEASONS_TEAMS
-          .replace('{slug}', slug)
+          .replace('{seasonSlug}', slug)
         ;
 
         const response = await axios.get(url);

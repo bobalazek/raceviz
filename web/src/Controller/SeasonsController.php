@@ -61,15 +61,15 @@ class SeasonsController extends AbstractController
     }
 
     /**
-     * @Route("/seasons/{slug}", name="seasons.detail")
+     * @Route("/seasons/{seasonSlug}", name="seasons.detail")
      */
-    public function detail(string $slug)
+    public function detail(string $seasonSlug)
     {
         /** @var SeasonRepository $seasonRepository */
         $seasonRepository = $this->em->getRepository(Season::class);
 
         $season = $seasonRepository->findOneBy([
-            'slug' => $slug,
+            'slug' => $seasonSlug,
         ]);
         if (!$season) {
             throw $this->createNotFoundException();

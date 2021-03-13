@@ -81,7 +81,7 @@ function NewDriverForm() {
 
     try {
       const url = API_POST_RACES_DRIVERS
-        .replace('{slug}', appData.race.slug)
+        .replace('{raceSlug}', appData.race.slug)
       ;
 
       const response = await axios.post(url, qs.stringify({

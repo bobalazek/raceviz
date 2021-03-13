@@ -23,8 +23,9 @@ function App() {
 
   return (
     <>
-      <DriversTableWrapper />
       <NewDriverForm />
+      <hr />
+      <DriversTableWrapper />
     </>
   );
 }

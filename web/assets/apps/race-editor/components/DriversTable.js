@@ -24,7 +24,7 @@ function DriversTable({
       'Are you sure you want to remove the driver?'
     )) {
       DriversService.delete({
-        slug: appData.race.slug,
+        raceSlug: appData.race.slug,
         raceDriver,
       })
     }

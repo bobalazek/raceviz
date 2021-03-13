@@ -4,7 +4,7 @@
   <div class="container my-4 text-center">
     <p>Here you'll soon see the awesome 3D visualisazion of the track!</p>
     <p>Meanwhile, if you are an admin, you can edit the data at <a href="{{ url('races.edit', {
-      slug: race.getSlug(),
+      raceSlug: race.getSlug(),
     }) }}">here</a>.</p>
   </div>
 {% endblock %}

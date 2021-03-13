@@ -20,8 +20,8 @@ export const API_DELETE_RACES_DRIVERS = '/api/v1/races/{raceSlug}/drivers/{raceD
 
 export const DriversService = {
   load: async (args) => {
-    const slug = args?.slug;
-    if (!slug) {
+    const raceSlug = args?.raceSlug;
+    if (!raceSlug) {
       throw new Error('Please set a valid slug');
     }
 
@@ -29,7 +29,7 @@ export const DriversService = {
 
     try {
       const url = API_GET_RACES_DRIVERS
-        .replace('{raceSlug}', slug)
+        .replace('{raceSlug}', raceSlug)
       ;
 
       const response = await axios.get(url);
@@ -43,8 +43,8 @@ export const DriversService = {
     }
   },
   delete: async (args) => {
-    const slug = args?.slug;
-    if (!slug) {
+    const raceSlug = args?.raceSlug;
+    if (!raceSlug) {
       throw new Error('Please set a valid slug');
     }
 
@@ -55,7 +55,7 @@ export const DriversService = {
 
     try {
       const url = API_DELETE_RACES_DRIVERS
-        .replace('{raceSlug}', slug)
+        .replace('{raceSlug}', raceSlug)
         .replace('{raceDriverId}', raceDriverId)
       ;
 
@@ -64,7 +64,7 @@ export const DriversService = {
       toast.success('The driver was successfully deleted!');
 
       DriversService.load({
-        slug,
+        raceSlug,
       });
     } catch (error) {
       toast.error(error.response.data.detail);

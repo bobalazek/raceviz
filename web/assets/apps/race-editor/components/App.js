@@ -13,11 +13,11 @@ import {
 
 function App() {
   DriversService.load({
-    slug: appData.race.slug,
+    raceSlug: appData.race.slug,
   });
   useEventListener('driver-editor:new-driver', () => {
     DriversService.load({
-      slug: appData.race.slug,
+      raceSlug: appData.race.slug,
     });
   });
 

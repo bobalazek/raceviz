@@ -16,7 +16,7 @@ export const useSeasonsDriversFetch = (args) => {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
 
-  const slug = args?.slug;
+  const seasonSlug = args?.seasonSlug;
 
   useEffect(() => {
     setLoading(true);
@@ -24,7 +24,7 @@ export const useSeasonsDriversFetch = (args) => {
     (async () => {
       try {
         const url = API_GET_SEASONS_DRIVERS
-          .replace('{seasonSlug}', slug)
+          .replace('{seasonSlug}', seasonSlug)
         ;
 
         const response = await axios.get(url);
@@ -36,7 +36,7 @@ export const useSeasonsDriversFetch = (args) => {
         setLoaded(true);
       }
     })();
-  }, [slug]);
+  }, [seasonSlug]);
 
   return {
     loading,
@@ -52,7 +52,7 @@ export const useSeasonsTeamsFetch = (args) => {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
 
-  const slug = args?.slug;
+  const seasonSlug = args?.seasonSlug;
 
   useEffect(() => {
     setLoading(true);
@@ -60,7 +60,7 @@ export const useSeasonsTeamsFetch = (args) => {
     (async () => {
       try {
         const url = API_GET_SEASONS_TEAMS
-          .replace('{seasonSlug}', slug)
+          .replace('{seasonSlug}', seasonSlug)
         ;
 
         const response = await axios.get(url);
@@ -72,7 +72,7 @@ export const useSeasonsTeamsFetch = (args) => {
         setLoaded(true);
       }
     })();
-  }, [slug]);
+  }, [seasonSlug]);
 
   return {
     loading,

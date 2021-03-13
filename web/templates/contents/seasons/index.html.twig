@@ -11,7 +11,7 @@
             <div class="list-group">
               {% for season in series_by_sesson.seasons %}
                 <a href="{{ url('seasons.detail', {
-                  slug: season.getSlug(),
+                  seasonSlug: season.getSlug(),
                 }) }}" class="list-group-item list-group-item-action">
                   {{ season.getName() }}
                 </a>

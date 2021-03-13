@@ -31,12 +31,12 @@ function NewDriverForm() {
   const {
     data: seasonDrivers,
   } = useSeasonsDriversFetch({
-    slug: appData.race.season.slug,
+    seasonSlug: appData.race.season.slug,
   });
   const {
     data: seasonTeams,
   } = useSeasonsTeamsFetch({
-    slug: appData.race.season.slug,
+    seasonSlug: appData.race.season.slug,
   });
   const [driverId, setDriverId] = useState(0);
   const [teamId, setTeamId] = useState(0);

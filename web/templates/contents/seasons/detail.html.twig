@@ -8,7 +8,7 @@
       <div class="list-group">
         {% for race in races %}
           <a href="{{ url('races.detail', {
-            slug: race.getSlug(),
+            raceSlug: race.getSlug(),
           }) }}" class="list-group-item list-group-item-action">
             <h5 class="mb-1">
               {{ race.getName() }}

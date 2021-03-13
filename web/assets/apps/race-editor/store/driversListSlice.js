@@ -4,7 +4,7 @@ import {
 } from '@reduxjs/toolkit';
 
 export const slice = createSlice({
-  name: 'drivers',
+  name: 'driversList',
   initialState: {
     loading: false,
     loaded: false,
@@ -34,9 +34,9 @@ export const {
   setError,
 } = slice.actions;
 
-export const selectLoading = state => state.drivers.loading;
-export const selectLoaded = state => state.drivers.loaded;
-export const selectData = state => state.drivers.data;
-export const selectError = state => state.drivers.error;
+export const selectLoading = state => state.driversList.loading;
+export const selectLoaded = state => state.driversList.loaded;
+export const selectData = state => state.driversList.data;
+export const selectError = state => state.driversList.error;
 
 export default slice.reducer;

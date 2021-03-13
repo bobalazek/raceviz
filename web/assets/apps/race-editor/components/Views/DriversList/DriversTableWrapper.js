@@ -8,7 +8,7 @@ import {
   selectLoading,
   selectData,
   selectError,
-} from '../store/driversSlice';
+} from '../../../store/driversListSlice';
 import DriversTable from './DriversTable';
 
 function DriversTableWrapper() {

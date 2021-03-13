@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import {
   DriversService,
-} from '../api';
-import confirm from './ConfirmDialog';
+} from '../../../api';
+import confirm from '../../Shared/ConfirmDialog';
 
 /* global appData */
 

@@ -9,7 +9,7 @@ import {
   setLoaded,
   setData,
   setError,
-} from './store/driversSlice';
+} from './store/driversListSlice';
 
 export const API_GET_SEASONS = '/api/v1/seasons';
 export const API_GET_SEASONS_DRIVERS = '/api/v1/seasons/{seasonSlug}/drivers';

@@ -16,14 +16,14 @@ import {
 
 import {
   selectData,
-} from '../store/driversSlice';
+} from '../../../store/driversListSlice';
 import {
   API_POST_RACES_DRIVERS,
-} from '../api';
+} from '../../../api';
 import {
   useSeasonsDriversFetch,
   useSeasonsTeamsFetch,
-} from '../hooks';
+} from '../../../hooks';
 
 /* global appData */
 
@@ -210,7 +210,7 @@ function NewDriverForm() {
           type="submit"
           disabled={formSubmitting}
         >
-          Submit
+          Add new Race Driver
         </Button>
       </Form>
     </div>

@@ -312,6 +312,12 @@ class RaceDriver implements Interfaces\ArrayInterface, TimestampableInterface
     {
         return [
             'id' => $this->getId(),
+            'team' => $this->getTeam()
+                ? $this->getTeam()->toArray()
+                : null,
+            'driver' => $this->getDriver()
+                ? $this->getDriver()->toArray()
+                : null,
         ];
     }
 }

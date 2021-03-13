@@ -39,12 +39,28 @@ function NewDriverForm() {
   const [formErrors, setFormErrors] = useState(null);
 
   const onDriverChange = (event) => {
-    setDriverId(event.target.value);
+    const value = parseInt(event.target.value);
+    setDriverId(value);
     setFormErrors(null);
+
+    const seasonDriver = seasonDrivers.find((entry) => {
+      return entry.driver.id === value;
+    });
+
+    const seasonDriverTeam = seasonTeams.find((entry) => {
+      return entry.team.id === seasonDriver.team.id;
+    });
+
+    if (!seasonDriverTeam) {
+      return;
+    }
+
+    setTeamId(seasonDriverTeam.team.id);
   };
 
   const onTeamChange = (event) => {
-    setTeamId(event.target.value);
+    const value = parseInt(event.target.value);
+    setTeamId(value);
     setFormErrors(null);
   };
 
@@ -60,8 +76,8 @@ function NewDriverForm() {
       ;
 
       const response = await axios.post(url, qs.stringify({
-        driver_id: driverId,
-        team_id: teamId,
+          driver: driverId,
+          team: teamId,
       }));
 
       if (response.data.errors) {
@@ -72,6 +88,8 @@ function NewDriverForm() {
       }
 
       toast.success('You have successfully added the driver.');
+
+      window.dispatchEvent(new CustomEvent('driver-editor:new-driver'));
     } catch(error) {
       toast.error(error.response.data.detail);
     } finally {

@@ -29,9 +29,10 @@ function DriversTable({
                 <td>{entry.driver.name}</td>
                 <td>{entry.team.name}</td>
                 <td>
-                  <a href="#" className="btn btn-sm btn-default" onClick={onEditButtonClick}>Edit</a>
-                  |
-                  <a href="#" className="btn btn-sm btn-danger" onClick={onDeleteButtonClick}>Delete</a>
+                  <div className="btn-group">
+                    <a href="#" className="btn btn-sm btn-primary" onClick={onEditButtonClick}>Edit</a>
+                    <a href="#" className="btn btn-sm btn-danger" onClick={onDeleteButtonClick}>Delete</a>
+                  </div>
                 </td>
               </tr>
             );

@@ -1,21 +1,21 @@
 import React from 'react';
+import {
+  useSelector,
+} from 'react-redux';
 
 import {
-  useRacesDriversFetch,
-} from '../hooks';
+  selectLoaded,
+  selectLoading,
+  selectData,
+  selectError,
+} from '../store/driversSlice';
 import DriversTable from './DriversTable';
 
-/* global appData */
-
 function DriversTableWrapper() {
-  const {
-    loaded,
-    loading,
-    data,
-    error,
-  } = useRacesDriversFetch({
-    slug: appData.race.slug,
-  });
+  const loaded = useSelector(selectLoaded);
+  const loading = useSelector(selectLoading);
+  const data = useSelector(selectData);
+  const error = useSelector(selectError);
 
   return (
     <div>

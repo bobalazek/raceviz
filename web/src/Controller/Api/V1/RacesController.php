@@ -5,6 +5,7 @@ namespace App\Controller\Api\V1;
 use App\Entity\Race;
 use App\Entity\RaceDriver;
 use App\Form\Type\RaceDriverType;
+use App\Repository\RaceRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -64,6 +65,7 @@ class RacesController extends AbstractApiController
         }
 
         $race = $this->_getRace($slug);
+        $data = $request->request->all();
 
         $raceDriver = new RaceDriver();
         $raceDriver
@@ -72,9 +74,9 @@ class RacesController extends AbstractApiController
 
         $form = $this->createForm(RaceDriverType::class, $raceDriver, [
             'filter_race' => $race,
-            //'csrf_protection' => false,
+            'csrf_protection' => false,
         ]);
-        $form->submit($request->request->all());
+        $form->submit($data);
 
         if (!$form->isValid()) {
             return $this->json([
@@ -82,9 +84,12 @@ class RacesController extends AbstractApiController
             ]);
         }
 
+        $this->em->persist($raceDriver);
+        $this->em->flush();
+
         return $this->json([
             'success' => true,
-            'data' => [],
+            'data' => $raceDriver->toArray(),
             'meta' => [],
         ]);
     }

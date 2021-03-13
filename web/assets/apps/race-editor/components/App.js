@@ -1,9 +1,13 @@
 import React from 'react';
 
+import DriversTableWrapper from './DriversTableWrapper';
+import NewDriverForm from './NewDriverForm';
+
 function App() {
   return (
     <>
-      THIS IS THE APP
+      <DriversTableWrapper />
+      <NewDriverForm />
     </>
   );
 }

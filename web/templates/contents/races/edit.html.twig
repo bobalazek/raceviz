@@ -7,11 +7,20 @@
 
 {% block content %}
   <div class="container my-4">
+    <h1>{{ race.getName() }}</h1>
     <div id="root"></div>
   </div>
 {% endblock %}
 
 {% block body_javascripts %}
   {{ parent() }}
+  <script>
+    var appData = {
+      race: {
+        id: {{ race.getId() }},
+        slug: '{{ race.getSlug() }}',
+      },
+    };
+  </script>
   {{ encore_entry_script_tags('race-editor') }}
 {% endblock %}

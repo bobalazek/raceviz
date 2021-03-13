@@ -5,14 +5,13 @@ namespace App\Controller\Api\V1;
 use App\Entity\Race;
 use App\Entity\RaceDriver;
 use App\Form\Type\RaceDriverType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class RacesController.
  */
-class RacesController extends AbstractController
+class RacesController extends AbstractApiController
 {
     /**
      * @Route("/api/v1/races/{slug}", name="api.v1.races.detail", methods={"GET"})
@@ -33,7 +32,7 @@ class RacesController extends AbstractController
     /**
      * @Route("/api/v1/races/{slug}/drivers", name="api.v1.races.drivers", methods={"GET"})
      */
-    public function drivers(int $slug)
+    public function drivers(string $slug)
     {
         $race = $this->_getRace($slug);
 

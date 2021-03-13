@@ -21,6 +21,9 @@ Encore
     .enableSourceMaps(!Encore.isProduction())
     .enableVersioning(Encore.isProduction())
     .enableReactPreset()
+    .enableEslintLoader((config) => {
+      config.configFile = __dirname + '/.eslintrc.js';
+    })
 
     .configureBabel(() => {}, {
         useBuiltIns: 'usage',
@@ -28,7 +31,7 @@ Encore
     })
 
     .enableSassLoader()
-    .enableTypeScriptLoader(function(tsConfig) {
+    .enableTypeScriptLoader((tsConfig) => {
       tsConfig.compilerOptions = {
         sourceMap: true,
         esModuleInterop: true,

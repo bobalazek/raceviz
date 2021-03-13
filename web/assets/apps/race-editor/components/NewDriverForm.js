@@ -2,6 +2,9 @@ import React, {
   useState,
 } from 'react';
 import {
+  useSelector
+} from 'react-redux';
+import {
   Form,
   Button,
 } from 'react-bootstrap';
@@ -11,6 +14,9 @@ import {
   toast,
 } from 'react-toastify';
 
+import {
+  selectData,
+} from '../store/driversSlice';
 import {
   API_POST_RACES_DRIVERS,
 } from '../api';
@@ -32,11 +38,14 @@ function NewDriverForm() {
   } = useSeasonsTeamsFetch({
     slug: appData.race.season.slug,
   });
-
   const [driverId, setDriverId] = useState(0);
   const [teamId, setTeamId] = useState(0);
   const [formSubmitting, setFormSubmitting] = useState(false);
   const [formErrors, setFormErrors] = useState(null);
+  const raceDrivers = useSelector(selectData);
+  const addedDriverIds = raceDrivers.map((entry) => {
+    return entry.driver.id;
+  });
 
   const onDriverChange = (event) => {
     const value = parseInt(event.target.value);
@@ -88,6 +97,9 @@ function NewDriverForm() {
       }
 
       toast.success('You have successfully added the driver.');
+
+      setDriverId(0);
+      setTeamId(0);
 
       window.dispatchEvent(new CustomEvent('driver-editor:new-driver'));
     } catch(error) {
@@ -151,12 +163,15 @@ function NewDriverForm() {
               >
                 <option value="0">-- none --</option>
                 {seasonDrivers.map((entry) => {
+                  const alreadyAddedDriver = addedDriverIds.includes(entry.driver.id);
                   return (
                     <option
                       key={entry.driver.id}
                       value={entry.driver.id}
+                      disabled={alreadyAddedDriver}
                     >
                       {entry.driver.name}
+                      {alreadyAddedDriver && ' (already added)'}
                     </option>
                   );
                 })}

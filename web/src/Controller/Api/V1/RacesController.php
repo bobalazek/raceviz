@@ -371,7 +371,13 @@ class RacesController extends AbstractApiController
                 ? $raceDriverRaceLapsMap[$lap]
                 : new RaceDriverRaceLap();
 
-            $raceLapForm = $this->createForm(RaceDriverRaceLapType::class, $raceDriverRaceLap);
+            $raceLapForm = $this->createForm(
+                RaceDriverRaceLapType::class,
+                $raceDriverRaceLap,
+                [
+                    'csrf_protection' => false,
+                ]
+            );
             $raceLapForm->submit([
                 'raceDriver' => $raceDriver,
                 'lap' => $lap,
@@ -398,7 +404,13 @@ class RacesController extends AbstractApiController
                 ? $raceDriverRacePitStopsMap[$lap]
                 : new RaceDriverRacePitStop();
 
-            $racePitStopForm = $this->createForm(RaceDriverRacePitStopType::class, $raceDriverRacePitStop);
+            $racePitStopForm = $this->createForm(
+                RaceDriverRacePitStopType::class,
+                $raceDriverRacePitStop,
+                [
+                    'csrf_protection' => false,
+                ]
+            );
             $racePitStopForm->submit([
                 'raceDriver' => $raceDriver,
                 'lap' => $lap,
@@ -414,6 +426,8 @@ class RacesController extends AbstractApiController
 
             $this->em->persist($raceDriverRacePitStop);
         }
+
+        // TODO: remove stray laps and pit stops
 
         return $errors;
     }

@@ -17,7 +17,6 @@ class TimeDurationType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'with_hours' => false,
             'compound' => false,
             'invalid_message' => 'Invalid input. Please make sure that you delimited seconds/minutes/hours with a colon (:) instead of a dot (.).',
             'format' => 'H:i:s.v',

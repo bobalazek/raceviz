@@ -83,7 +83,7 @@ class HomeController extends AbstractController
     /**
      * @Route("/contact", name="contact")
      */
-    public function contact(Request $request, UserActionManager $userActionManager)
+    public function contact(Request $request)
     {
         $form = $this->createForm(ContactFormType::class);
         $form->handleRequest($request);

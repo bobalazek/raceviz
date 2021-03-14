@@ -24,7 +24,10 @@ class RaceDriverRacePitStopType extends AbstractType
             ])
             ->add('lap', NumberType::class)
             ->add('time', TimeDurationType::class)
-            ->add('timeOfDay', TimeType::class)
+            ->add('timeOfDay', TimeType::class, [
+                'with_seconds' => true,
+                'widget' => 'single_text',
+            ])
         ;
     }
 

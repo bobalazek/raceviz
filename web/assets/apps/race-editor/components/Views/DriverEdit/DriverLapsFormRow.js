@@ -102,7 +102,7 @@ function DriverLapsFormRow({
           </Form.Group>
         </div>
       </div>
-      {renderFormErrors(entryErrors?.['race_lap']?.['*'])}
+      {renderFormErrors(entryErrors?.['race_lap']?.['*'], true)}
       {entry?.['had_race_pit_stop'] && (
         <>
           <h6>Pit Stop</h6>
@@ -135,7 +135,7 @@ function DriverLapsFormRow({
               </Form.Group>
             </div>
           </div>
-          {renderFormErrors(entryErrors?.['race_pit_stop']?.['*'])}
+          {renderFormErrors(entryErrors?.['race_pit_stop']?.['*'], true)}
         </>
       )}
     </div>

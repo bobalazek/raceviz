@@ -20,6 +20,7 @@ import {
 import {
   renderFormErrors,
 } from '../../Shared/helpers';
+import confirm from '../../Shared/ConfirmDialog';
 import DriverLapsFormRow from './DriverLapsFormRow';
 
 /* global appData */
@@ -101,6 +102,52 @@ function DriverLapsForm({
     setFormData(newFormData);
   };
 
+  const onPullFromErgastClick = async () => {
+    const confirmation = await confirm(
+      'Are you sure you want to do this? This will overwite all your current data (but not save yet)!'
+    );
+    if (!confirmation) {
+      return;
+    }
+
+    try {
+      const ergastLaps = await DriversService.loadLapsFromErgast({
+        raceDriver: selectedRaceDriver,
+      });
+
+      const newFormData = [];
+
+      ergastLaps.forEach((entry) => {
+        const lap = entry.lap;
+        const position = entry.position;
+        const time = entry.time;
+
+        newFormData.push({
+          lap,
+          had_race_pit_stop: false,
+          race_lap: {
+            id: null,
+            lap,
+            position,
+            time,
+            time_of_day: null,
+            tyres: null,
+          },
+          race_pit_stop: {
+            id: null,
+            lap,
+            time: null,
+            time_of_day: null,
+          },
+        });
+      });
+
+      setFormData(newFormData);
+    } catch (error) {
+      toast.error(error.response.data.detail);
+    }
+  };
+
   const onSubmit = async (event) => {
     event.preventDefault();
     event.stopPropagation();
@@ -113,7 +160,9 @@ function DriverLapsForm({
         .replace('{raceDriverId}', selectedRaceDriver.id)
       ;
 
-      const response = await axios.put(url, qs.stringify(formData));
+      const response = await axios.put(url, qs.stringify({
+        data: JSON.stringify(formData),
+      }));
 
       if (response.data.errors) {
         setFormErrors(response.data.errors);
@@ -182,11 +231,18 @@ function DriverLapsForm({
         {canRemoveLastLap && (
           <Button
             variant="primary"
+            className="mr-3"
             onClick={onRemoveLastClick}
           >
             Remove last lap
           </Button>
         )}
+        <Button
+          variant="danger"
+          onClick={onPullFromErgastClick}
+        >
+          Pull from ergast
+        </Button>
       </div>
       {renderFormErrors(formErrors?.['*'], true)}
       <Button

@@ -14,9 +14,12 @@ class TimeDurationToStringTransformer implements DataTransformerInterface
         's.v',
         // Very likely one could write a dot instead of a comma,
         // so let's also take that into account.
+        // TODO: reenable once leading zeros are fixed below
+        /*
         'H.i.s.v',
         'G.i.s.v',
         'i.s.v',
+        */
     ];
 
     public $format;
@@ -45,6 +48,17 @@ class TimeDurationToStringTransformer implements DataTransformerInterface
         if (!$data) {
             return null;
         }
+
+        // TODO: better solution for a leading zero.
+        // Something that will work with the formats above
+        $dataExploded = explode(':', $data);
+        foreach ($dataExploded as $i => $chunk) {
+            if (false !== strpos($chunk, '.')) {
+                continue;
+            }
+            $dataExploded[$i] = sprintf('%02d', $chunk);
+        }
+        $data = join(':', $dataExploded);
 
         foreach (self::POSSIBLE_FORMATS as $format) {
             $value = \DateTime::createFromFormat($format, $data);

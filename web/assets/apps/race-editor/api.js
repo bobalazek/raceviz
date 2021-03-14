@@ -20,6 +20,7 @@ export const API_PUT_RACES_DRIVERS = '/api/v1/races/{raceSlug}/drivers/{raceDriv
 export const API_DELETE_RACES_DRIVERS = '/api/v1/races/{raceSlug}/drivers/{raceDriverId}';
 export const API_GET_RACES_DRIVERS_LAPS = '/api/v1/races/{raceSlug}/drivers/{raceDriverId}/laps';
 export const API_PUT_RACES_DRIVERS_LAPS = '/api/v1/races/{raceSlug}/drivers/{raceDriverId}/laps';
+export const API_GET_ERGAST_RACE_DRIVER_RACE_LAPS = '/api/v1/ergast/{raceSlug}/{raceDriverId}/laps';
 
 /* global appData */
 
@@ -51,6 +52,20 @@ export const DriversService = {
     }
 
     const url = API_GET_RACES_DRIVERS_LAPS
+      .replace('{raceSlug}', appData.race.slug)
+      .replace('{raceDriverId}', raceDriverId)
+    ;
+
+    const response = await axios.get(url);
+    return response.data.data;
+  },
+  loadLapsFromErgast: async (args) => {
+    const raceDriverId = args?.raceDriver.id;
+    if (!raceDriverId) {
+      throw new Error('Please set a valid raceDriverId');
+    }
+
+    const url = API_GET_ERGAST_RACE_DRIVER_RACE_LAPS
       .replace('{raceSlug}', appData.race.slug)
       .replace('{raceDriverId}', raceDriverId)
     ;

@@ -7,7 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class AbstractApiController.
@@ -29,21 +28,14 @@ class AbstractApiController extends AbstractController
      */
     protected $router;
 
-    /**
-     * @var TranslatorInterface
-     */
-    protected $translator;
-
     public function __construct(
         ParameterBagInterface $params,
         EntityManagerInterface $em,
-        UrlGeneratorInterface $router,
-        TranslatorInterface $translator
+        UrlGeneratorInterface $router
     ) {
         $this->params = $params;
         $this->em = $em;
         $this->router = $router;
-        $this->translator = $translator;
     }
 
     public function getFormErrors(FormInterface $form)

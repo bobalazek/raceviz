@@ -201,7 +201,7 @@ class RacesController extends AbstractApiController
         $race = $this->_getRace($raceSlug);
         $raceDriver = $this->_getRaceDriver($raceDriverId);
 
-        $formData = $request->request->all();
+        $formData = json_decode($request->request->get('data'), true);
         $errorResponse = $this->_saveRaceDriverLaps($raceDriver, $formData);
         if ($errorResponse) {
             return $this->json([

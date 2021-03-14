@@ -109,7 +109,6 @@ class SeasonsController extends AbstractApiController
     {
         /** @var SeasonRepository $seasonRepository */
         $seasonRepository = $this->em->getRepository(Season::class);
-
         $season = $seasonRepository->findOneBy([
             'slug' => $seasonSlug,
         ]);

@@ -295,8 +295,17 @@ class RacesController extends AbstractApiController
             $raceDriverRacePitStopsMap[$raceDriverRacePitStop->getLap()] = $raceDriverRacePitStop;
         }
 
+        // $laps = $race->getLaps(); // We won't show all if they aren't present
+        $maxRaceLapsLap = $raceDriverRaceLapsMap
+            ? max(array_keys($raceDriverRaceLapsMap))
+            : 0;
+        $maxRacePitStopsLap = $raceDriverRacePitStopsMap
+            ? max(array_keys($raceDriverRacePitStopsMap))
+            : 0;
+        $laps = max($maxRaceLapsLap, $maxRacePitStopsLap);
+
         $data = [];
-        for ($lap = 1; $lap <= $race->getLaps(); ++$lap) {
+        for ($lap = 1; $lap <= $laps; ++$lap) {
             // Race Lap
             $raceDriverRaceLap = isset($raceDriverRaceLapsMap[$lap])
                 ? $raceDriverRaceLapsMap[$lap]
@@ -367,6 +376,7 @@ class RacesController extends AbstractApiController
             $hadRacePitStop = 'true' === $single['had_race_pit_stop'];
 
             // Race Lap
+            /** @var RaceDriverRaceLap $raceDriverRaceLap */
             $raceDriverRaceLap = isset($raceDriverRaceLapsMap[$lap])
                 ? $raceDriverRaceLapsMap[$lap]
                 : new RaceDriverRaceLap();
@@ -400,6 +410,7 @@ class RacesController extends AbstractApiController
             }
 
             // Race Pit Stop
+            /** @var RaceDriverRacePitStop $raceDriverRacePitStop */
             $raceDriverRacePitStop = isset($raceDriverRacePitStopsMap[$lap])
                 ? $raceDriverRacePitStopsMap[$lap]
                 : new RaceDriverRacePitStop();

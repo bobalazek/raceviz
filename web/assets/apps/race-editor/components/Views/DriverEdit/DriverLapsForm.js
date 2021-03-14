@@ -67,6 +67,40 @@ function DriverLapsForm({
     setFormData(newFormData);
   };
 
+  const onAddNewClick = () => {
+    const newFormData = JSON.parse(JSON.stringify(formData));
+    const lap = newFormData.length + 1;
+
+    newFormData.push({
+      lap,
+      had_race_pit_stop: false,
+      race_lap: {
+        id: null,
+        lap,
+        position: null,
+        time: null,
+        time_of_day: null,
+        tyres: null,
+      },
+      race_pit_stop: {
+        id: null,
+        lap,
+        time: null,
+        time_of_day: null,
+      },
+    });
+
+    setFormData(newFormData);
+  };
+
+  const onRemoveLastClick = () => {
+    const newFormData = JSON.parse(JSON.stringify(formData));
+
+    newFormData.pop();
+
+    setFormData(newFormData);
+  };
+
   const onSubmit = async (event) => {
     event.preventDefault();
     event.stopPropagation();
@@ -97,6 +131,9 @@ function DriverLapsForm({
       setFormSubmitting(false);
     }
   };
+
+  const canAddNewLap = formData.length < appData.race.laps;
+  const canRemoveLastLap = formData.length > 0;
 
   if (loading) {
     return (
@@ -130,6 +167,25 @@ function DriverLapsForm({
           />
         );
       })}
+      <div className="my-3">
+        {canAddNewLap && (
+          <Button
+            variant="primary"
+            className="mr-3"
+            onClick={onAddNewClick}
+          >
+            Add new lap
+          </Button>
+        )}
+        {canRemoveLastLap && (
+          <Button
+            variant="primary"
+            onClick={onRemoveLastClick}
+          >
+            Remove last lap
+          </Button>
+        )}
+      </div>
       {renderFormErrors(formErrors?.['*'], true)}
       <Button
         block

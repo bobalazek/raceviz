@@ -337,6 +337,7 @@ class RacesController extends AbstractApiController
         $errors = [];
 
         // Race Laps
+        $raceDriverRaceLapsToBeRemoved = [];
         $raceDriverRaceLapsMap = [];
         /** @var RaceDriverRaceLapRepository $raceDriverRaceLapRepository */
         $raceDriverRaceLapRepository = $this->em->getRepository(RaceDriverRaceLap::class);
@@ -349,10 +350,12 @@ class RacesController extends AbstractApiController
             ->getResult()
         ;
         foreach ($raceDriverRaceLaps as $raceDriverRaceLap) {
+            $raceDriverRaceLapsToBeRemoved[] = $raceDriverRaceLap->getId();
             $raceDriverRaceLapsMap[$raceDriverRaceLap->getLap()] = $raceDriverRaceLap;
         }
 
         // Race Pit Stops
+        $raceDriverRacePitStopsToBeRemoved = [];
         $raceDriverRacePitStopsMap = [];
         /** @var RaceDriverRacePitStopRepository $raceDriverRacePitStopRepository */
         $raceDriverRacePitStopRepository = $this->em->getRepository(RaceDriverRacePitStop::class);
@@ -365,6 +368,7 @@ class RacesController extends AbstractApiController
             ->getResult()
         ;
         foreach ($raceDriverRacePitStops as $raceDriverRacePitStop) {
+            $raceDriverRacePitStopsToBeRemoved[] = $raceDriverRacePitStop->getId();
             $raceDriverRacePitStopsMap[$raceDriverRacePitStop->getLap()] = $raceDriverRacePitStop;
         }
 
@@ -405,6 +409,13 @@ class RacesController extends AbstractApiController
 
             $this->em->persist($raceDriverRaceLap);
 
+            if (($removalKey = array_search(
+                $raceDriverRaceLap->getId(),
+                $raceDriverRaceLapsToBeRemoved
+            )) !== false) {
+                unset($raceDriverRaceLapsToBeRemoved[$removalKey]);
+            }
+
             if (!$hadRacePitStop) {
                 continue;
             }
@@ -436,9 +447,35 @@ class RacesController extends AbstractApiController
             }
 
             $this->em->persist($raceDriverRacePitStop);
+
+            if (($removalKey = array_search(
+                $raceDriverRacePitStop->getId(),
+                $raceDriverRacePitStopsToBeRemoved
+            )) !== false) {
+                unset($raceDriverRacePitStopsToBeRemoved[$removalKey]);
+            }
         }
 
-        // TODO: remove stray laps and pit stops
+        // Cleanup
+        foreach ($raceDriverRaceLaps as $raceDriverRaceLap) {
+            if (!in_array(
+                $raceDriverRaceLap->getId(),
+                $raceDriverRaceLapsToBeRemoved
+            )) {
+                continue;
+            }
+            $this->em->remove($raceDriverRaceLap);
+        }
+
+        foreach ($raceDriverRacePitStops as $raceDriverRacePitStop) {
+            if (!in_array(
+                $raceDriverRacePitStop->getId(),
+                $raceDriverRacePitStopsToBeRemoved
+            )) {
+                continue;
+            }
+            $this->em->remove($raceDriverRacePitStop);
+        }
 
         return $errors;
     }

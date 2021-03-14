@@ -26,6 +26,12 @@ parameters:
         soft: Soft
         intermediate: Intermediate
         wet: Wet
+    app.race_driver_statuses:
+        f: Finished (F)
+        dnf: DNF (Did Not Finish)
+        dsq: DSQ (Disqualified)
+        dns: DNS (Did Not Start)
+        x: Excluded (X)
 
     # Credentials
     app.oauth.facebook:

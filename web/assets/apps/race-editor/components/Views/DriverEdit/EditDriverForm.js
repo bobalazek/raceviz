@@ -6,7 +6,15 @@ import {
   Form,
   Button,
 } from 'react-bootstrap';
+import axios from 'axios';
+import qs from 'qs';
+import {
+  toast,
+} from 'react-toastify';
 
+import {
+  API_PUT_RACES_DRIVERS,
+} from '../../../api';
 import {
   renderFormErrors,
 } from '../../Shared/helpers';
@@ -16,17 +24,54 @@ import {
 function EditDriverForm({
   selectedRaceDriver,
 }) {
-  const [startingGridPosition, setStartingGridPosition] = useState(selectedRaceDriver.race_starting_grid_position);
-  const [startingGridTyres, setStartingGridTyres] = useState(selectedRaceDriver.race_starting_grid_tyres);
+  const [raceStartingGridPosition, setRaceStartingGridPosition] = useState(selectedRaceDriver.race_starting_grid_position);
+  const [raceStartingGridTyres, setRaceStartingGridTyres] = useState(selectedRaceDriver.race_starting_grid_tyres);
+  const [raceResultPosition, setRaceResultPosition] = useState(selectedRaceDriver.race_result_position);
+  const [raceResultPoints, setRaceResultPoints] = useState(selectedRaceDriver.race_result_points);
+  const [raceResultTime, setRaceResultTime] = useState(selectedRaceDriver.race_result_time);
+  const [raceResultLapsBehind, setRaceResultLapsBehind] = useState(selectedRaceDriver.race_result_laps_behind);
+  const [raceResultStatus, setRaceResultStatus] = useState(selectedRaceDriver.race_result_status);
+  const [raceResultStatusNote, setRaceResultStatusNote] = useState(selectedRaceDriver.race_result_status_note);
+
   const [formErrors, setFormErrors] = useState(null);
+  const [formSubmitting, setFormSubmitting] = useState(false);
 
   const onSubmit = async (event) => {
     event.preventDefault();
     event.stopPropagation();
 
-    // TODO
+    setFormSubmitting(true);
 
-    setFormErrors(null); // TODO: just so the eslinter doesn't complain
+    try {
+      const url = API_PUT_RACES_DRIVERS
+        .replace('{raceSlug}', appData.race.slug)
+        .replace('{raceDriverId}', selectedRaceDriver.id)
+      ;
+
+      const response = await axios.put(url, qs.stringify({
+          raceStartingGridPosition,
+          raceStartingGridTyres,
+          raceResultPosition,
+          raceResultPoints,
+          raceResultTime,
+          raceResultLapsBehind,
+          raceResultStatus,
+          raceResultStatusNote,
+      }));
+
+      if (response.data.errors) {
+        setFormErrors(response.data.errors);
+
+        toast.error('Please fix the errors first!');
+        return;
+      }
+
+      toast.success('You have successfully edited the driver.');
+    } catch(error) {
+      toast.error(error.response.data.detail);
+    } finally {
+      setFormSubmitting(false);
+    }
   };
 
   return (
@@ -38,11 +83,11 @@ function EditDriverForm({
             <Form.Label>Position</Form.Label>
             <Form.Control
               type="number"
-              value={startingGridPosition ?? ''}
-              onChange={(event) => { setStartingGridPosition(event.target.value) }}
-              isInvalid={!!formErrors?.['startingGridPosition']}
+              value={raceStartingGridPosition ?? ''}
+              onChange={(event) => { setRaceStartingGridPosition(event.target.value) }}
+              isInvalid={!!formErrors?.['raceStartingGridPosition']}
             />
-            {renderFormErrors(formErrors?.['startingGridPosition'])}
+            {renderFormErrors(formErrors?.['raceStartingGridPosition'])}
           </Form.Group>
         </div>
         <div className="col-md-6">
@@ -50,9 +95,9 @@ function EditDriverForm({
             <Form.Label>Tyres</Form.Label>
             <Form.Control
               as="select"
-              value={startingGridTyres ?? ''}
-              onChange={(event) => { setStartingGridTyres(event.target.value) }}
-              isInvalid={!!formErrors?.['startingGridTyres']}
+              value={raceStartingGridTyres ?? ''}
+              onChange={(event) => { setRaceStartingGridTyres(event.target.value) }}
+              isInvalid={!!formErrors?.['raceStartingGridTyres']}
             >
               <option value="">-- none --</option>
               {Object.keys(appData.tyres).map((key) => {
@@ -68,18 +113,93 @@ function EditDriverForm({
                 );
               })}
             </Form.Control>
-            {renderFormErrors(formErrors?.['startingGridTyres'])}
+            {renderFormErrors(formErrors?.['raceStartingGridTyres'])}
           </Form.Group>
         </div>
       </div>
-      <h3>Race</h3>
-      TODO
+      <h3>Race Result</h3>
+      <div className="row">
+        <div className="col-md-6">
+          <Form.Group>
+            <Form.Label>Position</Form.Label>
+            <Form.Control
+              type="number"
+              value={raceResultPosition ?? ''}
+              onChange={(event) => { setRaceResultPosition(event.target.value) }}
+              isInvalid={!!formErrors?.['raceResultPosition']}
+            />
+            {renderFormErrors(formErrors?.['raceResultPosition'])}
+          </Form.Group>
+        </div>
+        <div className="col-md-6">
+          <Form.Group>
+            <Form.Label>Points</Form.Label>
+            <Form.Control
+              type="number"
+              value={raceResultPoints ?? ''}
+              onChange={(event) => { setRaceResultPoints(event.target.value) }}
+              isInvalid={!!formErrors?.['raceResultPoints']}
+            />
+            {renderFormErrors(formErrors?.['raceResultPoints'])}
+          </Form.Group>
+        </div>
+        <div className="col-md-6">
+          <Form.Group>
+            <Form.Label>Time</Form.Label>
+            <Form.Control
+              value={raceResultTime ?? ''}
+              onChange={(event) => { setRaceResultTime(event.target.value) }}
+              isInvalid={!!formErrors?.['raceResultTime']}
+            />
+            <Form.Text muted>
+              Enter a valid duration time (1:06:20.123 or 1:09.456 or 55.789).
+            </Form.Text>
+            {renderFormErrors(formErrors?.['raceResultTime'])}
+          </Form.Group>
+        </div>
+        <div className="col-md-6">
+          <Form.Group>
+            <Form.Label>Laps Behind</Form.Label>
+            <Form.Control
+              type="number"
+              value={raceResultLapsBehind ?? ''}
+              onChange={(event) => { setRaceResultLapsBehind(event.target.value) }}
+              isInvalid={!!formErrors?.['raceResultLapsBehind']}
+            />
+            {renderFormErrors(formErrors?.['raceResultLapsBehind'])}
+          </Form.Group>
+        </div>
+        <div className="col-md-6">
+          <Form.Group>
+            <Form.Label>Status</Form.Label>
+            <Form.Control
+              value={raceResultStatus ?? ''}
+              onChange={(event) => { setRaceResultStatus(event.target.value) }}
+              isInvalid={!!formErrors?.['raceResultStatus']}
+            />
+            {renderFormErrors(formErrors?.['raceResultStatus'])}
+          </Form.Group>
+        </div>
+        <div className="col-md-6">
+          <Form.Group>
+            <Form.Label>Status Note</Form.Label>
+            <Form.Control
+              as="textarea"
+              value={raceResultStatusNote ?? ''}
+              onChange={(event) => { setRaceResultStatusNote(event.target.value) }}
+              isInvalid={!!formErrors?.['raceResultStatusNote']}
+            />
+            {renderFormErrors(formErrors?.['raceResultStatusNote'])}
+          </Form.Group>
+        </div>
+      </div>
       {renderFormErrors(formErrors?.['*'], true)}
       <Button
         block
         size="lg"
         variant="primary"
         type="submit"
+        disabled={formSubmitting}
       >
         Save
       </Button>

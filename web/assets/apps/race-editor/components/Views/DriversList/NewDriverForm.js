@@ -37,10 +37,13 @@ function NewDriverForm() {
   const {
     data: seasonTeams,
   } = useSeasonsTeamsFetch();
+
   const [driverId, setDriverId] = useState(0);
   const [teamId, setTeamId] = useState(0);
+
   const [formSubmitting, setFormSubmitting] = useState(false);
   const [formErrors, setFormErrors] = useState(null);
+
   const raceDrivers = useSelector(selectData);
   const addedDriverIds = raceDrivers.map((entry) => {
     return entry.driver.id;

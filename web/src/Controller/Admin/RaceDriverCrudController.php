@@ -2,7 +2,7 @@
 
 namespace App\Controller\Admin;
 
-use App\Admin\Field\RaceResultStatusField;
+use App\Admin\Field\RaceDriverRaceResultStatusField;
 use App\Admin\Field\TimeWithMillisecondsField;
 use App\Admin\Field\TyresField;
 use App\Entity\RaceDriver;
@@ -44,7 +44,7 @@ class RaceDriverCrudController extends AbstractCrudController
         ;
         $raceResultTime = TimeWithMillisecondsField::new('raceResultTime');
         $raceResultLapsBehind = NumberField::new('raceResultLapsBehind');
-        $raceResultStatus = RaceResultStatusField::new('raceResultStatus');
+        $raceResultStatus = RaceDriverRaceResultStatusField::new('raceResultStatus');
         $raceResultStatusNote = TextareaField::new('raceResultStatusNote');
 
         if (Crud::PAGE_INDEX === $pageName) {

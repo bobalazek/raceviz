@@ -10,9 +10,9 @@ import {
 } from '../../../api';
 
 function DriversListView() {
-  DriversService.load();
+  DriversService.loadAll();
   useEventListener('driver-editor:new-driver', () => {
-    DriversService.load();
+    DriversService.loadAll();
   });
 
   return (

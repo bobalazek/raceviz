@@ -72,12 +72,13 @@ class RacesController extends AbstractApiController
         }
 
         $race = $this->_getRace($raceSlug);
-        $data = $request->request->all();
 
         $raceDriver = new RaceDriver();
         $raceDriver
             ->setRace($race)
         ;
+
+        $data = $request->request->all();
 
         $form = $this->createForm(RaceDriverType::class, $raceDriver, [
             'filter_race' => $race,
@@ -115,6 +116,45 @@ class RacesController extends AbstractApiController
         $raceDriver = $this->_getRaceDriver($raceDriverId);
 
         $this->em->remove($raceDriver);
+        $this->em->flush();
+
+        return $this->json([
+            'success' => true,
+            'data' => [],
+            'meta' => [],
+        ]);
+    }
+
+    /**
+     * @Route("/api/v1/races/{raceSlug}/drivers/{raceDriverId}", name="api.v1.races.drivers.edit", methods={"PUT"})
+     */
+    public function driversEdit(string $raceSlug, int $raceDriverId, Request $request)
+    {
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $race = $this->_getRace($raceSlug);
+
+        $raceDriver = $this->_getRaceDriver($raceDriverId);
+
+        $data = $request->request->all();
+        $data['team'] = $raceDriver->getTeam()->getId();
+        $data['driver'] = $raceDriver->getDriver()->getId();
+
+        $form = $this->createForm(RaceDriverType::class, $raceDriver, [
+            'filter_race' => $race,
+            'csrf_protection' => false,
+        ]);
+        $form->submit($data);
+
+        if (!$form->isValid()) {
+            return $this->json([
+                'errors' => $this->getFormErrors($form),
+            ]);
+        }
+
+        $this->em->persist($raceDriver);
         $this->em->flush();
 
         return $this->json([

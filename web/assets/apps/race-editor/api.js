@@ -16,12 +16,13 @@ export const API_GET_SEASONS_DRIVERS = '/api/v1/seasons/{seasonSlug}/drivers';
 export const API_GET_SEASONS_TEAMS = '/api/v1/seasons/{seasonSlug}/teams';
 export const API_GET_RACES_DRIVERS = '/api/v1/races/{raceSlug}/drivers';
 export const API_POST_RACES_DRIVERS = '/api/v1/races/{raceSlug}/drivers';
+export const API_PUT_RACES_DRIVERS = '/api/v1/races/{raceSlug}/drivers/{raceDriverId}';
 export const API_DELETE_RACES_DRIVERS = '/api/v1/races/{raceSlug}/drivers/{raceDriverId}';
 
 /* global appData */
 
 export const DriversService = {
-  load: async () => {
+  loadAll: async () => {
     const raceSlug = appData.race.slug;
 
     store.dispatch(setLoading(true));
@@ -59,7 +60,7 @@ export const DriversService = {
 
       toast.success('The driver was successfully deleted!');
 
-      DriversService.load({
+      DriversService.loadAll({
         raceSlug,
       });
     } catch (error) {

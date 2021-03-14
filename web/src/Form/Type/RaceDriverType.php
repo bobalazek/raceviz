@@ -8,6 +8,8 @@ use App\Entity\Team;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -60,6 +62,14 @@ class RaceDriverType extends AbstractType
                     return $queryBuilder;
                 },
             ])
+            ->add('raceStartingGridPosition', NumberType::class)
+            ->add('raceStartingGridTyres', TyresType::class)
+            ->add('raceResultPosition', NumberType::class)
+            ->add('raceResultPoints', NumberType::class)
+            ->add('raceResultTime', TimeDurationType::class)
+            ->add('raceResultLapsBehind', NumberType::class)
+            ->add('raceResultStatus', RaceDriverStatusType::class)
+            ->add('raceResultStatusNote', TextareaType::class)
         ;
     }
 

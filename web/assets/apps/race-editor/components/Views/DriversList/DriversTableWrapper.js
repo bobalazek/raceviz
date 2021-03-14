@@ -21,9 +21,9 @@ function DriversTableWrapper() {
     <div>
       <h2>Drivers</h2>
       {loading && (
-        <div className="text-center">
-        <i className="fas fa-4x fa-spinner fa-spin"></i>
-      </div>
+        <div className="p-4 text-center">
+          <i className="fas fa-4x fa-spinner fa-spin"></i>
+        </div>
       )}
       {error && (
         <div className="alert alert-danger">

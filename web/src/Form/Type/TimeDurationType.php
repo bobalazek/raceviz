@@ -19,7 +19,7 @@ class TimeDurationType extends AbstractType
         $resolver->setDefaults([
             'with_hours' => false,
             'compound' => false,
-            'invalid_message' => 'Invalid input.',
+            'invalid_message' => 'Invalid input. Please make sure that you delimited seconds/minutes/hours with a colon (:) instead of a dot (.).',
             'format' => 'H:i:s.v',
             'help' => 'Enter a valid duration time (1:06:20.123 or 1:09.456 or 55.789).',
         ]);

@@ -173,10 +173,25 @@ function EditDriverForm({
           <Form.Group>
             <Form.Label>Status</Form.Label>
             <Form.Control
+              as="select"
               value={raceResultStatus ?? ''}
               onChange={(event) => { setRaceResultStatus(event.target.value) }}
               isInvalid={!!formErrors?.['raceResultStatus']}
-            />
+            >
+              <option value="">-- none --</option>
+              {Object.keys(appData.race_driver_statuses).map((key) => {
+                const label = appData.race_driver_statuses[key];
+
+                return (
+                  <option
+                    key={key}
+                    value={key}
+                  >
+                    {label}
+                  </option>
+                );
+              })}
+            </Form.Control>
             {renderFormErrors(formErrors?.['raceResultStatus'])}
           </Form.Group>
         </div>

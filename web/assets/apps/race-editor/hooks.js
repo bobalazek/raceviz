@@ -20,24 +20,22 @@ export const useSeasonsDriversFetch = () => {
 
   const seasonSlug = appData.race.season.slug;
 
-  useEffect(() => {
+  useEffect(async () => {
     setLoading(true);
 
-    (async () => {
-      try {
-        const url = API_GET_SEASONS_DRIVERS
-          .replace('{seasonSlug}', seasonSlug)
-        ;
+    try {
+      const url = API_GET_SEASONS_DRIVERS
+        .replace('{seasonSlug}', seasonSlug)
+      ;
 
-        const response = await axios.get(url);
-        setData(response.data.data);
-      } catch (error) {
-        setError(error.response.error);
-      } finally {
-        setLoading(false);
-        setLoaded(true);
-      }
-    })();
+      const response = await axios.get(url);
+      setData(response.data.data);
+    } catch (error) {
+      setError(error.response.error);
+    } finally {
+      setLoading(false);
+      setLoaded(true);
+    }
   }, [seasonSlug]);
 
   return {
@@ -56,24 +54,22 @@ export const useSeasonsTeamsFetch = () => {
 
   const seasonSlug = appData.race.season.slug;
 
-  useEffect(() => {
+  useEffect(async () => {
     setLoading(true);
 
-    (async () => {
-      try {
-        const url = API_GET_SEASONS_TEAMS
-          .replace('{seasonSlug}', seasonSlug)
-        ;
+    try {
+      const url = API_GET_SEASONS_TEAMS
+        .replace('{seasonSlug}', seasonSlug)
+      ;
 
-        const response = await axios.get(url);
-        setData(response.data.data);
-      } catch (error) {
-        setError(error.response.error);
-      } finally {
-        setLoading(false);
-        setLoaded(true);
-      }
-    })();
+      const response = await axios.get(url);
+      setData(response.data.data);
+    } catch (error) {
+      setError(error.response.error);
+    } finally {
+      setLoading(false);
+      setLoaded(true);
+    }
   }, [seasonSlug]);
 
   return {

@@ -154,6 +154,13 @@ class RaceDriverRaceLap implements Interfaces\ArrayInterface, TimestampableInter
             'id' => $this->getId(),
             'lap' => $this->getLap(),
             'position' => $this->getPosition(),
+            'time' => $this->getTime()
+                ? $this->getTime()->format('H:i:s.v')
+                : null,
+            'time_of_day' => $this->getTimeOfDay()
+                ? $this->getTimeOfDay()->format('H:i:s')
+                : null,
+            'tyres' => $this->getTyres(),
         ];
     }
 }

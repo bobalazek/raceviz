@@ -30,6 +30,7 @@ class DriverCrudController extends AbstractCrudController
         $slug = TextField::new('slug');
         $countryCode = CountryField::new('countryCode');
         $url = UrlField::new('url');
+        $ergastDriverId = TextField::new('ergastDriverId');
 
         return [
             $firstName,
@@ -37,6 +38,7 @@ class DriverCrudController extends AbstractCrudController
             $slug,
             $countryCode,
             $url,
+            $ergastDriverId,
         ];
     }
 }

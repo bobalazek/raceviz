@@ -2,7 +2,8 @@
 
 return [
     [
-        'name' => 'Mercedes-AMG Petronas F1 Team',
+        'name' => 'Mercedes',
+        'full_name' => 'Mercedes-AMG Petronas F1 Team',
         'slug' => 'mercedes',
         'location' => 'Brackley',
         'country_code' => 'GB',
@@ -11,7 +12,8 @@ return [
         'color' => '#00C7B9',
     ],
     [
-        'name' => 'Alpine F1 Team',
+        'name' => 'Alpine',
+        'full_name' => 'Alpine F1 Team',
         'slug' => 'alpine',
         'location' => 'Enstone',
         'country_code' => 'GB',
@@ -20,7 +22,8 @@ return [
         'color' => '#0088D7',
     ],
     [
-        'name' => 'Haas F1 Team',
+        'name' => 'Haas',
+        'full_name' => 'Haas F1 Team',
         'slug' => 'haas',
         'location' => 'Kannapolis',
         'country_code' => 'US',
@@ -29,7 +32,8 @@ return [
         'color' => '#FAF9FB',
     ],
     [
-        'name' => 'McLaren F1 Team',
+        'name' => 'McLaren',
+        'full_name' => 'McLaren F1 Team',
         'slug' => 'mclaren',
         'location' => 'Woking',
         'country_code' => 'GB',
@@ -38,7 +42,8 @@ return [
         'color' => '#F38704',
     ],
     [
-        'name' => 'Alfa Romeo Racing ORLEN',
+        'name' => 'Alfa Romeo',
+        'full_name' => 'Alfa Romeo Racing ORLEN',
         'slug' => 'alfa-romeo',
         'location' => 'Hinwil',
         'country_code' => 'CH',
@@ -47,7 +52,8 @@ return [
         'color' => '#73050A',
     ],
     [
-        'name' => 'Red Bull Racing',
+        'name' => 'Red Bull',
+        'full_name' => 'Red Bull Racing',
         'slug' => 'red-bull',
         'location' => 'Milton Keynes',
         'country_code' => 'GB',
@@ -56,7 +62,8 @@ return [
         'color' => '#06029B',
     ],
     [
-        'name' => 'Aston Martin Cognizant Formula One Team',
+        'name' => 'Aston Martin',
+        'full_name' => 'Aston Martin Cognizant Formula One Team',
         'slug' => 'aston-martin',
         'location' => 'Silverstone',
         'country_code' => 'GB',
@@ -65,7 +72,8 @@ return [
         'color' => '#00665A',
     ],
     [
-        'name' => 'Scuderia Ferrari Mission Winnow',
+        'name' => 'Ferrari',
+        'full_name' => 'Scuderia Ferrari Mission Winnow',
         'slug' => 'ferrari',
         'location' => 'Maranello',
         'country_code' => 'IT',
@@ -74,8 +82,9 @@ return [
         'color' => '#CA0000',
     ],
     [
-        'name' => 'Scuderia AlphaTauri Honda',
-        'slug' => 'alpha-tauri',
+        'name' => 'AlphaTauri',
+        'full_name' => 'Scuderia AlphaTauri Honda',
+        'slug' => 'alphatauri',
         'location' => 'Faenza',
         'country_code' => 'IT',
         'url' => 'https://www.formula1.com/en/teams/AlphaTauri.html',
@@ -83,7 +92,8 @@ return [
         'color' => '#3A404E',
     ],
     [
-        'name' => 'Williams Racing',
+        'name' => 'Williams',
+        'full_name' => 'Williams Racing',
         'slug' => 'williams',
         'location' => 'Grove',
         'country_code' => 'GB',

@@ -35,6 +35,12 @@ class Team implements Interfaces\ArrayInterface, TimestampableInterface
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      */
+    private $fullName;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     */
     private $location;
 
     /**
@@ -105,6 +111,18 @@ class Team implements Interfaces\ArrayInterface, TimestampableInterface
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getFullName(): ?string
+    {
+        return $this->fullName;
+    }
+
+    public function setFullName(string $fullName): self
+    {
+        $this->fullName = $fullName;
 
         return $this;
     }
@@ -276,6 +294,7 @@ class Team implements Interfaces\ArrayInterface, TimestampableInterface
         return [
             'id' => $this->getId(),
             'name' => $this->getName(),
+            'full_name' => $this->getFullName(),
             'slug' => $this->getSlug(),
             'location' => $this->getLocation(),
             'country_code' => $this->getCountryCode(),

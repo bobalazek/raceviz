@@ -43,6 +43,11 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
     private $url;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $ergastSeasonAndRound;
+
+    /**
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank()
      */
@@ -114,6 +119,18 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
     public function setUrl(?string $url): self
     {
         $this->url = $url;
+
+        return $this;
+    }
+
+    public function getErgastSeasonAndRound(): ?string
+    {
+        return $this->ergastSeasonAndRound;
+    }
+
+    public function setErgastSeasonAndRound(?string $ergastSeasonAndRound): self
+    {
+        $this->ergastSeasonAndRound = $ergastSeasonAndRound;
 
         return $this;
     }

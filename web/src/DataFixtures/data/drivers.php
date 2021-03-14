@@ -7,6 +7,7 @@ return [
         'slug' => 'lewis-hamilton',
         'country_code' => 'GB',
         'url' => 'https://www.formula1.com/en/drivers/lewis-hamilton.html',
+        'ergast_driver_id' => 'hamilton',
     ],
     [
         'first_name' => 'Valtteri',
@@ -14,6 +15,7 @@ return [
         'slug' => 'valtteri-bottas',
         'country_code' => 'FI',
         'url' => 'https://www.formula1.com/en/drivers/valtteri-bottas.html',
+        'ergast_driver_id' => 'bottas',
     ],
     [
         'first_name' => 'Max',
@@ -21,6 +23,7 @@ return [
         'slug' => 'max-verstappen',
         'country_code' => 'NL',
         'url' => 'https://www.formula1.com/en/drivers/max-verstappen.html',
+        'ergast_driver_id' => 'max_verstappen',
     ],
     [
         'first_name' => 'Sergio',
@@ -28,6 +31,7 @@ return [
         'slug' => 'sergio-perez',
         'country_code' => 'MX',
         'url' => 'https://www.formula1.com/en/drivers/sergio-perez.html',
+        'ergast_driver_id' => 'perez',
     ],
     [
         'first_name' => 'Lando',
@@ -35,6 +39,7 @@ return [
         'slug' => 'lando-norris',
         'country_code' => 'GB',
         'url' => 'https://www.formula1.com/en/drivers/lando-norris.html',
+        'ergast_driver_id' => 'norris',
     ],
     [
         'first_name' => 'Daniel',
@@ -42,6 +47,7 @@ return [
         'slug' => 'daniel-ricciardo',
         'country_code' => 'AU',
         'url' => 'https://www.formula1.com/en/drivers/daniel-ricciarco.html',
+        'ergast_driver_id' => 'ricciardo',
     ],
     [
         'first_name' => 'Lance',
@@ -49,6 +55,7 @@ return [
         'slug' => 'lance-stroll',
         'country_code' => 'CA',
         'url' => 'https://www.formula1.com/en/drivers/lance-stroll.html',
+        'ergast_driver_id' => 'stroll',
     ],
     [
         'first_name' => 'Sebastian',
@@ -56,6 +63,7 @@ return [
         'slug' => 'sebastian-vettel',
         'country_code' => 'DE',
         'url' => 'https://www.formula1.com/en/drivers/sebastian-vettel.html',
+        'ergast_driver_id' => 'vettel',
     ],
     [
         'first_name' => 'Esteban',
@@ -63,6 +71,7 @@ return [
         'slug' => 'esteban-ocon',
         'country_code' => 'FR',
         'url' => 'https://www.formula1.com/en/drivers/esteban-ocon.html',
+        'ergast_driver_id' => 'ocon',
     ],
     [
         'first_name' => 'Fernando',
@@ -70,6 +79,7 @@ return [
         'slug' => 'fernando-alonso',
         'country_code' => 'ES',
         'url' => 'https://www.formula1.com/en/drivers/fernando-alonso.html',
+        'ergast_driver_id' => 'alonso',
     ],
     [
         'first_name' => 'Charles',
@@ -77,6 +87,7 @@ return [
         'slug' => 'charles-leclerc',
         'country_code' => 'MC',
         'url' => 'https://www.formula1.com/en/drivers/charles-leclerc.html',
+        'ergast_driver_id' => 'leclerc',
     ],
     [
         'first_name' => 'Carlos',
@@ -84,6 +95,7 @@ return [
         'slug' => 'carlos-sainz',
         'country_code' => 'ES',
         'url' => 'https://www.formula1.com/en/drivers/carlos-sainz.html',
+        'ergast_driver_id' => 'sainz',
     ],
     [
         'first_name' => 'Pierre',
@@ -91,6 +103,7 @@ return [
         'slug' => 'pierre-gasly',
         'country_code' => 'FR',
         'url' => 'https://www.formula1.com/en/drivers/pierre-gasly.html',
+        'ergast_driver_id' => 'gasly',
     ],
     [
         'first_name' => 'Yuki',
@@ -98,6 +111,7 @@ return [
         'slug' => 'yuki-tsunoda',
         'country_code' => 'JP',
         'url' => 'https://www.formula1.com/en/drivers/yuki-tsunoda.html',
+        'ergast_driver_id' => 'tsunoda',
     ],
     [
         'first_name' => 'Kimi',
@@ -105,6 +119,7 @@ return [
         'slug' => 'kimi-raikkonen',
         'country_code' => 'FI',
         'url' => 'https://www.formula1.com/en/drivers/kimi-raikkonen.html',
+        'ergast_driver_id' => 'raikkonen',
     ],
     [
         'first_name' => 'Antonio',
@@ -112,6 +127,7 @@ return [
         'slug' => 'antonio-giovinazzi',
         'country_code' => 'IT',
         'url' => 'https://www.formula1.com/en/drivers/antonio-giovinazzi.html',
+        'ergast_driver_id' => 'giovinazzi',
     ],
     [
         'first_name' => 'Mick',
@@ -119,6 +135,7 @@ return [
         'slug' => 'mick-schumacher',
         'country_code' => 'DE',
         'url' => 'https://www.formula1.com/en/drivers/mick-schumacher.html',
+        'ergast_driver_id' => 'mick_schumacher',
     ],
     [
         'first_name' => 'Nikita',
@@ -126,6 +143,7 @@ return [
         'slug' => 'nikita-mazepin',
         'country_code' => 'RU',
         'url' => 'https://www.formula1.com/en/drivers/nikita-mazepin.html',
+        'ergast_driver_id' => 'mazepin',
     ],
     [
         'first_name' => 'George',
@@ -133,6 +151,7 @@ return [
         'slug' => 'george-russel',
         'country_code' => 'GB',
         'url' => 'https://www.formula1.com/en/drivers/george-russel.html',
+        'ergast_driver_id' => 'russel',
     ],
     [
         'first_name' => 'Nicholas',
@@ -140,5 +159,6 @@ return [
         'slug' => 'nicholas-latifi',
         'country_code' => 'CA',
         'url' => 'https://www.formula1.com/en/drivers/nicholas-latifi.html',
+        'ergast_driver_id' => 'latifi',
     ],
 ];

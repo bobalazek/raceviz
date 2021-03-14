@@ -21,13 +21,14 @@ class TeamCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setSearchFields(['name', 'location', 'countryCode'])
+            ->setSearchFields(['name', 'fullName', 'location', 'countryCode'])
         ;
     }
 
     public function configureFields(string $pageName): iterable
     {
         $name = TextField::new('name');
+        $fullName = TextField::new('fullName');
         $slug = TextField::new('slug');
         $location = TextField::new('location');
         $countryCode = CountryField::new('countryCode');
@@ -38,6 +39,7 @@ class TeamCrudController extends AbstractCrudController
 
         return [
             $name,
+            $fullName,
             $slug,
             $location,
             $countryCode,

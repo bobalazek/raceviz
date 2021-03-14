@@ -31,6 +31,7 @@ class SeasonDriverFixtures extends Fixture implements DependentFixtureInterface
             $entity = new SeasonDriver();
             $entity
                 ->setNumber($entry['number'])
+                ->setCode($entry['code'])
                 ->setSeason(
                     $manager
                         ->getRepository(Season::class)

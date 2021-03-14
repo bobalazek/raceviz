@@ -35,7 +35,7 @@ return [
     ],
     [
         'season_slug' => 'f1-2021',
-        'team_slug' => 'alpha-tauri',
+        'team_slug' => 'alphatauri',
     ],
     [
         'season_slug' => 'f1-2021',

@@ -34,6 +34,12 @@ class SeasonDriver implements Interfaces\ArrayInterface, TimestampableInterface
     private $number;
 
     /**
+     * @ORM\Column(type="string", length=8)
+     * @Assert\NotBlank()
+     */
+    private $code;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Season", inversedBy="seasonDrivers")
      * @ORM\JoinColumn()
      * @Assert\NotBlank()
@@ -79,6 +85,18 @@ class SeasonDriver implements Interfaces\ArrayInterface, TimestampableInterface
         return $this;
     }
 
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    public function setCode(string $code): self
+    {
+        $this->code = $code;
+
+        return $this;
+    }
+
     public function getSeason(): ?Season
     {
         return $this->season;
@@ -120,6 +138,7 @@ class SeasonDriver implements Interfaces\ArrayInterface, TimestampableInterface
         return [
             'id' => $this->getId(),
             'number' => $this->getNumber(),
+            'code' => $this->getCode(),
             'driver' => $this->getDriver()
                 ? $this->getDriver()->toArray()
                 : null,

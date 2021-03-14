@@ -7,6 +7,7 @@ return [
         'laps' => 57,
         'started_at' => '2021-03-28 18:00',
         'circuit_slug' => 'bahrain',
-        'season_slug' => 'f1-2021'
+        'season_slug' => 'f1-2021',
+        'ergast_season_and_round' => '2021/1',
     ],
 ];

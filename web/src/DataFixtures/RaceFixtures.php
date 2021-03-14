@@ -33,6 +33,12 @@ class RaceFixtures extends Fixture implements DependentFixtureInterface
                 ->setSlug($entry['slug'])
                 ->setLaps($entry['laps'])
                 ->setStartedAt(new \DateTime($entry['debuted_at']))
+                ->setUrl(isset($entry['url'])
+                    ? $entry['url']
+                    : null)
+                ->setErgastSeasonAndRound(isset($entry['ergast_season_and_round'])
+                    ? $entry['ergast_season_and_round']
+                    : null)
                 ->setCircuit(
                     $manager
                         ->getRepository(Circuit::class)

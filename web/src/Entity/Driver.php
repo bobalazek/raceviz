@@ -50,6 +50,11 @@ class Driver implements Interfaces\ArrayInterface, TimestampableInterface
     private $url;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $ergastDriverId;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\RaceDriver", mappedBy="driver")
      */
     private $raceDrivers;
@@ -119,6 +124,18 @@ class Driver implements Interfaces\ArrayInterface, TimestampableInterface
     public function setUrl(?string $url): self
     {
         $this->url = $url;
+
+        return $this;
+    }
+
+    public function getErgastDriverId(): ?string
+    {
+        return $this->ergastDriverId;
+    }
+
+    public function setErgastDriverId(?string $ergastDriverId): self
+    {
+        $this->ergastDriverId = $ergastDriverId;
 
         return $this;
     }

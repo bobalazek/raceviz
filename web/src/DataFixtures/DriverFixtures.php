@@ -31,6 +31,9 @@ class DriverFixtures extends Fixture
                 ->setSlug($entry['slug'])
                 ->setCountryCode($entry['country_code'])
                 ->setUrl($entry['url'])
+                ->setErgastDriverId(isset($entry['ergast_driver_id'])
+                    ? $entry['ergast_driver_id']
+                    : null)
             ;
 
             $manager->persist($entity);

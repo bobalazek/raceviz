@@ -62,7 +62,7 @@ function DriverLapsForm({
   const setFormHadPitStopData = (index) => {
     const newFormData = JSON.parse(JSON.stringify(formData));
 
-    newFormData[index]['had_pit_stop'] = !newFormData[index]['had_pit_stop'];
+    newFormData[index]['had_race_pit_stop'] = !newFormData[index]['had_race_pit_stop'];
 
     setFormData(newFormData);
   };

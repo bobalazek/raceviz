@@ -5,13 +5,16 @@ namespace App\Controller\Api\V1;
 use App\Entity\Race;
 use App\Entity\RaceDriver;
 use App\Entity\RaceDriverRaceLap;
+use App\Entity\RaceDriverRacePitStop;
+use App\Form\Type\RaceDriverRaceLapType;
+use App\Form\Type\RaceDriverRacePitStopType;
 use App\Form\Type\RaceDriverType;
 use App\Repository\RaceDriverRaceLapRepository;
+use App\Repository\RaceDriverRacePitStopRepository;
 use App\Repository\RaceDriverRepository;
 use App\Repository\RaceRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * Class RacesController.
@@ -189,12 +192,8 @@ class RacesController extends AbstractApiController
     /**
      * @Route("/api/v1/races/{raceSlug}/drivers/{raceDriverId}/laps", name="api.v1.races.drivers.laps.edit", methods={"PUT"})
      */
-    public function driversLapsEdit(
-        string $raceSlug,
-        int $raceDriverId,
-        Request $request,
-        ValidatorInterface $validator
-    ) {
+    public function driversLapsEdit(string $raceSlug, int $raceDriverId, Request $request)
+    {
         if (!$this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException();
         }
@@ -203,7 +202,7 @@ class RacesController extends AbstractApiController
         $raceDriver = $this->_getRaceDriver($raceDriverId);
 
         $formData = $request->request->all();
-        $errorResponse = $this->_saveRaceDriverLaps($raceDriver, $formData, $validator);
+        $errorResponse = $this->_saveRaceDriverLaps($raceDriver, $formData);
         if ($errorResponse) {
             return $this->json([
                 'errors' => $errorResponse,
@@ -262,6 +261,8 @@ class RacesController extends AbstractApiController
     {
         $race = $raceDriver->getRace();
 
+        // Race Laps
+        $emptyRaceDriverRaceLap = new RaceDriverRaceLap();
         $raceDriverRaceLapsMap = [];
         /** @var RaceDriverRaceLapRepository $raceDriverRaceLapRepository */
         $raceDriverRaceLapRepository = $this->em->getRepository(RaceDriverRaceLap::class);
@@ -277,20 +278,42 @@ class RacesController extends AbstractApiController
             $raceDriverRaceLapsMap[$raceDriverRaceLap->getLap()] = $raceDriverRaceLap;
         }
 
-        $emptyRaceDriverRaceLap = new RaceDriverRaceLap();
+        // Race Pit Stops
+        $emptyRaceDriverRacePitStop = new RaceDriverRacePitStop();
+        $raceDriverRacePitStopsMap = [];
+        /** @var RaceDriverRacePitStopRepository $raceDriverRacePitStopRepository */
+        $raceDriverRacePitStopRepository = $this->em->getRepository(RaceDriverRacePitStop::class);
+        $raceDriverRacePitStops = $raceDriverRacePitStopRepository
+            ->createQueryBuilder('rdrps')
+            ->where('rdrps.raceDriver = :raceDriver')
+            ->orderBy('rdrps.lap')
+            ->setParameter('raceDriver', $raceDriver)
+            ->getQuery()
+            ->getResult()
+        ;
+        foreach ($raceDriverRacePitStops as $raceDriverRacePitStop) {
+            $raceDriverRacePitStopsMap[$raceDriverRacePitStop->getLap()] = $raceDriverRacePitStop;
+        }
 
         $data = [];
         for ($lap = 1; $lap <= $race->getLaps(); ++$lap) {
+            // Race Lap
             $raceDriverRaceLap = isset($raceDriverRaceLapsMap[$lap])
                 ? $raceDriverRaceLapsMap[$lap]
                 : $emptyRaceDriverRaceLap;
-            $emptyRaceDriverRaceLap->setLap($lap);
+            $raceDriverRaceLap->setLap($lap);
+
+            // Race Pit Stop
+            $raceDriverRacePitStop = isset($raceDriverRacePitStopsMap[$lap])
+                ? $raceDriverRacePitStopsMap[$lap]
+                : $emptyRaceDriverRacePitStop;
+            $raceDriverRacePitStop->setLap($lap);
 
             $data[] = [
                 'lap' => $lap,
                 'race_lap' => $raceDriverRaceLap->toArray(),
-                'had_race_pit_stop' => false,
-                'race_pit_stop' => null,
+                'race_pit_stop' => $raceDriverRacePitStop->toArray(),
+                'had_race_pit_stop' => (bool) $raceDriverRacePitStop->getId(),
             ];
         }
 
@@ -298,13 +321,13 @@ class RacesController extends AbstractApiController
     }
 
     /**
-     * @return array
+     * @return array returns any errors
      */
-    private function _saveRaceDriverLaps(
-        RaceDriver $raceDriver,
-        array $formData,
-        ValidatorInterface $validator
-    ) {
+    private function _saveRaceDriverLaps(RaceDriver $raceDriver, array $formData)
+    {
+        $errors = [];
+
+        // Race Laps
         $raceDriverRaceLapsMap = [];
         /** @var RaceDriverRaceLapRepository $raceDriverRaceLapRepository */
         $raceDriverRaceLapRepository = $this->em->getRepository(RaceDriverRaceLap::class);
@@ -320,38 +343,76 @@ class RacesController extends AbstractApiController
             $raceDriverRaceLapsMap[$raceDriverRaceLap->getLap()] = $raceDriverRaceLap;
         }
 
-        $errors = [];
+        // Race Pit Stops
+        $raceDriverRacePitStopsMap = [];
+        /** @var RaceDriverRacePitStopRepository $raceDriverRacePitStopRepository */
+        $raceDriverRacePitStopRepository = $this->em->getRepository(RaceDriverRacePitStop::class);
+        $raceDriverRacePitStops = $raceDriverRacePitStopRepository
+            ->createQueryBuilder('rdrps')
+            ->where('rdrps.raceDriver = :raceDriver')
+            ->orderBy('rdrps.lap')
+            ->setParameter('raceDriver', $raceDriver)
+            ->getQuery()
+            ->getResult()
+        ;
+        foreach ($raceDriverRacePitStops as $raceDriverRacePitStop) {
+            $raceDriverRacePitStopsMap[$raceDriverRacePitStop->getLap()] = $raceDriverRacePitStop;
+        }
 
+        // Processing
         foreach ($formData as $index => $single) {
+            $lap = (int) $single['lap'];
             $raceLap = $single['race_lap'];
-            $lap = (int) $raceLap['lap'];
-            $position = (int) $raceLap['position'];
-            $time = $raceLap['time'];
-            $timeOfDay = $raceLap['time_of_day'];
-            $tyres = $raceLap['tyres'];
+            $racePitStop = $single['race_pit_stop'];
+            $hadRacePitStop = 'true' === $single['had_race_pit_stop'];
 
+            // Race Lap
             $raceDriverRaceLap = isset($raceDriverRaceLapsMap[$lap])
                 ? $raceDriverRaceLapsMap[$lap]
                 : new RaceDriverRaceLap();
 
-            $raceDriverRaceLap
-                ->setLap($lap)
-                ->setPosition($position)
-                ->setTime($time)
-                ->setTimeOfDay($timeOfDay)
-                ->setTyres($tyres)
-            ;
-
-            $raceLapValidatorErrors = $validator->validate($raceDriverRaceLap);
-            if (count($raceLapValidatorErrors) > 0) {
-                $raceLapErrors = [];
-                foreach ($raceLapValidatorErrors as $validatorError) {
-                    $singleErrors[] = $validatorError->getMessage();
+            $raceLapForm = $this->createForm(RaceDriverRaceLapType::class, $raceDriverRaceLap);
+            $raceLapForm->submit([
+                'raceDriver' => $raceDriver,
+                'lap' => $lap,
+                'position' => $raceLap['position'] ?? null,
+                'time' => $raceLap['time'] ?? null,
+                'timeOfDay' => $raceLap['time_of_day'] ?? null,
+                'tyres' => $raceLap['tyres'] ?? null,
+            ]);
+            if (!$raceLapForm->isValid()) {
+                if (!isset($errors[$index])) {
+                    $errors[$index] = [];
                 }
-                $errors[$index]['race_lap'] = $raceLapErrors;
+                $errors[$index]['race_lap'] = $this->getFormErrors($raceLapForm);
             }
 
             $this->em->persist($raceDriverRaceLap);
+
+            if (!$hadRacePitStop) {
+                continue;
+            }
+
+            // Race Pit Stop
+            $raceDriverRacePitStop = isset($raceDriverRacePitStopsMap[$lap])
+                ? $raceDriverRacePitStopsMap[$lap]
+                : new RaceDriverRacePitStop();
+
+            $racePitStopForm = $this->createForm(RaceDriverRacePitStopType::class, $raceDriverRacePitStop);
+            $racePitStopForm->submit([
+                'raceDriver' => $raceDriver,
+                'lap' => $lap,
+                'time' => $racePitStop['time'] ?? null,
+                'timeOfDay' => $racePitStop['time_of_day'] ?? null,
+            ]);
+            if (!$racePitStopForm->isValid()) {
+                if (!isset($errors[$index])) {
+                    $errors[$index] = [];
+                }
+                $errors[$index]['race_pit_stop'] = $this->getFormErrors($racePitStopForm);
+            }
+
+            $this->em->persist($raceDriverRacePitStop);
         }
 
         return $errors;

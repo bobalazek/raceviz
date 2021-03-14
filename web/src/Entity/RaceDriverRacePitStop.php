@@ -118,6 +118,12 @@ class RaceDriverRacePitStop implements Interfaces\ArrayInterface, TimestampableI
         return [
             'id' => $this->getId(),
             'lap' => $this->getLap(),
+            'time' => $this->getTime()
+                ? $this->getTime()->format('H:i:s.v')
+                : null,
+            'time_of_day' => $this->getTimeOfDay()
+                ? $this->getTimeOfDay()->format('H:i:s')
+                : null,
         ];
     }
 }

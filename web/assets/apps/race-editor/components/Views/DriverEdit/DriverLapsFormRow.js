@@ -70,9 +70,9 @@ function DriverLapsFormRow({
               step="1"
               value={entry.race_lap?.['time_of_day'] ?? ''}
               onChange={(event) => { setFormLapData(index, 'race_lap', 'time_of_day', event.target.value) }}
-              isInvalid={!!entryErrors?.['race_lap']?.['time_of_day']}
+              isInvalid={!!entryErrors?.['race_lap']?.['timeOfDay']}
             />
-            {renderFormErrors(entryErrors?.['race_lap']?.['time_of_day'])}
+            {renderFormErrors(entryErrors?.['race_lap']?.['timeOfDay'])}
           </Form.Group>
         </div>
         <div className="col-md-3">
@@ -102,10 +102,40 @@ function DriverLapsFormRow({
           </Form.Group>
         </div>
       </div>
-      {entry?.['had_pit_stop'] && (
+      {renderFormErrors(entryErrors?.['race_lap']?.['*'])}
+      {entry?.['had_race_pit_stop'] && (
         <>
           <h6>Pit Stop</h6>
-          <div>TODO</div>
+          <div className="row">
+            <div className="col-md-3">
+              <Form.Group>
+                <Form.Label>Time</Form.Label>
+                <Form.Control
+                  value={entry.race_pit_stop?.['time'] ?? ''}
+                  onChange={(event) => { setFormLapData(index, 'race_pit_stop', 'time', event.target.value) }}
+                  isInvalid={!!entryErrors?.['race_pit_stop']?.['time']}
+                />
+                <Form.Text muted>
+                  Enter a valid duration time (2.789).
+                </Form.Text>
+                {renderFormErrors(entryErrors?.['race_pit_stop']?.['time'])}
+              </Form.Group>
+            </div>
+            <div className="col-md-3">
+              <Form.Group>
+                <Form.Label>Time of day</Form.Label>
+                <Form.Control
+                  type="time"
+                  step="1"
+                  value={entry.race_pit_stop?.['time_of_day'] ?? ''}
+                  onChange={(event) => { setFormLapData(index, 'race_pit_stop', 'time_of_day', event.target.value) }}
+                  isInvalid={!!entryErrors?.['race_pit_stop']?.['timeOfDay']}
+                />
+                {renderFormErrors(entryErrors?.['race_pit_stop']?.['timeOfDay'])}
+              </Form.Group>
+            </div>
+          </div>
+          {renderFormErrors(entryErrors?.['race_pit_stop']?.['*'])}
         </>
       )}
     </div>

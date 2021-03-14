@@ -124,6 +124,8 @@ function DriverLapsForm({
 
       toast.success('You have successfully edited the driver laps.');
 
+      setFormErrors(null);
+
       loadLaps();
     } catch(error) {
       toast.error(error.response.data.detail);

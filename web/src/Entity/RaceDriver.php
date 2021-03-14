@@ -320,6 +320,8 @@ class RaceDriver implements Interfaces\ArrayInterface, TimestampableInterface
             'race_result_laps_behind' => $this->getRaceResultLapsBehind(),
             'race_result_status' => $this->getRaceResultStatus(),
             'race_result_status_note' => $this->getRaceResultStatusNote(),
+            'race_laps_count' => $this->getRaceDriverRaceLaps()->count(),
+            'race_pit_stops_count' => $this->getRaceDriverRacePitStops()->count(),
             'team' => $this->getTeam()
                 ? $this->getTeam()->toArray()
                 : null,

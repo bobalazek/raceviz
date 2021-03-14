@@ -389,7 +389,7 @@ class RacesController extends AbstractApiController
                 ]
             );
             $raceLapForm->submit([
-                'raceDriver' => $raceDriver,
+                'raceDriver' => $raceDriver->getId(),
                 'lap' => $lap,
                 'position' => $raceLap['position'] ?? null,
                 'time' => $raceLap['time'] ?? null,
@@ -423,7 +423,7 @@ class RacesController extends AbstractApiController
                 ]
             );
             $racePitStopForm->submit([
-                'raceDriver' => $raceDriver,
+                'raceDriver' => $raceDriver->getId(),
                 'lap' => $lap,
                 'time' => $racePitStop['time'] ?? null,
                 'timeOfDay' => $racePitStop['time_of_day'] ?? null,

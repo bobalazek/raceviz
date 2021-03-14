@@ -152,7 +152,7 @@ function EditDriverForm({
               isInvalid={!!formErrors?.['raceResultTime']}
             />
             <Form.Text muted>
-              Enter a valid duration time (1:06:20.123 or 1:09.456 or 55.789).
+              Enter a valid duration time (1:06:20.123 or 1:09.456 or 05.789).
             </Form.Text>
             {renderFormErrors(formErrors?.['raceResultTime'])}
           </Form.Group>

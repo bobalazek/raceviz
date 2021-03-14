@@ -12,6 +12,11 @@ class TimeDurationToStringTransformer implements DataTransformerInterface
         'G:i:s.v',
         'i:s.v',
         's.v',
+        // Very likely one could write a dot instead of a comma,
+        // so let's also take that into account.
+        'H.i.s.v',
+        'G.i.s.v',
+        'i.s.v',
     ];
 
     public $format;

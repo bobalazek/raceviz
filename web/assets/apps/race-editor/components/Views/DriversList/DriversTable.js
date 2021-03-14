@@ -43,6 +43,8 @@ function DriversTable({
           <tr>
             <th>Driver</th>
             <th>Team</th>
+            <th>Laps</th>
+            <th>Pit Stops</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -52,6 +54,8 @@ function DriversTable({
               <tr key={entry.id}>
                 <td>{entry.driver.name}</td>
                 <td>{entry.team.name}</td>
+                <td>{entry.race_laps_count}</td>
+                <td>{entry.race_pit_stops_count}</td>
                 <td>
                   <div className="btn-group">
                     <Button

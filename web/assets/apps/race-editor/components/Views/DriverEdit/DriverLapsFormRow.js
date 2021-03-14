@@ -57,7 +57,7 @@ function DriverLapsFormRow({
               isInvalid={!!entryErrors?.['race_lap']?.['time']}
             />
             <Form.Text muted>
-              Enter a valid duration time (1:06:20.123 or 1:09.456 or 55.789).
+              Enter a valid duration time (1:06:20.123 or 1:09.456 or 05.789).
             </Form.Text>
             {renderFormErrors(entryErrors?.['race_lap']?.['time'])}
           </Form.Group>
@@ -116,7 +116,7 @@ function DriverLapsFormRow({
                   isInvalid={!!entryErrors?.['race_pit_stop']?.['time']}
                 />
                 <Form.Text muted>
-                  Enter a valid duration time (2.789).
+                  Enter a valid duration time (02.789).
                 </Form.Text>
                 {renderFormErrors(entryErrors?.['race_pit_stop']?.['time'])}
               </Form.Group>

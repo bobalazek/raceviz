@@ -31,6 +31,7 @@ function DriverLapsFormRow({
             inline
             type="checkbox"
             label="Had Pit Stop?"
+            checked={entry?.['had_race_pit_stop']}
             onChange={() => { setFormHadPitStopData(index) }}
           />
         </Form.Group>

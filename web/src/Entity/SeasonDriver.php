@@ -12,8 +12,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="App\Repository\SeasonDriverRepository")
  * @ORM\Table(name="season_drivers")
  * @UniqueEntity(
- *   fields={"season", "driver"},
- *   message="This Season Driver was already added"
+ *   fields={"season", "driver", "team"},
+ *   message="This Season Driver for this Team was already added"
  * )
  */
 class SeasonDriver implements Interfaces\ArrayInterface, TimestampableInterface
@@ -40,6 +40,11 @@ class SeasonDriver implements Interfaces\ArrayInterface, TimestampableInterface
     private $code;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $temporary = false;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Season", inversedBy="seasonDrivers")
      * @ORM\JoinColumn()
      * @Assert\NotBlank()
@@ -56,6 +61,7 @@ class SeasonDriver implements Interfaces\ArrayInterface, TimestampableInterface
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Team", inversedBy="seasonDrivers")
      * @ORM\JoinColumn()
+     * @Assert\NotBlank()
      */
     private $team;
 
@@ -65,7 +71,7 @@ class SeasonDriver implements Interfaces\ArrayInterface, TimestampableInterface
         $driver = $this->getDriver();
         $team = $this->getTeam();
 
-        return $season . ' @ ' . $driver . ($team ? ' (' . $team . ')' : '');
+        return $season . ' @ ' . $driver . ' (' . $team . ')';
     }
 
     public function getId(): ?int
@@ -93,6 +99,23 @@ class SeasonDriver implements Interfaces\ArrayInterface, TimestampableInterface
     public function setCode(string $code): self
     {
         $this->code = $code;
+
+        return $this;
+    }
+
+    public function getTemporary(): bool
+    {
+        return $this->temporary;
+    }
+
+    public function isTemporary(): bool
+    {
+        return $this->getTemporary();
+    }
+
+    public function setTemporary(bool $temporary): self
+    {
+        $this->temporary = $temporary;
 
         return $this;
     }
@@ -139,12 +162,10 @@ class SeasonDriver implements Interfaces\ArrayInterface, TimestampableInterface
             'id' => $this->getId(),
             'number' => $this->getNumber(),
             'code' => $this->getCode(),
-            'driver' => $this->getDriver()
-                ? $this->getDriver()->toArray()
-                : null,
-            'team' => $this->getTeam()
-                ? $this->getTeam()->toArray()
-                : null,
+            'temporary' => $this->getTemporary(),
+            'season' => $this->getSeason()->toArray(),
+            'driver' => $this->getDriver()->toArray(),
+            'team' => $this->getTeam()->toArray(),
         ];
     }
 }

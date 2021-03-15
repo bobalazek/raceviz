@@ -17,6 +17,14 @@ return [
         'team_slug' => 'mercedes',
     ],
     [
+        'number' => 63,
+        'code' => 'RUS',
+        'temporary' => true,
+        'season_slug' => 'f1-2020',
+        'driver_slug' => 'george-russel',
+        'team_slug' => 'mercedes',
+    ],
+    [
         'number' => 3,
         'code' => 'RIC',
         'season_slug' => 'f1-2020',
@@ -42,6 +50,14 @@ return [
         'code' => 'MAG',
         'season_slug' => 'f1-2020',
         'driver_slug' => 'kevin-magnussen',
+        'team_slug' => 'haas',
+    ],
+    [
+        'number' => 51,
+        'code' => 'FIT',
+        'temporary' => true,
+        'season_slug' => 'f1-2020',
+        'driver_slug' => 'pietro-fittipaldi',
         'team_slug' => 'haas',
     ],
     [
@@ -98,7 +114,15 @@ return [
         'code' => 'STR',
         'season_slug' => 'f1-2020',
         'driver_slug' => 'lance-stroll',
-        'team_slug' => 'aston-martin',
+        'team_slug' => 'racing-point',
+    ],
+    [
+        'number' => 27,
+        'code' => 'HUL',
+        'temporary' => true,
+        'season_slug' => 'f1-2020',
+        'driver_slug' => 'nico-hulkenberg',
+        'team_slug' => 'racing-point',
     ],
     [
         'number' => 16,

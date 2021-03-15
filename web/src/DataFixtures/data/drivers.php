@@ -195,7 +195,7 @@ return [
     ],
     [
         'first_name' => 'Nico',
-        'last_name' => 'Hulkenberg',
+        'last_name' => 'Hülkenberg',
         'slug' => 'nico-hulkenberg',
         'country_code' => 'DE',
         'url' => 'https://en.wikipedia.org/wiki/Nico_H%C3%BClkenberg',
@@ -208,5 +208,13 @@ return [
         'country_code' => 'GB',
         'url' => 'https://en.wikipedia.org/wiki/Jack_Aitken',
         'ergast_driver_id' => 'aitken',
+    ],
+    [
+        'first_name' => 'Pietro',
+        'last_name' => 'Fittipaldi',
+        'slug' => 'pietro-fittipaldi',
+        'country_code' => 'BR',
+        'url' => 'https://en.wikipedia.org/wiki/Pietro_Fittipaldi',
+        'ergast_driver_id' => 'pietro_fittipaldi',
     ],
 ];

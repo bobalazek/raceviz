@@ -6,6 +6,7 @@ use App\Entity\SeasonDriver;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
@@ -27,6 +28,7 @@ class SeasonDriverCrudController extends AbstractCrudController
     {
         $number = NumberField::new('number');
         $code = TextField::new('code');
+        $temporary = BooleanField::new('temporary');
         $season = AssociationField::new('season');
         $driver = AssociationField::new('driver');
         $team = AssociationField::new('team');
@@ -34,6 +36,7 @@ class SeasonDriverCrudController extends AbstractCrudController
         return [
             $number,
             $code,
+            $temporary,
             $season,
             $driver,
             $team,

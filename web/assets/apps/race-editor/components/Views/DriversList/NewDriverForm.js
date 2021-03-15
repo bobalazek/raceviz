@@ -38,6 +38,8 @@ function NewDriverForm() {
     data: seasonTeams,
   } = useSeasonsTeamsFetch();
 
+  const [seasonDriverId, setSeasonDriverId] = useState(0);
+  const [seasonTeamId, setSeasonTeamId] = useState(0);
   const [driverId, setDriverId] = useState(0);
   const [teamId, setTeamId] = useState(0);
 
@@ -49,29 +51,39 @@ function NewDriverForm() {
     return entry.driver.id;
   });
 
-  const onDriverChange = (event) => {
+  const onSeasonDriverChange = (event) => {
     const value = parseInt(event.target.value);
-    setDriverId(value);
-    setFormErrors(null);
+
+    setSeasonDriverId(value);
 
     const seasonDriver = seasonDrivers.find((entry) => {
-      return entry.driver.id === value;
+      return entry.id === value;
     });
+
+    setDriverId(seasonDriver.driver.id);
+    setFormErrors(null);
 
     const seasonDriverTeam = seasonTeams.find((entry) => {
       return entry.team.id === seasonDriver.team.id;
     });
-
     if (!seasonDriverTeam) {
       return;
     }
 
+    setSeasonTeamId(seasonDriverTeam.team.id);
     setTeamId(seasonDriverTeam.team.id);
   };
 
-  const onTeamChange = (event) => {
+  const onSeasonTeamChange = (event) => {
     const value = parseInt(event.target.value);
-    setTeamId(value);
+
+    setSeasonTeamId(value);
+
+    const seasonTeam = seasonTeams.find((entry) => {
+      return entry.id === value;
+    });
+
+    setTeamId(seasonTeam.team.id);
     setFormErrors(null);
   };
 
@@ -100,6 +112,8 @@ function NewDriverForm() {
 
       toast.success('You have successfully added the driver.');
 
+      setSeasonDriverId(0);
+      setSeasonTeamId(0);
       setDriverId(0);
       setTeamId(0);
 
@@ -119,8 +133,8 @@ function NewDriverForm() {
             <Form.Label>Driver</Form.Label>
             <Form.Control
               as="select"
-              value={driverId}
-              onChange={onDriverChange}
+              value={seasonDriverId}
+              onChange={onSeasonDriverChange}
               isInvalid={!!formErrors?.['driver']}
             >
               <option value="0">-- none --</option>
@@ -128,11 +142,14 @@ function NewDriverForm() {
                 const alreadyAddedDriver = addedDriverIds.includes(entry.driver.id);
                 return (
                   <option
-                    key={entry.driver.id}
-                    value={entry.driver.id}
+                    key={entry.id}
+                    value={entry.id}
                     disabled={alreadyAddedDriver}
                   >
                     {entry.driver.name}
+                    {' '}
+                    ({entry.team.name})
+                    {entry.temporary && ' (temporary)'}
                     {alreadyAddedDriver && ' (already added)'}
                   </option>
                 );
@@ -146,16 +163,16 @@ function NewDriverForm() {
             <Form.Label>Team</Form.Label>
             <Form.Control
               as="select"
-              value={teamId}
-              onChange={onTeamChange}
+              value={seasonTeamId}
+              onChange={onSeasonTeamChange}
               isInvalid={!!formErrors?.['team']}
             >
               <option value="0">-- none --</option>
               {seasonTeams.map((entry) => {
                 return (
                   <option
-                    key={entry.team.id}
-                    value={entry.team.id}
+                    key={entry.id}
+                    value={entry.id}
                   >
                     {entry.team.name}
                   </option>

@@ -32,6 +32,7 @@ class SeasonDriverFixtures extends Fixture implements DependentFixtureInterface
             $entity
                 ->setNumber($entry['number'])
                 ->setCode($entry['code'])
+                ->setTemporary(isset($entry['temporary']) && $entry['temporary'])
                 ->setSeason(
                     $manager
                         ->getRepository(Season::class)
@@ -47,13 +48,11 @@ class SeasonDriverFixtures extends Fixture implements DependentFixtureInterface
                         ])
                 )
                 ->setTeam(
-                    isset($entry['team_slug'])
-                        ? $manager
-                            ->getRepository(Team::class)
-                            ->findOneBy([
-                                'slug' => $entry['team_slug'],
-                            ])
-                        : null
+                    $manager
+                        ->getRepository(Team::class)
+                        ->findOneBy([
+                            'slug' => $entry['team_slug'],
+                        ])
                 )
             ;
 

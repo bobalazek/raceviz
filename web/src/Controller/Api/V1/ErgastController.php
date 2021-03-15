@@ -9,7 +9,6 @@ use App\Manager\ErgastManager;
 use App\Repository\RaceDriverRepository;
 use App\Repository\RaceRepository;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
  * Class ErgastController.

@@ -38,6 +38,12 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
     private $laps;
 
     /**
+     * @ORM\Column(type="smallint")
+     * @Assert\NotBlank()
+     */
+    private $round;
+
+    /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $url;
@@ -104,9 +110,21 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
         return $this->laps;
     }
 
-    public function setLaps(string $laps): self
+    public function setLaps(int $laps): self
     {
         $this->laps = $laps;
+
+        return $this;
+    }
+
+    public function getRound(): ?int
+    {
+        return $this->round;
+    }
+
+    public function setRound(int $round): self
+    {
+        $this->round = $round;
 
         return $this;
     }

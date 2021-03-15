@@ -30,6 +30,7 @@ class RaceCrudController extends AbstractCrudController
         $name = TextField::new('name');
         $slug = TextField::new('slug');
         $laps = NumberField::new('laps');
+        $round = NumberField::new('round');
         $url = UrlField::new('url');
         $ergastSeriesSeasonAndRound = TextField::new('ergastSeriesSeasonAndRound')
             ->setHelp('The format must be "(series)/(season)/(round)", for example "f1/2020/16"')
@@ -42,6 +43,7 @@ class RaceCrudController extends AbstractCrudController
             $name,
             $slug,
             $laps,
+            $round,
             $url,
             $ergastSeriesSeasonAndRound,
             $startedAt,

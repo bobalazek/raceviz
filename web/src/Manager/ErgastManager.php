@@ -2,13 +2,7 @@
 
 namespace App\Manager;
 
-use App\Entity\User;
-use App\Entity\UserAction;
 use App\Exception\Controller\InvalidParameterException;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -106,7 +100,8 @@ class ErgastManager
     private function _getLapsResponseData(string $seriesSeasonAndRound)
     {
         $key = 'ergast_laps_' . str_replace('/', '_', $seriesSeasonAndRound);
-        return $this->cache->get($key, function(ItemInterface $item) use ($seriesSeasonAndRound) {
+
+        return $this->cache->get($key, function (ItemInterface $item) use ($seriesSeasonAndRound) {
             $url = sprintf(
                 'http://ergast.com/api/%s/laps.json?limit=2000',
                 $seriesSeasonAndRound
@@ -123,7 +118,8 @@ class ErgastManager
     private function _getPitStopsResponseData(string $seriesSeasonAndRound)
     {
         $key = 'ergast_pitstops_' . str_replace('/', '_', $seriesSeasonAndRound);
-        return $this->cache->get($key, function(ItemInterface $item) use ($seriesSeasonAndRound) {
+
+        return $this->cache->get($key, function (ItemInterface $item) use ($seriesSeasonAndRound) {
             $url = sprintf(
                 'http://ergast.com/api/%s/pitstops.json?limit=2000',
                 $seriesSeasonAndRound

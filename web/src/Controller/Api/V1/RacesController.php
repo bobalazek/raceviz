@@ -474,7 +474,7 @@ class RacesController extends AbstractApiController
             )) {
                 continue;
             }
-           $this->em->remove($raceDriverRacePitStop);
+            $this->em->remove($raceDriverRacePitStop);
         }
 
         return $errors;

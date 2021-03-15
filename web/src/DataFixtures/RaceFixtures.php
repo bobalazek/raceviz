@@ -33,7 +33,7 @@ class RaceFixtures extends Fixture implements DependentFixtureInterface
                 ->setSlug($entry['slug'])
                 ->setLaps($entry['laps'])
                 ->setRound($entry['round'])
-                ->setStartedAt(new \DateTime($entry['debuted_at']))
+                ->setStartedAt(new \DateTime($entry['started_at']))
                 ->setUrl(isset($entry['url'])
                     ? $entry['url']
                     : null)

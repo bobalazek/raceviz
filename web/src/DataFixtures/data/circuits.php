@@ -151,8 +151,22 @@ return [
     [
         'name' => 'Yas Marina Circuit',
         'slug' => 'yas-marina',
-        'location' => 'Yas Island, Abu Dhabi,',
+        'location' => 'Yas Island, Abu Dhabi',
         'country_code' => 'AE',
         'url' => 'https://en.wikipedia.org/wiki/Yas_Marina_Circuit',
+    ],
+    [
+        'name' => 'Nürburg',
+        'slug' => 'nurburg',
+        'location' => 'Nürburg',
+        'country_code' => 'DE',
+        'url' => 'https://en.wikipedia.org/wiki/N%C3%BCrburgring',
+    ],
+    [
+        'name' => 'Istanbul Park',
+        'slug' => 'istanbul',
+        'location' => 'Tuzla, Istanbul',
+        'country_code' => 'TR',
+        'url' => 'https://en.wikipedia.org/wiki/Istanbul_Park',
     ],
 ];

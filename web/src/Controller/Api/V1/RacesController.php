@@ -377,7 +377,7 @@ class RacesController extends AbstractApiController
             $lap = (int) $single['lap'];
             $raceLap = $single['race_lap'];
             $racePitStop = $single['race_pit_stop'];
-            $hadRacePitStop = 'true' === $single['had_race_pit_stop'];
+            $hadRacePitStop = $single['had_race_pit_stop'];
 
             // Race Lap
             /** @var RaceDriverRaceLap $raceDriverRaceLap */
@@ -474,7 +474,7 @@ class RacesController extends AbstractApiController
             )) {
                 continue;
             }
-            $this->em->remove($raceDriverRacePitStop);
+           $this->em->remove($raceDriverRacePitStop);
         }
 
         return $errors;

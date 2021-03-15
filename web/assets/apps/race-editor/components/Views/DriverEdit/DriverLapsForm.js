@@ -117,30 +117,33 @@ function DriverLapsForm({
 
       const newFormData = [];
 
-      ergastLaps.forEach((entry) => {
-        const lap = entry.lap;
-        const position = entry.position;
-        const time = entry.time;
+      if (ergastLaps.length > 0) {
+        for (let i = 0; i < ergastLaps.length; i++) {
+          const entry = ergastLaps[i];
+          const lap = entry.lap;
 
-        newFormData.push({
-          lap,
-          had_race_pit_stop: false,
-          race_lap: {
-            id: null,
+          newFormData.push({
             lap,
-            position,
-            time,
-            time_of_day: null,
-            tyres: null,
-          },
-          race_pit_stop: {
-            id: null,
-            lap,
-            time: null,
-            time_of_day: null,
-          },
-        });
-      });
+            race_lap: {
+              id: null,
+              lap,
+              position: entry.race_lap.position,
+              time: entry.race_lap.time,
+              time_of_day: null,
+              tyres: null,
+            },
+            race_pit_stop: {
+              id: null,
+              lap,
+              time: entry.race_pit_stop?.time ?? null,
+              time_of_day: entry.race_pit_stop?.time_of_day ?? null,
+            },
+            had_race_pit_stop: !!entry.race_pit_stop,
+          });
+        }
+      } else {
+        toast.info('No laps data found for this driver on this race.');
+      }
 
       setFormData(newFormData);
     } catch (error) {

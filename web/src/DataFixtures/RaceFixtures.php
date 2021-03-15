@@ -36,8 +36,8 @@ class RaceFixtures extends Fixture implements DependentFixtureInterface
                 ->setUrl(isset($entry['url'])
                     ? $entry['url']
                     : null)
-                ->setErgastSeasonAndRound(isset($entry['ergast_season_and_round'])
-                    ? $entry['ergast_season_and_round']
+                ->setErgastSeriesSeasonAndRound(isset($entry['ergast_series_season_and_round'])
+                    ? $entry['ergast_series_season_and_round']
                     : null)
                 ->setCircuit(
                     $manager

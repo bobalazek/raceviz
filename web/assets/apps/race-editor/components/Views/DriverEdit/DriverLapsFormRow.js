@@ -39,18 +39,6 @@ function DriverLapsFormRow({
       <div className="row">
         <div className="col-md-3">
           <Form.Group>
-            <Form.Label>Position</Form.Label>
-            <Form.Control
-              type="number"
-              value={entry.race_lap?.['position'] ?? ''}
-              onChange={(event) => { setFormLapData(index, 'race_lap', 'position', event.target.value) }}
-              isInvalid={!!entryErrors?.['race_lap']?.['position']}
-            />
-            {renderFormErrors(entryErrors?.['race_lap']?.['position'])}
-          </Form.Group>
-        </div>
-        <div className="col-md-3">
-          <Form.Group>
             <Form.Label>Time</Form.Label>
             <Form.Control
               value={entry.race_lap?.['time'] ?? ''}
@@ -74,6 +62,18 @@ function DriverLapsFormRow({
               isInvalid={!!entryErrors?.['race_lap']?.['timeOfDay']}
             />
             {renderFormErrors(entryErrors?.['race_lap']?.['timeOfDay'])}
+          </Form.Group>
+        </div>
+        <div className="col-md-3">
+          <Form.Group>
+            <Form.Label>Position</Form.Label>
+            <Form.Control
+              type="number"
+              value={entry.race_lap?.['position'] ?? ''}
+              onChange={(event) => { setFormLapData(index, 'race_lap', 'position', event.target.value) }}
+              isInvalid={!!entryErrors?.['race_lap']?.['position']}
+            />
+            {renderFormErrors(entryErrors?.['race_lap']?.['position'])}
           </Form.Group>
         </div>
         <div className="col-md-3">

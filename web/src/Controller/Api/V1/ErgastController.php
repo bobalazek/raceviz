@@ -5,6 +5,7 @@ namespace App\Controller\Api\V1;
 use App\Entity\Race;
 use App\Entity\RaceDriver;
 use App\Exception\Controller\InvalidParameterException;
+use App\Manager\ErgastManager;
 use App\Repository\RaceDriverRepository;
 use App\Repository\RaceRepository;
 use Symfony\Component\Routing\Annotation\Route;
@@ -30,7 +31,7 @@ class ErgastController extends AbstractApiController
     /**
      * @Route("/api/v1/ergast/{raceSlug}/{raceDriverId}/laps", name="api.v1.ergast.race_driver_race_laps", methods={"GET"})
      */
-    public function raceDriverRaceLaps(string $raceSlug, int $raceDriverId, HttpClientInterface $client)
+    public function raceDriverRaceLaps(string $raceSlug, int $raceDriverId, ErgastManager $ergastManager)
     {
         if (!$this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException();
@@ -45,8 +46,8 @@ class ErgastController extends AbstractApiController
             throw $this->createNotFoundException();
         }
 
-        $ergastSeasonAndRound = $race->getErgastSeasonAndRound();
-        if (!$ergastSeasonAndRound) {
+        $ergastSeriesSeasonAndRound = $race->getErgastSeriesSeasonAndRound();
+        if (!$ergastSeriesSeasonAndRound) {
             throw new InvalidParameterException('This race has no ergast season and round set!');
         }
 
@@ -65,46 +66,10 @@ class ErgastController extends AbstractApiController
             throw new InvalidParameterException('This driver has no ergast driver id set!');
         }
 
-        $season = $race->getSeason();
-        $series = strtolower($season->getSeries());
-
-        $response = $client->request(
-            'GET',
-            sprintf(
-                'http://ergast.com/api/%s/%s/laps.json?limit=2000',
-                $series,
-                $ergastSeasonAndRound
-            )
+        $data = $ergastManager->getLapsData(
+            $ergastSeriesSeasonAndRound,
+            $ergastDriverId
         );
-        $content = $response->toArray();
-
-        if (!isset($content['MRData']['RaceTable']['Races'][0]['Laps'])) {
-            throw new InvalidParameterException('No data found for this race.');
-        }
-
-        $raceLapsData = $content['MRData']['RaceTable']['Races'][0]['Laps'];
-
-        $data = [];
-
-        foreach ($raceLapsData as $raceLapData) {
-            $lap = (int) $raceLapData['number'];
-            $allDriverTimes = $raceLapData['Timings'];
-            foreach ($allDriverTimes as $allDriverTime) {
-                if ($allDriverTime['driverId'] !== $ergastDriverId) {
-                    continue;
-                }
-
-                $position = (int) $allDriverTime['position'];
-                $time = $allDriverTime['time'];
-
-                $data[] = [
-                    'lap' => $lap,
-                    'position' => $position,
-                    'time' => $time,
-                    // TODO: also pit stops
-                ];
-            }
-        }
 
         return $this->json([
             'success' => true,

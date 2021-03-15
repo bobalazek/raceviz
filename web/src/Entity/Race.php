@@ -45,7 +45,7 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $ergastSeasonAndRound;
+    private $ergastSeriesSeasonAndRound;
 
     /**
      * @ORM\Column(type="datetime")
@@ -123,14 +123,14 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
         return $this;
     }
 
-    public function getErgastSeasonAndRound(): ?string
+    public function getErgastSeriesSeasonAndRound(): ?string
     {
-        return $this->ergastSeasonAndRound;
+        return $this->ergastSeriesSeasonAndRound;
     }
 
-    public function setErgastSeasonAndRound(?string $ergastSeasonAndRound): self
+    public function setErgastSeriesSeasonAndRound(?string $ergastSeriesSeasonAndRound): self
     {
-        $this->ergastSeasonAndRound = $ergastSeasonAndRound;
+        $this->ergastSeriesSeasonAndRound = $ergastSeriesSeasonAndRound;
 
         return $this;
     }

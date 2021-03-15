@@ -244,11 +244,13 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
             'name' => $this->getName(),
             'slug' => $this->getSlug(),
             'laps' => $this->getLaps(),
+            'lap_distance' => $this->getLapDistance(),
+            'round' => $this->getRound(),
             'url' => $this->getUrl(),
+            'ergast_series_season_and_round' => $this->getErgastSeriesSeasonAndRound(),
             'started_at' => $this->getStartedAt()->format('Y-m-d'),
-            'season' => $this->getSeason()
-                ? $this->getSeason()->toArray()
-                : null,
+            'season' => $this->getSeason()->toArray(),
+            'circuit' => $this->getCircuit()->toArray(),
         ];
     }
 }

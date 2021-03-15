@@ -1,4 +1,5 @@
 import axios from 'axios';
+import qs from 'qs';
 import {
   toast,
 } from 'react-toastify';
@@ -38,12 +39,16 @@ export const DriversService = {
       const response = await axios.get(url);
 
       store.dispatch(setData(response.data.data));
+
+      return response;
     } catch (error) {
       store.dispatch(setError(error.response.error));
     } finally {
       store.dispatch(setLoading(false));
       store.dispatch(setLoaded(true));
     }
+
+    return null;
   },
   loadLaps: async (args) => {
     const raceDriverId = args?.raceDriver.id;
@@ -57,6 +62,7 @@ export const DriversService = {
     ;
 
     const response = await axios.get(url);
+
     return response.data.data;
   },
   loadLapsFromErgast: async (args) => {
@@ -71,7 +77,27 @@ export const DriversService = {
     ;
 
     const response = await axios.get(url);
+
     return response.data.data;
+  },
+  add: async(args) => {
+    const raceDriverId = args?.raceDriver.id;
+    if (!raceDriverId) {
+      throw new Error('Please set a valid raceDriverId');
+    }
+
+    const formData = args.formData;
+
+    const url = API_PUT_RACES_DRIVERS_LAPS
+      .replace('{raceSlug}', appData.race.slug)
+      .replace('{raceDriverId}', raceDriverId)
+    ;
+
+    const response = await axios.put(url, qs.stringify({
+      data: JSON.stringify(formData),
+    }));
+
+    return response;
   },
   delete: async (args) => {
     const raceSlug = appData.race.slug;
@@ -87,15 +113,19 @@ export const DriversService = {
         .replace('{raceDriverId}', raceDriverId)
       ;
 
-      await axios.delete(url);
+      const response = await axios.delete(url);
 
       toast.success('The driver was successfully deleted!');
 
       DriversService.loadAll({
         raceSlug,
       });
+
+      return response;
     } catch (error) {
       toast.error(error.response.data.detail);
     }
+
+    return null;
   }
 };

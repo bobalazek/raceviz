@@ -7,15 +7,12 @@ import {
   Form,
   Button,
 } from 'react-bootstrap';
-import axios from 'axios';
-import qs from 'qs';
 import {
   toast,
 } from 'react-toastify';
 
 import {
   DriversService,
-  API_PUT_RACES_DRIVERS_LAPS,
 } from '../../../api';
 import {
   renderFormErrors,
@@ -158,14 +155,10 @@ function DriverLapsForm({
     setFormSubmitting(true);
 
     try {
-      const url = API_PUT_RACES_DRIVERS_LAPS
-        .replace('{raceSlug}', appData.race.slug)
-        .replace('{raceDriverId}', selectedRaceDriver.id)
-      ;
-
-      const response = await axios.put(url, qs.stringify({
-        data: JSON.stringify(formData),
-      }));
+      const response = DriversService.add({
+        raceDriver: selectedRaceDriver,
+        formData,
+      });
 
       if (response.data.errors) {
         setFormErrors(response.data.errors);
@@ -240,12 +233,14 @@ function DriverLapsForm({
             Remove last lap
           </Button>
         )}
-        <Button
-          variant="danger"
-          onClick={onPullFromErgastClick}
-        >
-          Pull from ergast
-        </Button>
+        {appData.race.ergast_series_season_and_round && (
+          <Button
+            variant="danger"
+            onClick={onPullFromErgastClick}
+          >
+            Pull from ergast
+          </Button>
+        )}
       </div>
       {renderFormErrors(formErrors?.['*'], true)}
       <Button

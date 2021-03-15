@@ -30,6 +30,7 @@ class RaceCrudController extends AbstractCrudController
         $name = TextField::new('name');
         $slug = TextField::new('slug');
         $laps = NumberField::new('laps');
+        $lapDistance = NumberField::new('lapDistance');
         $round = NumberField::new('round');
         $url = UrlField::new('url');
         $ergastSeriesSeasonAndRound = TextField::new('ergastSeriesSeasonAndRound')
@@ -43,6 +44,7 @@ class RaceCrudController extends AbstractCrudController
             $name,
             $slug,
             $laps,
+            $lapDistance,
             $round,
             $url,
             $ergastSeriesSeasonAndRound,

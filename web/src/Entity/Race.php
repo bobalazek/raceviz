@@ -41,6 +41,12 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
      * @ORM\Column(type="smallint")
      * @Assert\NotBlank()
      */
+    private $lapDistance;
+
+    /**
+     * @ORM\Column(type="smallint")
+     * @Assert\NotBlank()
+     */
     private $round;
 
     /**
@@ -113,6 +119,18 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
     public function setLaps(int $laps): self
     {
         $this->laps = $laps;
+
+        return $this;
+    }
+
+    public function getLapDistance(): ?int
+    {
+        return $this->lapDistance;
+    }
+
+    public function setLapDistance(int $lapDistance): self
+    {
+        $this->lapDistance = $lapDistance;
 
         return $this;
     }

@@ -6,15 +6,14 @@ use App\Entity\Race;
 use App\Entity\RaceDriver;
 use App\Entity\RaceDriverRaceLap;
 use App\Entity\RaceDriverRacePitStop;
-use App\Entity\SeasonDriver;
 use App\Form\Type\RaceDriverRaceLapType;
 use App\Form\Type\RaceDriverRacePitStopType;
 use App\Form\Type\RaceDriverType;
+use App\Manager\RaceDriverManager;
 use App\Repository\RaceDriverRaceLapRepository;
 use App\Repository\RaceDriverRacePitStopRepository;
 use App\Repository\RaceDriverRepository;
 use App\Repository\RaceRepository;
-use App\Repository\SeasonDriverRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -113,59 +112,24 @@ class RacesController extends AbstractApiController
     /**
      * @Route("/api/v1/races/{raceSlug}/drivers/prepare-all", name="api.v1.races.drivers.prepare_all", methods={"POST"})
      */
-    public function driversPrepareAll(string $raceSlug)
+    public function driversPrepareAll(string $raceSlug, RaceDriverManager $raceDriverManager)
     {
         if (!$this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException();
         }
 
         $race = $this->_getRace($raceSlug);
-        $season = $race->getSeason();
 
-        /** @var SeasonDriverRepository $seasonDriverRepository */
-        $seasonDriverRepository = $this->em->getRepository(SeasonDriver::class);
+        $addedRaceDrivers = $raceDriverManager->prepareAll($race);
 
-        $seasonDrivers = $seasonDriverRepository->findBy([
-            'season' => $season,
-            'temporary' => false,
-        ]);
-
-        /** @var RaceDriverRepository $raceDriverRepository */
-        $raceDriverRepository = $this->em->getRepository(RaceDriver::class);
-
-        $raceDrivers = $raceDriverRepository->findBy([
-            'race' => $race,
-        ]);
-
-        $raceDriversMap = [];
-        foreach ($raceDrivers as $raceDriver) {
-            $driverId = $raceDriver->getDriver()->getId();
-            $raceDriversMap[$driverId] = $raceDriver;
+        $data = [];
+        foreach ($addedRaceDrivers as $addedRaceDriver) {
+            $data[] = $addedRaceDriver->toArray();
         }
-
-        foreach ($seasonDrivers as $seasonDriver) {
-            $driver = $seasonDriver->getDriver();
-            $team = $seasonDriver->getTeam();
-            $driverId = $driver->getId();
-            if (isset($raceDriversMap[$driverId])) {
-                continue;
-            }
-
-            $raceDriver = new RaceDriver();
-            $raceDriver
-                ->setRace($race)
-                ->setDriver($driver)
-                ->setTeam($team)
-            ;
-
-            $this->em->persist($raceDriver);
-        }
-
-        $this->em->flush();
 
         return $this->json([
             'success' => true,
-            'data' => [],
+            'data' => $data,
             'meta' => [],
         ]);
     }

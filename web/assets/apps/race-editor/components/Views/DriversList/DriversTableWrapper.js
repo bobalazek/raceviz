@@ -12,6 +12,9 @@ import {
   selectData,
   selectError,
 } from '../../../store/driversListSlice';
+import {
+  DriversService,
+} from '../../../api.js';
 import DriversTable from './DriversTable';
 import confirm from '../../Shared/ConfirmDialog';
 
@@ -29,15 +32,16 @@ function DriversTableWrapper() {
       return;
     }
 
-    // TODO
-
-    window.dispatchEvent(new CustomEvent('driver-editor:new-driver'));
+    DriversService.prepareAll();
   };
 
   return (
     <div>
       <h2 className="d-flex">
-        <div className="mr-auto">Drivers</div>
+        <div className="mr-auto">
+          <span>Drivers </span>
+          <small>({data.length})</small>
+        </div>
         <div>
           <Button
             variant="primary"

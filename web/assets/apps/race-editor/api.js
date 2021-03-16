@@ -17,6 +17,7 @@ export const API_GET_SEASONS_DRIVERS = '/api/v1/seasons/{seasonSlug}/drivers';
 export const API_GET_SEASONS_TEAMS = '/api/v1/seasons/{seasonSlug}/teams';
 export const API_GET_RACES_DRIVERS = '/api/v1/races/{raceSlug}/drivers';
 export const API_POST_RACES_DRIVERS = '/api/v1/races/{raceSlug}/drivers';
+export const API_POST_RACES_DRIVERS_PREPARE_ALL = '/api/v1/races/{raceSlug}/drivers/prepare-all';
 export const API_PUT_RACES_DRIVERS = '/api/v1/races/{raceSlug}/drivers/{raceDriverId}';
 export const API_DELETE_RACES_DRIVERS = '/api/v1/races/{raceSlug}/drivers/{raceDriverId}';
 export const API_GET_RACES_DRIVERS_LAPS = '/api/v1/races/{raceSlug}/drivers/{raceDriverId}/laps';
@@ -79,6 +80,29 @@ export const DriversService = {
     const response = await axios.get(url);
 
     return response.data.data;
+  },
+  prepareAll: async() => {
+    const raceSlug = appData.race.slug;
+
+    try {
+      const url = API_POST_RACES_DRIVERS_PREPARE_ALL
+        .replace('{raceSlug}', raceSlug)
+      ;
+
+      const response = await axios.post(url);
+
+      toast.success('The race drivers were successfully prepared!');
+
+      DriversService.loadAll({
+        raceSlug,
+      });
+
+      return response;
+    } catch (error) {
+      toast.error(error.response.data.detail);
+    }
+
+    return null;
   },
   add: async(args) => {
     const raceDriverId = args?.raceDriver.id;

@@ -32,7 +32,7 @@ class Season implements Interfaces\ArrayInterface, TimestampableInterface
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=16)
+     * @ORM\Column(type="string", length=32)
      * @Assert\NotBlank()
      */
     private $series;

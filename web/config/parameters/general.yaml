@@ -16,22 +16,32 @@ parameters:
 
     # Data
     app.series:
-        F1: Formula 1
-        F2: Formula 2
-        F3: Formula 3
-        FE: Formula E
+        f1: Formula 1
+        f2: Formula 2
+        f3: Formula 3
+        fe: Formula E
     app.tyres:
-        hard: Hard
-        medium: Medium
-        soft: Soft
-        intermediate: Intermediate
-        wet: Wet
+        hard: Hard (H)
+        medium: Medium (M)
+        soft: Soft (S)
+        intermediate: Intermediate (I)
+        wet: Wet (W)
+        c1: Compound 1 (C1)
+        c2: Compound 2 (C2)
+        c3: Compound 3 (C3)
+        c4: Compound 4 (C4)
+        c5: Compound 5 (C5)
     app.race_driver_statuses:
-        f: Finished (F)
-        dnf: DNF (Did Not Finish)
-        dsq: DSQ (Disqualified)
-        dns: DNS (Did Not Start)
-        x: Excluded (X)
+        fin: Finished (FIN)
+        dnf: DNF (Did Not Finish) / Retired
+        dsq: DSQ/DQ (Disqualified)
+        dns: DNS (Did Not Start/Show)
+        dna: DNA (Did Not Arrive/Attend)
+        dnq: DNQ (Did Not Qualify)
+        dnpq: DNPQ (Did Not Pre-Qualify)
+        dnp: DNP (Did Not Practice)
+        ex: Excluded (EX)
+        wd: Withdrawn (WD)
 
     # Credentials
     app.oauth.facebook:

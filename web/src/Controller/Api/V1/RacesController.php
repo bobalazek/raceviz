@@ -6,8 +6,6 @@ use App\Entity\Race;
 use App\Entity\RaceDriver;
 use App\Entity\RaceDriverRaceLap;
 use App\Entity\RaceDriverRacePitStop;
-use App\Form\Type\RaceDriverRaceLapType;
-use App\Form\Type\RaceDriverRacePitStopType;
 use App\Form\Type\RaceDriverType;
 use App\Manager\RaceDriverManager;
 use App\Repository\RaceDriverRaceLapRepository;
@@ -218,7 +216,7 @@ class RacesController extends AbstractApiController
     /**
      * @Route("/api/v1/races/{raceSlug}/drivers/{raceDriverId}/laps", name="api.v1.races.drivers.laps.edit", methods={"PUT"})
      */
-    public function driversLapsEdit(string $raceSlug, int $raceDriverId, Request $request)
+    public function driversLapsEdit(string $raceSlug, int $raceDriverId, Request $request, RaceDriverManager $raceDriverManager)
     {
         if (!$this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException();
@@ -228,7 +226,7 @@ class RacesController extends AbstractApiController
         $raceDriver = $this->_getRaceDriver($raceDriverId);
 
         $formData = json_decode($request->request->get('data'), true);
-        $errorResponse = $this->_saveRaceDriverLaps($raceDriver, $formData);
+        $errorResponse = $raceDriverManager->saveLaps($raceDriver, $formData);
         if ($errorResponse) {
             return $this->json([
                 'errors' => $errorResponse,
@@ -353,156 +351,5 @@ class RacesController extends AbstractApiController
         }
 
         return $data;
-    }
-
-    /**
-     * @return array returns any errors
-     */
-    private function _saveRaceDriverLaps(RaceDriver $raceDriver, array $formData)
-    {
-        $errors = [];
-
-        // Race Laps
-        $raceDriverRaceLapsToBeRemoved = [];
-        $raceDriverRaceLapsMap = [];
-        /** @var RaceDriverRaceLapRepository $raceDriverRaceLapRepository */
-        $raceDriverRaceLapRepository = $this->em->getRepository(RaceDriverRaceLap::class);
-        $raceDriverRaceLaps = $raceDriverRaceLapRepository
-            ->createQueryBuilder('rdrl')
-            ->where('rdrl.raceDriver = :raceDriver')
-            ->orderBy('rdrl.lap')
-            ->setParameter('raceDriver', $raceDriver)
-            ->getQuery()
-            ->getResult()
-        ;
-        foreach ($raceDriverRaceLaps as $raceDriverRaceLap) {
-            $raceDriverRaceLapsToBeRemoved[] = $raceDriverRaceLap->getId();
-            $raceDriverRaceLapsMap[$raceDriverRaceLap->getLap()] = $raceDriverRaceLap;
-        }
-
-        // Race Pit Stops
-        $raceDriverRacePitStopsToBeRemoved = [];
-        $raceDriverRacePitStopsMap = [];
-        /** @var RaceDriverRacePitStopRepository $raceDriverRacePitStopRepository */
-        $raceDriverRacePitStopRepository = $this->em->getRepository(RaceDriverRacePitStop::class);
-        $raceDriverRacePitStops = $raceDriverRacePitStopRepository
-            ->createQueryBuilder('rdrps')
-            ->where('rdrps.raceDriver = :raceDriver')
-            ->orderBy('rdrps.lap')
-            ->setParameter('raceDriver', $raceDriver)
-            ->getQuery()
-            ->getResult()
-        ;
-        foreach ($raceDriverRacePitStops as $raceDriverRacePitStop) {
-            $raceDriverRacePitStopsToBeRemoved[] = $raceDriverRacePitStop->getId();
-            $raceDriverRacePitStopsMap[$raceDriverRacePitStop->getLap()] = $raceDriverRacePitStop;
-        }
-
-        // Processing
-        foreach ($formData as $index => $single) {
-            $lap = (int) $single['lap'];
-            $raceLap = $single['race_lap'];
-            $racePitStop = $single['race_pit_stop'];
-            $hadRacePitStop = $single['had_race_pit_stop'];
-
-            // Race Lap
-            /** @var RaceDriverRaceLap $raceDriverRaceLap */
-            $raceDriverRaceLap = isset($raceDriverRaceLapsMap[$lap])
-                ? $raceDriverRaceLapsMap[$lap]
-                : new RaceDriverRaceLap();
-
-            $raceLapForm = $this->createForm(
-                RaceDriverRaceLapType::class,
-                $raceDriverRaceLap,
-                [
-                    'csrf_protection' => false,
-                ]
-            );
-            $raceLapForm->submit([
-                'raceDriver' => $raceDriver->getId(),
-                'lap' => $lap,
-                'position' => $raceLap['position'] ?? null,
-                'time' => $raceLap['time'] ?? null,
-                'timeOfDay' => $raceLap['time_of_day'] ?? null,
-                'tyres' => $raceLap['tyres'] ?? null,
-            ]);
-            if (!$raceLapForm->isValid()) {
-                if (!isset($errors[$index])) {
-                    $errors[$index] = [];
-                }
-                $errors[$index]['race_lap'] = $this->getFormErrors($raceLapForm);
-            }
-
-            $this->em->persist($raceDriverRaceLap);
-
-            if (($removalKey = array_search(
-                $raceDriverRaceLap->getId(),
-                $raceDriverRaceLapsToBeRemoved
-            )) !== false) {
-                unset($raceDriverRaceLapsToBeRemoved[$removalKey]);
-            }
-
-            if (!$hadRacePitStop) {
-                continue;
-            }
-
-            // Race Pit Stop
-            /** @var RaceDriverRacePitStop $raceDriverRacePitStop */
-            $raceDriverRacePitStop = isset($raceDriverRacePitStopsMap[$lap])
-                ? $raceDriverRacePitStopsMap[$lap]
-                : new RaceDriverRacePitStop();
-
-            $racePitStopForm = $this->createForm(
-                RaceDriverRacePitStopType::class,
-                $raceDriverRacePitStop,
-                [
-                    'csrf_protection' => false,
-                ]
-            );
-            $racePitStopForm->submit([
-                'raceDriver' => $raceDriver->getId(),
-                'lap' => $lap,
-                'time' => $racePitStop['time'] ?? null,
-                'timeOfDay' => $racePitStop['time_of_day'] ?? null,
-            ]);
-            if (!$racePitStopForm->isValid()) {
-                if (!isset($errors[$index])) {
-                    $errors[$index] = [];
-                }
-                $errors[$index]['race_pit_stop'] = $this->getFormErrors($racePitStopForm);
-            }
-
-            $this->em->persist($raceDriverRacePitStop);
-
-            if (($removalKey = array_search(
-                $raceDriverRacePitStop->getId(),
-                $raceDriverRacePitStopsToBeRemoved
-            )) !== false) {
-                unset($raceDriverRacePitStopsToBeRemoved[$removalKey]);
-            }
-        }
-
-        // Cleanup
-        foreach ($raceDriverRaceLaps as $raceDriverRaceLap) {
-            if (!in_array(
-                $raceDriverRaceLap->getId(),
-                $raceDriverRaceLapsToBeRemoved
-            )) {
-                continue;
-            }
-            $this->em->remove($raceDriverRaceLap);
-        }
-
-        foreach ($raceDriverRacePitStops as $raceDriverRacePitStop) {
-            if (!in_array(
-                $raceDriverRacePitStop->getId(),
-                $raceDriverRacePitStopsToBeRemoved
-            )) {
-                continue;
-            }
-            $this->em->remove($raceDriverRacePitStop);
-        }
-
-        return $errors;
     }
 }

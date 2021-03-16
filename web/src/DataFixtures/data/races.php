@@ -216,6 +216,5 @@ return [
         'started_at' => '2021-03-28 18:10:00',
         'circuit_slug' => 'bahrain',
         'season_slug' => 'f1-2021',
-        'ergast_series_season_and_round' => 'f1/2021/1',
     ],
 ];

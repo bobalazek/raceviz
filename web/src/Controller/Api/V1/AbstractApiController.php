@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api\V1;
 
+use App\Manager\ErrorManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -28,40 +29,25 @@ class AbstractApiController extends AbstractController
      */
     protected $router;
 
+    /**
+     * @var ErrorManager
+     */
+    protected $errorManager;
+
     public function __construct(
         ParameterBagInterface $params,
         EntityManagerInterface $em,
-        UrlGeneratorInterface $router
+        UrlGeneratorInterface $router,
+        ErrorManager $errorManager
     ) {
         $this->params = $params;
         $this->em = $em;
         $this->router = $router;
+        $this->errorManager = $errorManager;
     }
 
     public function getFormErrors(FormInterface $form)
     {
-        $errors = [];
-
-        foreach ($form->getErrors() as $error) {
-            if ($form->getParent()) {
-                $errors[] = $error->getMessage();
-            } else {
-                if (!isset($errors['*'])) {
-                    $errors['*'] = [];
-                }
-
-                $errors['*'][] = $error->getMessage();
-            }
-        }
-
-        foreach ($form->all() as $childForm) {
-            if ($childForm instanceof FormInterface) {
-                if ($childErrors = $this->getFormErrors($childForm)) {
-                    $errors[$childForm->getName()] = $childErrors;
-                }
-            }
-        }
-
-        return $errors;
+        return $this->errorManager->getFormErrors($form);
     }
 }

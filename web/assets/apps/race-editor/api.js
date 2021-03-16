@@ -23,6 +23,7 @@ export const API_DELETE_RACES_DRIVERS = '/api/v1/races/{raceSlug}/drivers/{raceD
 export const API_GET_RACES_DRIVERS_LAPS = '/api/v1/races/{raceSlug}/drivers/{raceDriverId}/laps';
 export const API_PUT_RACES_DRIVERS_LAPS = '/api/v1/races/{raceSlug}/drivers/{raceDriverId}/laps';
 export const API_GET_ERGAST_RACE_DRIVER_RACE_LAPS = '/api/v1/ergast/{raceSlug}/{raceDriverId}/laps';
+export const API_POST_ERGAST_RACE_DRIVER_LAPS_PREPARE_ALL = '/api/v1/ergast/{raceSlug}/race-driver-laps-prepare-all';
 
 /* global appData */
 
@@ -81,6 +82,29 @@ export const DriversService = {
 
     return response.data.data;
   },
+  prepareLapsFromErgastAll: async () => {
+    const raceSlug = appData.race.slug;
+
+    try {
+      const url = API_POST_ERGAST_RACE_DRIVER_LAPS_PREPARE_ALL
+        .replace('{raceSlug}', raceSlug)
+      ;
+
+      const response = await axios.post(url);
+
+      toast.success('The Race Driver Laps were successfully prepared!');
+
+      DriversService.loadAll({
+        raceSlug,
+      });
+
+      return response;
+    } catch (error) {
+      toast.error(error.response.data.detail);
+    }
+
+    return null;
+  },
   saveLaps: async(args) => {
     const raceDriverId = args?.raceDriver.id;
     if (!raceDriverId) {
@@ -110,7 +134,7 @@ export const DriversService = {
 
       const response = await axios.post(url);
 
-      toast.success('The race drivers were successfully prepared!');
+      toast.success('The Race Drivers were successfully prepared!');
 
       DriversService.loadAll({
         raceSlug,

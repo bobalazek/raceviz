@@ -16,10 +16,35 @@ use Symfony\Component\Routing\Annotation\Route;
 class ErgastController extends AbstractApiController
 {
     /**
-     * @Route("/api/v1/ergast", name="api.v1.ergast", methods={"GET"})
+     * @Route("/api/v1/ergast/{raceSlug}/race-driver-laps-prepare-all", name="api.v1.ergast.race_driver_laps_prepare_all", methods={"POST"})
      */
-    public function index()
+    public function raceDriverLapsPrepareAll(string $raceSlug, ErgastManager $ergastManager)
     {
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            throw $this->createAccessDeniedException();
+        }
+
+        /** @var RaceRepository $raceRepository */
+        $raceRepository = $this->em->getRepository(Race::class);
+        $race = $raceRepository->findOneBy([
+            'slug' => $raceSlug,
+        ]);
+        if (!$race) {
+            throw $this->createNotFoundException();
+        }
+
+        $ergastSeriesSeasonAndRound = $race->getErgastSeriesSeasonAndRound();
+        if (!$ergastSeriesSeasonAndRound) {
+            throw new InvalidParameterException('This race has no ergast season and round set!');
+        }
+
+        $errors = $ergastManager->prepareLapsData($race);
+        if ($errors) {
+            return $this->json([
+                'errors' => $errors,
+            ], 400);
+        }
+
         return $this->json([
             'success' => true,
             'data' => [],

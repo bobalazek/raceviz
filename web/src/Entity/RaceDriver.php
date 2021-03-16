@@ -91,12 +91,12 @@ class RaceDriver implements Interfaces\ArrayInterface, TimestampableInterface
     private $driver;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\RaceDriverRaceLap", mappedBy="raceDriver")
+     * @ORM\OneToMany(targetEntity="App\Entity\RaceDriverRaceLap", mappedBy="raceDriver", cascade={"remove"})
      */
     private $raceDriverRaceLaps;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\RaceDriverRacePitStop", mappedBy="raceDriver")
+     * @ORM\OneToMany(targetEntity="App\Entity\RaceDriverRacePitStop", mappedBy="raceDriver", cascade={"remove"})
      */
     private $raceDriverRacePitStops;
 

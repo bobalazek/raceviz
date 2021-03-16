@@ -3,7 +3,12 @@
 {% block content %}
   <div class="container my-4">
     <h1>Seasons</h2>
-    <h2>{{ season.name }}</h2>
+    <h2>
+      {{ season.name }}
+      <a href="{{ url('seasons') }}" class="btn btn-sm btn-primary">
+        Back to List
+      </a>
+    </h2>
     {% if races %}
       <div class="list-group">
         {% for race in races %}

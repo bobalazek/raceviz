@@ -9,6 +9,9 @@ use App\Entity\RaceDriverRacePitStop;
 use App\Entity\SeasonDriver;
 use App\Form\Type\RaceDriverRaceLapType;
 use App\Form\Type\RaceDriverRacePitStopType;
+use App\Repository\RaceDriverRaceLapRepository;
+use App\Repository\RaceDriverRacePitStopRepository;
+use App\Repository\RaceDriverRepository;
 use App\Repository\SeasonDriverRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -44,7 +47,7 @@ class RaceDriverManager
     }
 
     /**
-     * @return Race[]
+     * @return RaceDriver[] newly added race drivers
      */
     public function prepareAll(Race $race)
     {
@@ -100,8 +103,12 @@ class RaceDriverManager
     /**
      * @return array returns any errors
      */
-    public function saveLaps(RaceDriver $raceDriver, array $formData)
-    {
+    public function saveLaps(
+        RaceDriver $raceDriver,
+        array $formData,
+        bool $useExistingDataIfNotSet = false,
+        bool $flushIfNoErrors = true
+    ) {
         $errors = [];
 
         // Race Laps
@@ -142,15 +149,15 @@ class RaceDriverManager
 
         // Processing
         foreach ($formData as $index => $single) {
-            $lap = (int) $single['lap'];
-            $raceLap = $single['race_lap'];
-            $racePitStop = $single['race_pit_stop'];
-            $hadRacePitStop = isset($single['had_race_pit_stop']) && $single['had_race_pit_stop'];
+            $lapData = (int) $single['lap'];
+            $raceLapData = $single['race_lap'];
+            $racePitStopData = $single['race_pit_stop'];
+            $hadRacePitStopData = isset($single['had_race_pit_stop']) && $single['had_race_pit_stop'];
 
             // Race Lap
             /** @var RaceDriverRaceLap $raceDriverRaceLap */
-            $raceDriverRaceLap = isset($raceDriverRaceLapsMap[$lap])
-                ? $raceDriverRaceLapsMap[$lap]
+            $raceDriverRaceLap = isset($raceDriverRaceLapsMap[$lapData])
+                ? $raceDriverRaceLapsMap[$lapData]
                 : new RaceDriverRaceLap();
 
             $raceLapForm = $this->formFactory->create(
@@ -160,13 +167,22 @@ class RaceDriverManager
                     'csrf_protection' => false,
                 ]
             );
+
             $raceLapForm->submit([
                 'raceDriver' => $raceDriver->getId(),
-                'lap' => $lap,
-                'position' => $raceLap['position'] ?? null,
-                'time' => $raceLap['time'] ?? null,
-                'timeOfDay' => $raceLap['time_of_day'] ?? null,
-                'tyres' => $raceLap['tyres'] ?? null,
+                'lap' => $lapData,
+                'position' => $useExistingDataIfNotSet && !isset($raceLapData['position'])
+                    ? $raceDriverRaceLap->getPosition()
+                    : $raceLapData['position'] ?? null,
+                'time' => $useExistingDataIfNotSet && !isset($raceLapData['time'])
+                    ? $raceDriverRaceLap->getTime()
+                    : $raceLapData['time'] ?? null,
+                'timeOfDay' => $useExistingDataIfNotSet && !isset($raceLapData['time_of_day'])
+                    ? $raceDriverRaceLap->getTimeOfDay()
+                    : $raceLapData['time_of_day'] ?? null,
+                'tyres' => $useExistingDataIfNotSet && !isset($raceLapData['tyres'])
+                    ? $raceDriverRaceLap->getTyres()
+                    : $raceLapData['tyres'] ?? null,
             ]);
             if (!$raceLapForm->isValid()) {
                 if (!isset($errors[$index])) {
@@ -184,14 +200,15 @@ class RaceDriverManager
                 unset($raceDriverRaceLapsToBeRemoved[$removalKey]);
             }
 
-            if (!$hadRacePitStop) {
+            if (!$hadRacePitStopData) {
+                // We habe no pit stop, so just skip the code below ...
                 continue;
             }
 
             // Race Pit Stop
             /** @var RaceDriverRacePitStop $raceDriverRacePitStop */
-            $raceDriverRacePitStop = isset($raceDriverRacePitStopsMap[$lap])
-                ? $raceDriverRacePitStopsMap[$lap]
+            $raceDriverRacePitStop = isset($raceDriverRacePitStopsMap[$lapData])
+                ? $raceDriverRacePitStopsMap[$lapData]
                 : new RaceDriverRacePitStop();
 
             $racePitStopForm = $this->formFactory->create(
@@ -203,9 +220,13 @@ class RaceDriverManager
             );
             $racePitStopForm->submit([
                 'raceDriver' => $raceDriver->getId(),
-                'lap' => $lap,
-                'time' => $racePitStop['time'] ?? null,
-                'timeOfDay' => $racePitStop['time_of_day'] ?? null,
+                'lap' => $lapData,
+                'time' => $useExistingDataIfNotSet && !isset($racePitStopData['time'])
+                    ? $raceDriverRaceLap->getTime()
+                    : $racePitStopData['time'] ?? null,
+                'timeOfDay' => $useExistingDataIfNotSet && !isset($racePitStopData['time_of_day'])
+                    ? $raceDriverRaceLap->getTimeOfDay()
+                    : $racePitStopData['time_of_day'] ?? null,
             ]);
             if (!$racePitStopForm->isValid()) {
                 if (!isset($errors[$index])) {
@@ -243,6 +264,13 @@ class RaceDriverManager
                 continue;
             }
             $this->em->remove($raceDriverRacePitStop);
+        }
+
+        if (
+            !$errors &&
+            $flushIfNoErrors
+        ) {
+            $this->em->flush();
         }
 
         return $errors;

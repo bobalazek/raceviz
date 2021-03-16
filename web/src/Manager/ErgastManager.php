@@ -103,7 +103,6 @@ class ErgastManager
                 $raceLap = [
                     'position' => $position,
                     'time' => $time,
-                    'time_of_day' => null,
                 ];
                 $racePitStop = isset($driverPitStops[$driverId][$lap])
                     ? $driverPitStops[$driverId][$lap]
@@ -154,7 +153,9 @@ class ErgastManager
             $raceDriverData = $allDriversLapData[$ergastDriverId];
             $raceDriverErrors = $this->raceDriverManager->saveLaps(
                 $raceDriver,
-                $raceDriverData
+                $raceDriverData,
+                true,
+                false
             );
 
             if ($raceDriverErrors) {

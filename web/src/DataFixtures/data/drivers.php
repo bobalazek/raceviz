@@ -147,11 +147,11 @@ return [
     ],
     [
         'first_name' => 'George',
-        'last_name' => 'Russel',
-        'slug' => 'george-russel',
+        'last_name' => 'Russell',
+        'slug' => 'george-russell',
         'country_code' => 'GB',
         'url' => 'https://en.wikipedia.org/wiki/George_Russell_%28racing_driver%29',
-        'ergast_driver_id' => 'russel',
+        'ergast_driver_id' => 'russell',
     ],
     [
         'first_name' => 'Nicholas',

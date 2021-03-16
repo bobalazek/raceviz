@@ -233,8 +233,6 @@ class RacesController extends AbstractApiController
             ], 400);
         }
 
-        $this->em->flush();
-
         return $this->json([
             'success' => true,
             'data' => [],

@@ -21,7 +21,7 @@ return [
         'code' => 'RUS',
         'temporary' => true,
         'season_slug' => 'f1-2020',
-        'driver_slug' => 'george-russel',
+        'driver_slug' => 'george-russell',
         'team_slug' => 'mercedes',
     ],
     [
@@ -156,7 +156,7 @@ return [
         'number' => 63,
         'code' => 'RUS',
         'season_slug' => 'f1-2020',
-        'driver_slug' => 'george-russel',
+        'driver_slug' => 'george-russell',
         'team_slug' => 'williams',
     ],
     [
@@ -297,7 +297,7 @@ return [
         'number' => 63,
         'code' => 'RUS',
         'season_slug' => 'f1-2021',
-        'driver_slug' => 'george-russel',
+        'driver_slug' => 'george-russell',
         'team_slug' => 'williams',
     ],
     [

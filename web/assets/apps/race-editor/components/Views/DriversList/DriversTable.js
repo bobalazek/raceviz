@@ -30,7 +30,7 @@ function DriversTable({
     if (await confirm(
       'Are you sure you want to remove the driver?'
     )) {
-      DriversService.delete({
+      await DriversService.delete({
         raceDriver,
       })
     }

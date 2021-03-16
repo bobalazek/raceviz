@@ -96,7 +96,7 @@ class RacesController extends AbstractApiController
         if (!$form->isValid()) {
             return $this->json([
                 'errors' => $this->getFormErrors($form),
-            ]);
+            ], 400);
         }
 
         $this->em->persist($raceDriver);
@@ -181,7 +181,7 @@ class RacesController extends AbstractApiController
         if (!$form->isValid()) {
             return $this->json([
                 'errors' => $this->getFormErrors($form),
-            ]);
+            ], 400);
         }
 
         $this->em->persist($raceDriver);
@@ -232,7 +232,7 @@ class RacesController extends AbstractApiController
         if ($errorResponse) {
             return $this->json([
                 'errors' => $errorResponse,
-            ]);
+            ], 400);
         }
 
         $this->em->flush();

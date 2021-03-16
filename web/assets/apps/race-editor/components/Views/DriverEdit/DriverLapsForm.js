@@ -155,17 +155,10 @@ function DriverLapsForm({
     setFormSubmitting(true);
 
     try {
-      const response = DriversService.add({
+      await DriversService.saveLaps({
         raceDriver: selectedRaceDriver,
         formData,
       });
-
-      if (response.data.errors) {
-        setFormErrors(response.data.errors);
-
-        toast.error('Please fix the errors first!');
-        return;
-      }
 
       toast.success('You have successfully edited the driver laps.');
 
@@ -173,7 +166,9 @@ function DriverLapsForm({
 
       loadLaps();
     } catch(error) {
-      toast.error(error.response.data.detail);
+      toast.error('Please fix the errors first!');
+
+      setFormErrors(error.response.data.errors);
     } finally {
       setFormSubmitting(false);
     }

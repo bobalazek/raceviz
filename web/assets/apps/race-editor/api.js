@@ -81,6 +81,25 @@ export const DriversService = {
 
     return response.data.data;
   },
+  saveLaps: async(args) => {
+    const raceDriverId = args?.raceDriver.id;
+    if (!raceDriverId) {
+      throw new Error('Please set a valid raceDriverId');
+    }
+
+    const formData = args.formData;
+
+    const url = API_PUT_RACES_DRIVERS_LAPS
+      .replace('{raceSlug}', appData.race.slug)
+      .replace('{raceDriverId}', raceDriverId)
+    ;
+
+    const response = await axios.put(url, qs.stringify({
+      data: JSON.stringify(formData),
+    }));
+
+    return response;
+  },
   prepareAll: async() => {
     const raceSlug = appData.race.slug;
 
@@ -103,25 +122,6 @@ export const DriversService = {
     }
 
     return null;
-  },
-  add: async(args) => {
-    const raceDriverId = args?.raceDriver.id;
-    if (!raceDriverId) {
-      throw new Error('Please set a valid raceDriverId');
-    }
-
-    const formData = args.formData;
-
-    const url = API_PUT_RACES_DRIVERS_LAPS
-      .replace('{raceSlug}', appData.race.slug)
-      .replace('{raceDriverId}', raceDriverId)
-    ;
-
-    const response = await axios.put(url, qs.stringify({
-      data: JSON.stringify(formData),
-    }));
-
-    return response;
   },
   delete: async (args) => {
     const raceSlug = appData.race.slug;

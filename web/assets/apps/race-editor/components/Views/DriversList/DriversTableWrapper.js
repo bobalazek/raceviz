@@ -32,7 +32,7 @@ function DriversTableWrapper() {
       return;
     }
 
-    DriversService.prepareAll();
+    await DriversService.prepareAll();
   };
 
   return (

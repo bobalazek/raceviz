@@ -63,7 +63,6 @@ export default class Application {
     this.emitter = createNanoEvents<ApplicationEvents>();
     this.loader = new Loader();
     this.preloader = new Preloader();
-    this.world = new World();
   }
 
   private static prepareRenderer() {
@@ -77,6 +76,8 @@ export default class Application {
 
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera();
+
+    this.world = new World();
 
     this.onTick();
   }

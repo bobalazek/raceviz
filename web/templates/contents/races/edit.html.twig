@@ -32,6 +32,7 @@
       tyres: {{ app_tyres | json_encode | raw }},
       race_driver_statuses: {{ app_race_driver_statuses | json_encode | raw }},
     };
+    window.appData = appData;
   </script>
   {{ encore_entry_script_tags('race-editor') }}
 {% endblock %}

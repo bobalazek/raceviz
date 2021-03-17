@@ -11,10 +11,15 @@ export default class Preloader {
   private total: number = 1;
 
   constructor() {
-    Application.loadingManager.onStart = (url, loaded, total) => {
+    const onProgress = (url, loaded, total) => {
       this.loaded = loaded;
       this.total = total;
+
+      this.updateProgress();
     };
+
+    Application.loadingManager.onStart = onProgress;
+    Application.loadingManager.onProgress = onProgress;
 
     // Prepare HTML
     this.containerElement = document.createElement('div');
@@ -60,9 +65,6 @@ export default class Preloader {
 
   public show() {
     this.updateProgress();
-    this.interval = window.setInterval(() => {
-      this.updateProgress();
-    }, 100);
 
     this.containerElement.style.display = 'block';
   }

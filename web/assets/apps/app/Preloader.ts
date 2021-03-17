@@ -1,5 +1,3 @@
-import * as THREE from 'three';
-
 import Application from './Application';
 
 export default class Preloader {

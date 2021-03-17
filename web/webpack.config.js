@@ -50,7 +50,7 @@ Encore.configureWatchOptions(watchOptions => {
 let config = Encore.getWebpackConfig();
 
 config.module.rules.push({
-  test: /\/Resources\/(.*)\.(jpg|png|gif|glb|gltf)$/i,
+  test: /\/Resources\/(.*)\.(jpg|png|gif|glb|gltf|hdr)$/i,
   use: [
     {
       loader: 'url-loader',

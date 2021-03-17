@@ -5,7 +5,6 @@ export default class Preloader {
   private textElement: HTMLElement;
   private progressElement: HTMLElement;
   private progressInnerElement: HTMLElement;
-  private interval: number;
 
   private loaded: number = 0;
   private total: number = 1;
@@ -21,7 +20,22 @@ export default class Preloader {
     Application.loadingManager.onStart = onProgress;
     Application.loadingManager.onProgress = onProgress;
 
-    // Prepare HTML
+    this.prepareHtml();
+  }
+
+  public show() {
+    this.updateProgress();
+
+    this.containerElement.style.display = 'block';
+  }
+
+  public hide() {
+    this.updateProgress();
+
+    this.containerElement.style.display = 'none';
+  }
+
+  private prepareHtml() {
     this.containerElement = document.createElement('div');
     this.containerElement.id = 'preloader';
     this.containerElement.style.background = '#000000';
@@ -63,21 +77,7 @@ export default class Preloader {
     document.body.prepend(this.containerElement);
   }
 
-  public show() {
-    this.updateProgress();
-
-    this.containerElement.style.display = 'block';
-  }
-
-  public hide() {
-    this.updateProgress();
-
-    window.clearInterval(this.interval);
-
-    this.containerElement.style.display = 'none';
-  }
-
-  public updateProgress() {
+  private updateProgress() {
     const {
       loaded,
       total,

@@ -6,6 +6,15 @@ import Application from './Application';
 
 // Resources
 import carsMercedes2021Resource from './Resources/models/cars/mercedes_2021.glb';
+import carsFerrari2021Resource from './Resources/models/cars/ferrari_2021.glb';
+import carsAlpine2021Resource from './Resources/models/cars/alpine_2021.glb';
+import carsAlphatauri2021Resource from './Resources/models/cars/alphatauri_2021.glb';
+import carsAlphaRomeo2021Resource from './Resources/models/cars/alfa_romeo_2021.glb';
+import carsAstonMartin2021Resource from './Resources/models/cars/aston_martin_2021.glb';
+import carsMclaren2021Resource from './Resources/models/cars/mclaren_2021.glb';
+import carsHaas2021Resource from './Resources/models/cars/haas_2021.glb';
+import carsRedBull2021Resource from './Resources/models/cars/red_bull_2021.glb';
+import carsWilliams2021Resource from './Resources/models/cars/williams_2021.glb';
 
 export default class World {
   private followTarget: THREE.Object3D;
@@ -28,31 +37,61 @@ export default class World {
 
   async prepareResources() {
     const gltfLoader = new GLTFLoader(Application.loadingManager);
-    const gltfData = await gltfLoader.loadAsync(carsMercedes2021Resource);
-    const carMesh = <THREE.Object3D>gltfData.scene.children[0];
+    const resources = [
+      carsMercedes2021Resource,
+      carsFerrari2021Resource,
+      carsAlpine2021Resource,
+      carsAlphaRomeo2021Resource,
+      carsAlphatauri2021Resource,
+      carsAstonMartin2021Resource,
+      carsMclaren2021Resource,
+      carsHaas2021Resource,
+      carsRedBull2021Resource,
+      carsWilliams2021Resource,
+    ];
 
-    Application.scene.add(carMesh);
+    let cars = [];
+    for (let i = 0; i < resources.length; i++) {
+      const resource = resources[i];
+      const gltfData = await gltfLoader.loadAsync(resource);
+      const carMesh = <THREE.Object3D>gltfData.scene.children[0];
+      carMesh.position.x = i * 3;
 
-    this.followTarget = carMesh;
+      carMesh.traverse((child: any) => {
+        child.castShadow = true;
+        child.receiveShadow = true;
+      });
 
-    const carMeshWheelFL = carMesh.getObjectByName('Bone_Wheel_FrontLeft');
-    const carMeshWheelFR = carMesh.getObjectByName('Bone_Wheel_FrontRight');
-    const carMeshWheelRL = carMesh.getObjectByName('Bone_Wheel_RearLeft');
-    const carMeshWheelRR = carMesh.getObjectByName('Bone_Wheel_RearRight');
+      Application.scene.add(carMesh);
+
+      cars.push(carMesh);
+    }
+
+    this.followTarget = cars[4];
 
     const speed = 0.1;
     Application.emitter.on('tick', () => {
-      carMesh.position.z += speed;
+      for (let i = 0; i < cars.length; i++) {
+        const carMesh = cars[i];
 
-      const wheelSpin = speed * 2;
-      carMeshWheelFL.rotateY(wheelSpin);
-      carMeshWheelFR.rotateY(-wheelSpin);
-      carMeshWheelRL.rotateY(wheelSpin);
-      carMeshWheelRR.rotateY(-wheelSpin);
+        const carMeshWheelFL = carMesh.getObjectByName('Bone_Wheel_FrontLeft');
+        const carMeshWheelFR = carMesh.getObjectByName('Bone_Wheel_FrontRight');
+        const carMeshWheelRL = carMesh.getObjectByName('Bone_Wheel_RearLeft');
+        const carMeshWheelRR = carMesh.getObjectByName('Bone_Wheel_RearRight');
+
+        carMesh.position.z += speed;
+
+        const wheelSpin = speed * 2;
+        carMeshWheelFL.rotateY(wheelSpin);
+        carMeshWheelFR.rotateY(-wheelSpin);
+        carMeshWheelRL.rotateY(wheelSpin);
+        carMeshWheelRR.rotateY(-wheelSpin);
+      }
     });
   }
 
   async prepareCamera() {
+    Application.camera.far = 5000;
     Application.camera.position.set(-16, 8, -16);
     Application.camera.lookAt(0, 0, 0);
   }
@@ -75,7 +114,7 @@ export default class World {
   }
 
   async prepareLights() {
-    const hemisphereLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 1);
+    const hemisphereLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 3);
     hemisphereLight.position.set(0, 50, 0);
 
     Application.scene.add(hemisphereLight);
@@ -83,7 +122,7 @@ export default class World {
 
   async prepareGround() {
     const groundGeometry = new THREE.PlaneGeometry(1024, 1024);
-    const groundMaterial = new THREE.MeshLambertMaterial({ color: 0xb3b3b3 });
+    const groundMaterial = new THREE.MeshPhongMaterial({ color: 0xb3b3b3 });
 
     const ground = new THREE.Mesh(groundGeometry, groundMaterial);
     ground.rotation.x = -Math.PI / 2;

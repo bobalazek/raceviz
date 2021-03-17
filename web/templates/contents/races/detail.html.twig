@@ -1,1 +1,9 @@
 {% extends 'layouts/app.html.twig' %}
+
+{% block body_javascripts %}
+  <script>
+    var appData = {{ app_data | json_encode | raw }};
+    window.appData = appData;
+  </script>
+  {{ parent() }}
+{% endblock %}

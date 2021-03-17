@@ -31,6 +31,7 @@ export default class World {
     await this.prepareControls();
     await this.prepareLights();
     await this.prepareGround();
+    await this.prepareMeshPicking();
 
     Application.preloader.hide();
   }
@@ -55,7 +56,9 @@ export default class World {
       const resource = resources[i];
       const gltfData = await gltfLoader.loadAsync(resource);
       const carMesh = <THREE.Object3D>gltfData.scene.children[0];
-      carMesh.position.x = i * 3;
+
+      carMesh.position.x = (i % 2) * 5;
+      carMesh.position.z = -i * 5;
 
       carMesh.traverse((child: any) => {
         child.castShadow = true;
@@ -72,7 +75,7 @@ export default class World {
     const speed = 0.1;
     Application.emitter.on('tick', () => {
       for (let i = 0; i < cars.length; i++) {
-        const carMesh = cars[i];
+        const carMesh = <THREE.Object3D>cars[i];
 
         const carMeshWheelFL = carMesh.getObjectByName('Bone_Wheel_FrontLeft');
         const carMeshWheelFR = carMesh.getObjectByName('Bone_Wheel_FrontRight');
@@ -99,7 +102,7 @@ export default class World {
   async prepareControls() {
     const controls = new OrbitControls(Application.camera, Application.renderer.domElement);
     controls.enableDamping = true;
-    controls.minDistance = 8;
+    controls.minDistance = 4;
     controls.maxDistance = 24;
     controls.minPolarAngle = -Math.PI;
     controls.maxPolarAngle = (Math.PI / 2) - 0.1; /* so we don't hit into the ground */
@@ -125,9 +128,39 @@ export default class World {
     const groundMaterial = new THREE.MeshPhongMaterial({ color: 0xb3b3b3 });
 
     const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+    ground.name = 'ground';
     ground.rotation.x = -Math.PI / 2;
     ground.receiveShadow = true;
 
     Application.scene.add(ground);
+  }
+
+  async prepareMeshPicking() {
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+
+    window.addEventListener('click', (event) => {
+      mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+      raycaster.setFromCamera(mouse, Application.camera);
+
+      const intersects = raycaster.intersectObjects(Application.scene.children, true);
+      if (intersects.length === 0) {
+        return;
+      }
+
+      for (let i = 0; i < intersects.length; i++) {
+        const intersection = intersects[i];
+        if (intersection.object.name === 'ground') {
+          continue
+        }
+
+        // TODO: https://discourse.threejs.org/t/raycasting-a-gltf-model-without-using-recursive-option/21307/3
+        // this.followTarget = intersection.object;
+
+        break;
+      }
+    });
   }
 }

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Race;
+use App\Manager\RaceManager;
 use App\Repository\RaceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -43,12 +44,15 @@ class RacesController extends AbstractController
     /**
      * @Route("/races/{raceSlug}", name="races.detail")
      */
-    public function detail(string $raceSlug)
+    public function detail(string $raceSlug, RaceManager $raceManager)
     {
         $race = $this->_getRace($raceSlug);
 
+        $appData = $raceManager->getAppData($race);
+
         return $this->render('contents/races/detail.html.twig', [
             'race' => $race,
+            'app_data' => $appData,
         ]);
     }
 

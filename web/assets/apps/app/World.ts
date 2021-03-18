@@ -6,14 +6,14 @@ import Application from './Application';
 
 // Resources
 import carsMercedes2021Resource from './Resources/models/cars/mercedes_2021.glb';
+import carsRedBull2021Resource from './Resources/models/cars/red_bull_2021.glb';
 import carsFerrari2021Resource from './Resources/models/cars/ferrari_2021.glb';
+import carsMclaren2021Resource from './Resources/models/cars/mclaren_2021.glb';
+import carsAstonMartin2021Resource from './Resources/models/cars/aston_martin_2021.glb';
 import carsAlpine2021Resource from './Resources/models/cars/alpine_2021.glb';
 import carsAlphatauri2021Resource from './Resources/models/cars/alphatauri_2021.glb';
 import carsAlphaRomeo2021Resource from './Resources/models/cars/alfa_romeo_2021.glb';
-import carsAstonMartin2021Resource from './Resources/models/cars/aston_martin_2021.glb';
-import carsMclaren2021Resource from './Resources/models/cars/mclaren_2021.glb';
 import carsHaas2021Resource from './Resources/models/cars/haas_2021.glb';
-import carsRedBull2021Resource from './Resources/models/cars/red_bull_2021.glb';
 import carsWilliams2021Resource from './Resources/models/cars/williams_2021.glb';
 
 export default class World {
@@ -38,57 +38,61 @@ export default class World {
 
   async prepareResources() {
     const gltfLoader = new GLTFLoader(Application.loadingManager);
-    const resources = [
-      carsMercedes2021Resource,
-      carsFerrari2021Resource,
-      carsAlpine2021Resource,
-      carsAlphaRomeo2021Resource,
-      carsAlphatauri2021Resource,
-      carsAstonMartin2021Resource,
-      carsMclaren2021Resource,
-      carsHaas2021Resource,
-      carsRedBull2021Resource,
-      carsWilliams2021Resource,
-    ];
+    const resources = {
+      mercedes: carsMercedes2021Resource,
+      redBull: carsRedBull2021Resource,
+      ferrari: carsFerrari2021Resource,
+      mclaren: carsMclaren2021Resource,
+      astonMartin: carsAstonMartin2021Resource,
+      alpine: carsAlpine2021Resource,
+      alphatauri: carsAlphatauri2021Resource,
+      alphaRomeo: carsAlphaRomeo2021Resource,
+      hass: carsHaas2021Resource,
+      williams: carsWilliams2021Resource,
+    };
 
-    let cars = [];
-    for (let i = 0; i < resources.length; i++) {
-      const resource = resources[i];
+    let vehicles = [];
+    let i = 0;
+    for (const key in resources) {
+      const resource = resources[key];
       const gltfData = await gltfLoader.loadAsync(resource);
-      const carMesh = <THREE.Object3D>gltfData.scene.children[0];
+      const vehicleMesh = <THREE.Object3D>gltfData.scene.children[0];
 
-      carMesh.position.x = (i % 2) * 5;
-      carMesh.position.z = -i * 5;
+      vehicleMesh.name = 'vehicles_' + key;
+      vehicleMesh.position.x = (i % 2) * 5;
+      vehicleMesh.position.z = -i * 5;
 
-      carMesh.traverse((child: any) => {
+      vehicleMesh.traverse((child: any) => {
         child.castShadow = true;
         child.receiveShadow = true;
       });
 
-      Application.scene.add(carMesh);
+      Application.scene.add(vehicleMesh);
 
-      cars.push(carMesh);
+      vehicles.push(vehicleMesh);
+
+      i++;
     }
 
-    this.followTarget = cars[4];
+    this.followTarget = vehicles[0];
 
     const speed = 0.1;
     Application.emitter.on('tick', () => {
-      for (let i = 0; i < cars.length; i++) {
-        const carMesh = <THREE.Object3D>cars[i];
+      for (let i = 0; i < vehicles.length; i++) {
+        const vehicleMesh = <THREE.Object3D>vehicles[i];
 
-        const carMeshWheelFL = carMesh.getObjectByName('Bone_Wheel_FrontLeft');
-        const carMeshWheelFR = carMesh.getObjectByName('Bone_Wheel_FrontRight');
-        const carMeshWheelRL = carMesh.getObjectByName('Bone_Wheel_RearLeft');
-        const carMeshWheelRR = carMesh.getObjectByName('Bone_Wheel_RearRight');
+        const vehicleMeshWheelFL = vehicleMesh.getObjectByName('Bone_Wheel_FrontLeft');
+        const vehicleMeshWheelFR = vehicleMesh.getObjectByName('Bone_Wheel_FrontRight');
+        const vehicleMeshWheelRL = vehicleMesh.getObjectByName('Bone_Wheel_RearLeft');
+        const vehicleMeshWheelRR = vehicleMesh.getObjectByName('Bone_Wheel_RearRight');
 
-        carMesh.position.z += speed;
+        vehicleMesh.position.z += speed;
 
         const wheelSpin = speed * 2;
-        carMeshWheelFL.rotateY(wheelSpin);
-        carMeshWheelFR.rotateY(-wheelSpin);
-        carMeshWheelRL.rotateY(wheelSpin);
-        carMeshWheelRR.rotateY(-wheelSpin);
+        vehicleMeshWheelFL.rotateY(wheelSpin);
+        vehicleMeshWheelFR.rotateY(-wheelSpin);
+        vehicleMeshWheelRL.rotateY(wheelSpin);
+        vehicleMeshWheelRR.rotateY(-wheelSpin);
       }
     });
   }
@@ -109,7 +113,7 @@ export default class World {
 
     Application.emitter.on('tick', () => {
       if (this.followTarget) {
-        controls.target = this.followTarget.position;
+        controls.target = this.followTarget.position; // TODO: interpolate
       }
 
       controls.update();
@@ -138,26 +142,47 @@ export default class World {
   async prepareMeshPicking() {
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
+    let pointerStartPoint: THREE.Vector2 = null;
 
-    window.addEventListener('click', (event) => {
+    window.addEventListener('pointerdown', (event) => {
+      pointerStartPoint = new THREE.Vector2(event.clientX, event.clientY);
+    });
+
+    window.addEventListener('pointerup', (event) => {
+      const pointerEndPoint = new THREE.Vector2(event.clientX, event.clientY);
+      const distance = pointerStartPoint.distanceToSquared(pointerEndPoint);
+      if (distance > 5) {
+        return;
+      }
+
       mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
       mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
       raycaster.setFromCamera(mouse, Application.camera);
 
-      const intersects = raycaster.intersectObjects(Application.scene.children, true);
-      if (intersects.length === 0) {
-        return;
-      }
-
-      for (let i = 0; i < intersects.length; i++) {
-        const intersection = intersects[i];
-        if (intersection.object.name === 'ground') {
-          continue
+      let vehicleBoxesMap = [];
+      let vehicleBoxes = [];
+      for (let i = 0; i < Application.scene.children.length; i++) {
+        const child = Application.scene.children[i];
+        if (!child.name.startsWith('vehicles_')) {
+          continue;
         }
 
-        // TODO: https://discourse.threejs.org/t/raycasting-a-gltf-model-without-using-recursive-option/21307/3
-        // this.followTarget = intersection.object;
+        vehicleBoxes.push(
+          new THREE.Box3().setFromObject(child)
+        );
+        vehicleBoxesMap.push(
+          child.name
+        );
+      }
+
+      for (let i = 0; i < vehicleBoxes.length; i++) {
+        const vehicleBox = vehicleBoxes[i];
+        if (!raycaster.ray.intersectsBox(vehicleBox)) {
+          continue;
+        }
+
+        this.followTarget = Application.scene.getObjectByName(vehicleBoxesMap[i]);
 
         break;
       }

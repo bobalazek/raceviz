@@ -40,6 +40,11 @@ class RaceDriver implements Interfaces\ArrayInterface, TimestampableInterface
     private $raceStartingGridTyres;
 
     /**
+     * @ORM\Column(type="time_with_milliseconds", nullable=true)
+     */
+    private $raceStartingGridTime;
+
+    /**
      * @ORM\Column(type="smallint", nullable=true)
      */
     private $raceResultPosition;
@@ -136,6 +141,18 @@ class RaceDriver implements Interfaces\ArrayInterface, TimestampableInterface
     public function setRaceStartingGridTyres(?string $raceStartingGridTyres): self
     {
         $this->raceStartingGridTyres = $raceStartingGridTyres;
+
+        return $this;
+    }
+
+    public function getRaceStartingGridTime(): ?\DateTimeInterface
+    {
+        return $this->raceStartingGridTime;
+    }
+
+    public function setRaceStartingGridTime(?\DateTimeInterface $raceStartingGridTime): self
+    {
+        $this->raceStartingGridTime = $raceStartingGridTime;
 
         return $this;
     }
@@ -314,9 +331,14 @@ class RaceDriver implements Interfaces\ArrayInterface, TimestampableInterface
             'id' => $this->getId(),
             'race_starting_grid_position' => $this->getRaceStartingGridPosition(),
             'race_starting_grid_tyres' => $this->getRaceStartingGridTyres(),
+            'race_starting_grid_time' => $this->getRaceStartingGridTime()
+                ? $this->getRaceStartingGridTime()->format('i:s.v')
+                : null,
             'race_result_position' => $this->getRaceResultPosition(),
             'race_result_points' => $this->getRaceResultPoints(),
-            'race_result_time' => $this->getRaceResultTime(),
+            'race_result_time' => $this->getRaceResultTime()
+                ? $this->getRaceResultTime()->format('i:s.v')
+                : null,
             'race_result_laps_behind' => $this->getRaceResultLapsBehind(),
             'race_result_status' => $this->getRaceResultStatus(),
             'race_result_status_note' => $this->getRaceResultStatusNote(),

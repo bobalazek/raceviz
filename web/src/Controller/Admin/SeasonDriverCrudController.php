@@ -32,6 +32,7 @@ class SeasonDriverCrudController extends AbstractCrudController
         $season = AssociationField::new('season');
         $driver = AssociationField::new('driver');
         $team = AssociationField::new('team');
+        $vehicle = AssociationField::new('vehicle');
 
         return [
             $number,
@@ -40,6 +41,7 @@ class SeasonDriverCrudController extends AbstractCrudController
             $season,
             $driver,
             $team,
+            $vehicle,
         ];
     }
 }

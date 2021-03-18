@@ -36,6 +36,7 @@ class RaceDriverCrudController extends AbstractCrudController
             ->setFormTypeOption('html5', true)
         ;
         $raceStartingGridTyres = TyresField::new('raceStartingGridTyres');
+        $raceStartingGridTime = TimeWithMillisecondsField::new('raceStartingGridTime');
         $raceResultPosition = NumberField::new('raceResultPosition')
             ->setFormTypeOption('html5', true)
         ;
@@ -62,6 +63,7 @@ class RaceDriverCrudController extends AbstractCrudController
             FormField::addPanel('Race information'),
             $raceStartingGridPosition,
             $raceStartingGridTyres,
+            $raceStartingGridTime,
             $raceResultPosition,
             $raceResultPoints,
             $raceResultTime,

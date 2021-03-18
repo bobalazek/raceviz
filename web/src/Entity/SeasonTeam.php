@@ -41,6 +41,11 @@ class SeasonTeam implements Interfaces\ArrayInterface, TimestampableInterface
      */
     private $team;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Vehicle")
+     */
+    private $vehicle;
+
     public function __toString()
     {
         return $this->getSeason() . ' @ ' . $this->getTeam();
@@ -71,6 +76,18 @@ class SeasonTeam implements Interfaces\ArrayInterface, TimestampableInterface
     public function setTeam(?Team $team): self
     {
         $this->team = $team;
+
+        return $this;
+    }
+
+    public function getVehicle(): ?Vehicle
+    {
+        return $this->vehicle;
+    }
+
+    public function setVehicle(?Vehicle $vehicle): self
+    {
+        $this->vehicle = $vehicle;
 
         return $this;
     }

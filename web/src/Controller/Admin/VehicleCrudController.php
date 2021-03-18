@@ -2,24 +2,25 @@
 
 namespace App\Controller\Admin;
 
-use App\Admin\Field\SeriesField;
-use App\Entity\Season;
+use App\Admin\Field\VehicleTypeField;
+use App\Entity\Vehicle;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
-class SeasonCrudController extends AbstractCrudController
+class VehicleCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Season::class;
+        return Vehicle::class;
     }
 
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setSearchFields(['name', 'series'])
+            ->setSearchFields(['name'])
         ;
     }
 
@@ -27,16 +28,17 @@ class SeasonCrudController extends AbstractCrudController
     {
         $name = TextField::new('name');
         $slug = TextField::new('slug');
-        $series = SeriesField::new('series');
-        $safetyVehicle = AssociationField::new('safetyVehicle');
-        $genericVehicle = AssociationField::new('genericVehicle');
+        $type = VehicleTypeField::new('type');
+        $file = Field::new('file')
+            ->setFormType(VichFileType::class)
+            ->onlyOnForms()
+        ;
 
         return [
             $name,
             $slug,
-            $series,
-            $safetyVehicle,
-            $genericVehicle,
+            $type,
+            $file,
         ];
     }
 }

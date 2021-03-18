@@ -20,6 +20,9 @@ parameters:
         f2: Formula 2
         f3: Formula 3
         fe: Formula E
+    app.vehicle_types:
+        race: Race Vehicle
+        safety: Safety Vehicle
     app.tyres:
         hard: Hard (H)
         medium: Medium (M)

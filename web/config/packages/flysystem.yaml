@@ -8,3 +8,7 @@ flysystem:
             adapter: 'local'
             options:
                 directory: '%kernel.project_dir%/public/uploads/users/images'
+        vehicle.storage:
+            adapter: 'local'
+            options:
+                directory: '%kernel.project_dir%/public/uploads/vehicles'

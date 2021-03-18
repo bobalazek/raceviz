@@ -64,6 +64,7 @@ class RaceDriverType extends AbstractType
             ])
             ->add('raceStartingGridPosition', NumberType::class)
             ->add('raceStartingGridTyres', TyresType::class)
+            ->add('raceStartingGridTime', TimeDurationType::class)
             ->add('raceResultPosition', NumberType::class)
             ->add('raceResultPoints', NumberType::class)
             ->add('raceResultTime', TimeDurationType::class)

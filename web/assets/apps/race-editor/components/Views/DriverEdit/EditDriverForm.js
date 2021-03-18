@@ -26,6 +26,7 @@ function EditDriverForm({
 }) {
   const [raceStartingGridPosition, setRaceStartingGridPosition] = useState(selectedRaceDriver.race_starting_grid_position);
   const [raceStartingGridTyres, setRaceStartingGridTyres] = useState(selectedRaceDriver.race_starting_grid_tyres);
+  const [raceStartingGridTime, setRaceStartingGridTime] = useState(selectedRaceDriver.race_starting_grid_time);
   const [raceResultPosition, setRaceResultPosition] = useState(selectedRaceDriver.race_result_position);
   const [raceResultPoints, setRaceResultPoints] = useState(selectedRaceDriver.race_result_points);
   const [raceResultTime, setRaceResultTime] = useState(selectedRaceDriver.race_result_time);
@@ -48,9 +49,10 @@ function EditDriverForm({
         .replace('{raceDriverId}', selectedRaceDriver.id)
       ;
 
-      const response = await axios.put(url, qs.stringify({
+      await axios.put(url, qs.stringify({
           raceStartingGridPosition,
           raceStartingGridTyres,
+          raceStartingGridTime,
           raceResultPosition,
           raceResultPoints,
           raceResultTime,
@@ -59,16 +61,17 @@ function EditDriverForm({
           raceResultStatusNote,
       }));
 
-      if (response.data.errors) {
-        setFormErrors(response.data.errors);
-
-        toast.error('Please fix the errors first!');
-        return;
-      }
+      setFormErrors(null);
 
       toast.success('You have successfully edited the driver.');
     } catch(error) {
-      toast.error(error.response.data.detail);
+      if (error.response?.data?.errors) {
+        setFormErrors(error.response.data.errors);
+
+        toast.error('Please fix the errors first!');
+      } else if (error.response?.data?.detail) {
+        toast.error(error.response.data.detail);
+      }
     } finally {
       setFormSubmitting(false);
     }
@@ -114,6 +117,20 @@ function EditDriverForm({
               })}
             </Form.Control>
             {renderFormErrors(formErrors?.['raceStartingGridTyres'])}
+          </Form.Group>
+        </div>
+        <div className="col-md-6">
+          <Form.Group>
+            <Form.Label>Time</Form.Label>
+            <Form.Control
+              value={raceStartingGridTime ?? ''}
+              onChange={(event) => { setRaceStartingGridTime(event.target.value) }}
+              isInvalid={!!formErrors?.['raceStartingGridTime']}
+            />
+            <Form.Text muted>
+              Enter a valid duration time (1:06:20.123 or 1:09.456 or 05.789).
+            </Form.Text>
+            {renderFormErrors(formErrors?.['raceStartingGridTime'])}
           </Form.Group>
         </div>
       </div>

@@ -26,10 +26,10 @@ function EditDriverForm({
 }) {
   const [raceStartingGridPosition, setRaceStartingGridPosition] = useState(selectedRaceDriver.race_driver_race_starting_grid?.position);
   const [raceStartingGridTyres, setRaceStartingGridTyres] = useState(selectedRaceDriver.race_driver_race_starting_grid?.tyres);
-  const [raceStartingGridTime, setRaceStartingGridTime] = useState(selectedRaceDriver.race_driver_race_starting_grid?.time);
+  const [raceStartingGridTimeDuration, setRaceStartingGridTimeDuration] = useState(selectedRaceDriver.race_driver_race_starting_grid?.time_duration);
   const [raceResultPosition, setRaceResultPosition] = useState(selectedRaceDriver.race_driver_race_result?.position);
   const [raceResultPoints, setRaceResultPoints] = useState(selectedRaceDriver.race_driver_race_result?.points);
-  const [raceResultTime, setRaceResultTime] = useState(selectedRaceDriver.race_driver_race_result?.time);
+  const [raceResultTimeDuration, setRaceResultTimeDuration] = useState(selectedRaceDriver.race_driver_race_result?.time_duration);
   const [raceResultLapsBehind, setRaceResultLapsBehind] = useState(selectedRaceDriver.race_driver_race_result?.laps_behind);
   const [raceResultStatus, setRaceResultStatus] = useState(selectedRaceDriver.race_driver_race_result?.status);
   const [raceResultStatusNote, setRaceResultStatusNote] = useState(selectedRaceDriver.race_driver_race_result?.status_note);
@@ -52,13 +52,13 @@ function EditDriverForm({
       await axios.put(url, qs.stringify({
         raceDriverRaceStartingGrid: {
           position: raceStartingGridPosition,
-          time: raceStartingGridTime,
+          timeDuration: raceStartingGridTimeDuration,
           tyres: raceStartingGridTyres,
         },
         raceDriverRaceResult: {
           position: raceResultPosition,
           points: raceResultPoints,
-          time: raceResultTime,
+          timeDuration: raceResultTimeDuration,
           lapsBehind: raceResultLapsBehind,
           status: raceResultStatus,
           statusNote: raceResultStatusNote,
@@ -127,14 +127,14 @@ function EditDriverForm({
           <Form.Group>
             <Form.Label>Time</Form.Label>
             <Form.Control
-              value={raceStartingGridTime ?? ''}
-              onChange={(event) => { setRaceStartingGridTime(event.target.value) }}
-              isInvalid={!!formErrors?.['raceDriverRaceStartingGrid']?.['time']}
+              value={raceStartingGridTimeDuration ?? ''}
+              onChange={(event) => { setRaceStartingGridTimeDuration(event.target.value) }}
+              isInvalid={!!formErrors?.['raceDriverRaceStartingGrid']?.['timeDuration']}
             />
             <Form.Text muted>
               Enter a valid duration time (1:06:20.123 or 1:09.456 or 05.789).
             </Form.Text>
-            {renderFormErrors(formErrors?.['raceDriverRaceStartingGrid']?.['time'])}
+            {renderFormErrors(formErrors?.['raceDriverRaceStartingGrid']?.['timeDuration'])}
           </Form.Group>
         </div>
       </div>
@@ -168,14 +168,14 @@ function EditDriverForm({
           <Form.Group>
             <Form.Label>Time</Form.Label>
             <Form.Control
-              value={raceResultTime ?? ''}
-              onChange={(event) => { setRaceResultTime(event.target.value) }}
-              isInvalid={!!formErrors?.['raceDriverRaceResult']?.['time']}
+              value={raceResultTimeDuration ?? ''}
+              onChange={(event) => { setRaceResultTimeDuration(event.target.value) }}
+              isInvalid={!!formErrors?.['raceDriverRaceResult']?.['timeDuration']}
             />
             <Form.Text muted>
               Enter a valid duration time (1:06:20.123 or 1:09.456 or 05.789).
             </Form.Text>
-            {renderFormErrors(formErrors?.['raceDriverRaceResult']?.['time'])}
+            {renderFormErrors(formErrors?.['raceDriverRaceResult']?.['timeDuration'])}
           </Form.Group>
         </div>
         <div className="col-md-6">

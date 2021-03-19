@@ -22,13 +22,13 @@ class RaceDriverRaceStartingGridCrudController extends AbstractCrudController
         $position = NumberField::new('position')
             ->setFormTypeOption('html5', true)
         ;
-        $time = TimeWithMillisecondsField::new('time');
+        $timeDuration = TimeWithMillisecondsField::new('timeDuration');
         $tyres = TyresField::new('tyres');
 
         return [
             $raceDriver,
             $position,
-            $time,
+            $timeDuration,
             $tyres,
         ];
     }

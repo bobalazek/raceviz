@@ -26,7 +26,7 @@ class RaceDriverRaceLapCrudController extends AbstractCrudController
         $position = NumberField::new('position')
             ->setFormTypeOption('html5', true)
         ;
-        $time = TimeWithMillisecondsField::new('time');
+        $timeDuration = TimeWithMillisecondsField::new('timeDuration');
         $timeOfDay = TimeField::new('timeOfDay')
             ->setFormTypeOption('with_seconds', true)
         ;
@@ -36,7 +36,7 @@ class RaceDriverRaceLapCrudController extends AbstractCrudController
             $raceDriver,
             $lap,
             $position,
-            $time,
+            $timeDuration,
             $timeOfDay,
             $tyres,
         ];

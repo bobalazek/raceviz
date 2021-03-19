@@ -36,7 +36,7 @@ class RaceDriverRaceStartingGrid implements Interfaces\ArrayInterface, Timestamp
     /**
      * @ORM\Column(type="time_with_milliseconds", nullable=true)
      */
-    private $time;
+    private $timeDuration;
 
     /**
      * @ORM\Column(type="string", length=16, nullable=true)
@@ -76,14 +76,14 @@ class RaceDriverRaceStartingGrid implements Interfaces\ArrayInterface, Timestamp
         return $this;
     }
 
-    public function getTime(): ?\DateTimeInterface
+    public function getTimeDuration(): ?\DateTimeInterface
     {
-        return $this->time;
+        return $this->timeDuration;
     }
 
-    public function setTime(?\DateTimeInterface $time): self
+    public function setTimeDuration(?\DateTimeInterface $timeDuration): self
     {
-        $this->time = $time;
+        $this->timeDuration = $timeDuration;
 
         return $this;
     }
@@ -117,8 +117,8 @@ class RaceDriverRaceStartingGrid implements Interfaces\ArrayInterface, Timestamp
         return [
             'id' => $this->getId(),
             'position' => $this->getPosition(),
-            'time' => $this->getTime()
-                ? $this->getTime()->format('H:i:s.v')
+            'time_duration' => $this->getTimeDuration()
+                ? $this->getTimeDuration()->format('H:i:s.v')
                 : null,
             'tyres' => $this->getTyres(),
         ];

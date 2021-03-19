@@ -24,7 +24,7 @@ class RaceDriverRaceResultType extends AbstractType
             ])
             ->add('position', NumberType::class)
             ->add('points', NumberType::class)
-            ->add('time', TimeDurationType::class)
+            ->add('timeDuration', TimeDurationType::class)
             ->add('lapsBehind', NumberType::class)
             ->add('status', RaceDriverStatusType::class)
             ->add('statusNote', TextareaType::class)

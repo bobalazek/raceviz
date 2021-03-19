@@ -37,7 +37,7 @@ class RaceDriverRacePitStop implements Interfaces\ArrayInterface, TimestampableI
      * @ORM\Column(type="time_with_milliseconds")
      * @Assert\NotBlank()
      */
-    private $time;
+    private $timeDuration;
 
     /**
      * @ORM\Column(type="time", nullable=true)
@@ -77,14 +77,14 @@ class RaceDriverRacePitStop implements Interfaces\ArrayInterface, TimestampableI
         return $this;
     }
 
-    public function getTime(): ?\DateTimeInterface
+    public function getTimeDuration(): ?\DateTimeInterface
     {
-        return $this->time;
+        return $this->timeDuration;
     }
 
-    public function setTime(?\DateTimeInterface $time): self
+    public function setTimeDuration(?\DateTimeInterface $timeDuration): self
     {
-        $this->time = $time;
+        $this->timeDuration = $timeDuration;
 
         return $this;
     }
@@ -118,8 +118,8 @@ class RaceDriverRacePitStop implements Interfaces\ArrayInterface, TimestampableI
         return [
             'id' => $this->getId(),
             'lap' => $this->getLap(),
-            'time' => $this->getTime()
-                ? $this->getTime()->format('H:i:s.v')
+            'time_duration' => $this->getTimeDuration()
+                ? $this->getTimeDuration()->format('H:i:s.v')
                 : null,
             'time_of_day' => $this->getTimeOfDay()
                 ? $this->getTimeOfDay()->format('H:i:s')

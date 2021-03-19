@@ -22,7 +22,7 @@ class RaceDriverRaceStartingGridType extends AbstractType
                 'class' => RaceDriver::class,
             ])
             ->add('position', NumberType::class)
-            ->add('time', TimeDurationType::class)
+            ->add('timeDuration', TimeDurationType::class)
             ->add('tyres', TyresType::class)
         ;
     }

@@ -26,7 +26,7 @@ class RaceDriverRaceResultCrudController extends AbstractCrudController
         $points = NumberField::new('points')
             ->setFormTypeOption('html5', true)
         ;
-        $time = TimeWithMillisecondsField::new('time');
+        $timeDuration = TimeWithMillisecondsField::new('timeDuration');
         $lapsBehind = NumberField::new('lapsBehind');
         $status = RaceDriverRaceResultStatusField::new('status');
         $statusNote = TextareaField::new('statusNote');
@@ -35,7 +35,7 @@ class RaceDriverRaceResultCrudController extends AbstractCrudController
             $raceDriver,
             $position,
             $points,
-            $time,
+            $timeDuration,
             $lapsBehind,
             $status,
             $statusNote,

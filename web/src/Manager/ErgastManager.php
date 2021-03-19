@@ -79,7 +79,7 @@ class ErgastManager
                 }
 
                 $driverPitStops[$driverId][$lap] = [
-                    'time' => $pitStopData['duration'],
+                    'time_duration' => $pitStopData['duration'],
                     'time_of_day' => $pitStopData['time'],
                 ];
             }
@@ -102,7 +102,7 @@ class ErgastManager
 
                 $raceLap = [
                     'position' => $position,
-                    'time' => $time,
+                    'time_duration' => $time,
                 ];
                 $racePitStop = isset($driverPitStops[$driverId][$lap])
                     ? $driverPitStops[$driverId][$lap]

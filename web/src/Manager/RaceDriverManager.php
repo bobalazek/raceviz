@@ -174,9 +174,9 @@ class RaceDriverManager
                 'position' => $useExistingDataIfNotSet && !isset($raceLapData['position'])
                     ? $raceDriverRaceLap->getPosition()
                     : $raceLapData['position'] ?? null,
-                'time' => $useExistingDataIfNotSet && !isset($raceLapData['time'])
-                    ? $raceDriverRaceLap->getTime()
-                    : $raceLapData['time'] ?? null,
+                'timeDuration' => $useExistingDataIfNotSet && !isset($raceLapData['time_duration'])
+                    ? $raceDriverRaceLap->getTimeDuration()
+                    : $raceLapData['time_duration'] ?? null,
                 'timeOfDay' => $useExistingDataIfNotSet && !isset($raceLapData['time_of_day'])
                     ? $raceDriverRaceLap->getTimeOfDay()
                     : $raceLapData['time_of_day'] ?? null,
@@ -221,9 +221,9 @@ class RaceDriverManager
             $racePitStopForm->submit([
                 'raceDriver' => $raceDriver->getId(),
                 'lap' => $lapData,
-                'time' => $useExistingDataIfNotSet && !isset($racePitStopData['time'])
-                    ? $raceDriverRaceLap->getTime()
-                    : $racePitStopData['time'] ?? null,
+                'timeDuration' => $useExistingDataIfNotSet && !isset($racePitStopData['time_duration'])
+                    ? $raceDriverRaceLap->getTimeDuration()
+                    : $racePitStopData['time_duration'] ?? null,
                 'timeOfDay' => $useExistingDataIfNotSet && !isset($racePitStopData['time_of_day'])
                     ? $raceDriverRaceLap->getTimeOfDay()
                     : $racePitStopData['time_of_day'] ?? null,

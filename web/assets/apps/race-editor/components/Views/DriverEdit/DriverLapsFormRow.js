@@ -41,14 +41,14 @@ function DriverLapsFormRow({
           <Form.Group>
             <Form.Label>Time</Form.Label>
             <Form.Control
-              value={entry.race_lap?.['time'] ?? ''}
-              onChange={(event) => { setFormLapData(index, 'race_lap', 'time', event.target.value) }}
-              isInvalid={!!entryErrors?.['race_lap']?.['time']}
+              value={entry.race_lap?.['time_duration'] ?? ''}
+              onChange={(event) => { setFormLapData(index, 'race_lap', 'timeDuration', event.target.value) }}
+              isInvalid={!!entryErrors?.['race_lap']?.['timeDuration']}
             />
             <Form.Text muted>
               Enter a valid duration time (1:06:20.123 or 1:09.456 or 05.789).
             </Form.Text>
-            {renderFormErrors(entryErrors?.['race_lap']?.['time'])}
+            {renderFormErrors(entryErrors?.['race_lap']?.['timeDuration'])}
           </Form.Group>
         </div>
         <div className="col-md-3">
@@ -112,14 +112,14 @@ function DriverLapsFormRow({
               <Form.Group>
                 <Form.Label>Time</Form.Label>
                 <Form.Control
-                  value={entry.race_pit_stop?.['time'] ?? ''}
-                  onChange={(event) => { setFormLapData(index, 'race_pit_stop', 'time', event.target.value) }}
-                  isInvalid={!!entryErrors?.['race_pit_stop']?.['time']}
+                  value={entry.race_pit_stop?.['time_duration'] ?? ''}
+                  onChange={(event) => { setFormLapData(index, 'race_pit_stop', 'time_duration', event.target.value) }}
+                  isInvalid={!!entryErrors?.['race_pit_stop']?.['timeDuration']}
                 />
                 <Form.Text muted>
                   Enter a valid duration time (02.789).
                 </Form.Text>
-                {renderFormErrors(entryErrors?.['race_pit_stop']?.['time'])}
+                {renderFormErrors(entryErrors?.['race_pit_stop']?.['timeDuration'])}
               </Form.Group>
             </div>
             <div className="col-md-3">

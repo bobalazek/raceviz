@@ -24,15 +24,15 @@ import {
 function EditDriverForm({
   selectedRaceDriver,
 }) {
-  const [raceStartingGridPosition, setRaceStartingGridPosition] = useState(selectedRaceDriver.race_driver_starting_grid?.position);
-  const [raceStartingGridTyres, setRaceStartingGridTyres] = useState(selectedRaceDriver.race_driver_starting_grid?.tyres);
-  const [raceStartingGridTime, setRaceStartingGridTime] = useState(selectedRaceDriver.race_driver_starting_grid?.time);
-  const [raceResultPosition, setRaceResultPosition] = useState(selectedRaceDriver.race_driver_result?.position);
-  const [raceResultPoints, setRaceResultPoints] = useState(selectedRaceDriver.race_driver_result?.points);
-  const [raceResultTime, setRaceResultTime] = useState(selectedRaceDriver.race_driver_result?.time);
-  const [raceResultLapsBehind, setRaceResultLapsBehind] = useState(selectedRaceDriver.race_driver_result?.laps_behind);
-  const [raceResultStatus, setRaceResultStatus] = useState(selectedRaceDriver.race_driver_result?.status);
-  const [raceResultStatusNote, setRaceResultStatusNote] = useState(selectedRaceDriver.race_driver_result?.status_note);
+  const [raceStartingGridPosition, setRaceStartingGridPosition] = useState(selectedRaceDriver.race_driver_race_starting_grid?.position);
+  const [raceStartingGridTyres, setRaceStartingGridTyres] = useState(selectedRaceDriver.race_driver_race_starting_grid?.tyres);
+  const [raceStartingGridTime, setRaceStartingGridTime] = useState(selectedRaceDriver.race_driver_race_starting_grid?.time);
+  const [raceResultPosition, setRaceResultPosition] = useState(selectedRaceDriver.race_driver_race_result?.position);
+  const [raceResultPoints, setRaceResultPoints] = useState(selectedRaceDriver.race_driver_race_result?.points);
+  const [raceResultTime, setRaceResultTime] = useState(selectedRaceDriver.race_driver_race_result?.time);
+  const [raceResultLapsBehind, setRaceResultLapsBehind] = useState(selectedRaceDriver.race_driver_race_result?.laps_behind);
+  const [raceResultStatus, setRaceResultStatus] = useState(selectedRaceDriver.race_driver_race_result?.status);
+  const [raceResultStatusNote, setRaceResultStatusNote] = useState(selectedRaceDriver.race_driver_race_result?.status_note);
 
   const [formErrors, setFormErrors] = useState(null);
   const [formSubmitting, setFormSubmitting] = useState(false);

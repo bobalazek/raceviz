@@ -10,8 +10,6 @@ use App\Entity\Team;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -23,6 +21,7 @@ class RaceDriverType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $filterRace = $options['filter_race'];
+        $withActualStartingGridAndResultData = $options['with_actual_starting_grid_and_result_data'];
 
         $builder
             ->add('driver', EntityType::class, [
@@ -64,15 +63,29 @@ class RaceDriverType extends AbstractType
                     return $queryBuilder;
                 },
             ])
-            ->add('raceDriverRaceStartingGrid', EntityType::class, [
-                'class' => RaceDriverRaceStartingGrid::class,
-                'required' => false,
-            ])
-            ->add('raceDriverRaceResult', EntityType::class, [
-                'class' => RaceDriverRaceResult::class,
-                'required' => false,
-            ])
         ;
+
+        if ($withActualStartingGridAndResultData) {
+            $builder
+                ->add('raceDriverRaceStartingGrid', RaceDriverRaceStartingGridType::class, [
+                    'error_bubbling' => true,
+                ])
+                ->add('raceDriverRaceResult', RaceDriverRaceResultType::class, [
+                    'error_bubbling' => true,
+                ])
+            ;
+        } else {
+            $builder
+                ->add('raceDriverRaceStartingGrid', EntityType::class, [
+                    'class' => RaceDriverRaceStartingGrid::class,
+                    'required' => false,
+                ])
+                ->add('raceDriverRaceResult', EntityType::class, [
+                    'class' => RaceDriverRaceResult::class,
+                    'required' => false,
+                ])
+            ;
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -81,6 +94,7 @@ class RaceDriverType extends AbstractType
             'csrf_protection' => true,
             'data_class' => RaceDriver::class,
             'filter_race' => null,
+            'with_actual_starting_grid_and_result_data' => false,
         ]);
     }
 }

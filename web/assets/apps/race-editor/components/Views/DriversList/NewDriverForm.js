@@ -98,17 +98,10 @@ function NewDriverForm() {
         .replace('{raceSlug}', appData.race.slug)
       ;
 
-      const response = await axios.post(url, qs.stringify({
+      await axios.post(url, qs.stringify({
           driver: driverId,
           team: teamId,
       }));
-
-      if (response.data.errors) {
-        setFormErrors(response.data.errors);
-
-        toast.error('Please fix the errors first!');
-        return;
-      }
 
       toast.success('You have successfully added the driver.');
 
@@ -119,7 +112,13 @@ function NewDriverForm() {
 
       window.dispatchEvent(new CustomEvent('driver-editor:new-driver'));
     } catch(error) {
-      toast.error(error.response.data.detail);
+      if (error.response?.data?.errors) {
+        setFormErrors(error.response.data.errors);
+
+        toast.error('Please fix the errors first!');
+      } else if (error.response?.data?.detail) {
+        toast.error(error.response.data.detail);
+      }
     } finally {
       setFormSubmitting(false);
     }

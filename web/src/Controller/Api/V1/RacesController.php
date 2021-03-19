@@ -170,9 +170,24 @@ class RacesController extends AbstractApiController
         $formData['team'] = $raceDriver->getTeam()->getId();
         $formData['driver'] = $raceDriver->getDriver()->getId();
 
+        if (
+            isset($formData['raceDriverRaceStartingGrid']) &&
+            $raceDriver->getRaceDriverRaceStartingGrid()
+        ) {
+            $formData['raceDriverRaceStartingGrid']['raceDriver'] = $raceDriver->getId();
+        }
+
+        if (
+            isset($formData['raceDriverRaceResult']) &&
+            $raceDriver->getRaceDriverRaceResult()
+        ) {
+            $formData['raceDriverRaceResult']['raceDriver'] = $raceDriver->getId();
+        }
+
         $form = $this->createForm(RaceDriverType::class, $raceDriver, [
             'filter_race' => $race,
             'csrf_protection' => false,
+            'with_actual_starting_grid_and_result_data' => true,
         ]);
         $form->submit($formData);
 

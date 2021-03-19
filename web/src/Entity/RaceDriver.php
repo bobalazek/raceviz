@@ -51,12 +51,12 @@ class RaceDriver implements Interfaces\ArrayInterface, TimestampableInterface
     private $driver;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\RaceDriverRaceStartingGrid", mappedBy="raceDriver")
+     * @ORM\OneToOne(targetEntity="App\Entity\RaceDriverRaceStartingGrid", mappedBy="raceDriver", cascade={"persist"})
      */
     private $raceDriverRaceStartingGrid;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\RaceDriverRaceResult", mappedBy="raceDriver")
+     * @ORM\OneToOne(targetEntity="App\Entity\RaceDriverRaceResult", mappedBy="raceDriver", cascade={"persist"})
      */
     private $raceDriverRaceResult;
 
@@ -131,6 +131,10 @@ class RaceDriver implements Interfaces\ArrayInterface, TimestampableInterface
     {
         $this->raceDriverRaceStartingGrid = $raceDriverRaceStartingGrid;
 
+        if ($raceDriverRaceStartingGrid) {
+            $raceDriverRaceStartingGrid->setRaceDriver($this);
+        }
+
         return $this;
     }
 
@@ -142,6 +146,10 @@ class RaceDriver implements Interfaces\ArrayInterface, TimestampableInterface
     public function setRaceDriverRaceResult(?RaceDriverRaceResult $raceDriverRaceResult): self
     {
         $this->raceDriverRaceResult = $raceDriverRaceResult;
+
+        if ($raceDriverRaceResult) {
+            $raceDriverRaceResult->setRaceDriver($this);
+        }
 
         return $this;
     }

@@ -45,7 +45,7 @@ class RaceDriverRaceStartingGrid implements Interfaces\ArrayInterface, Timestamp
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\RaceDriver", inversedBy="raceDriverRaceStartingGrid")
-     * @ORM\JoinColumn()
+     * @ORM\JoinColumn(nullable=false)
      * @Assert\NotBlank()
      */
     private $raceDriver;

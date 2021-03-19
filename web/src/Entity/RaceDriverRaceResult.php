@@ -61,7 +61,7 @@ class RaceDriverRaceResult implements Interfaces\ArrayInterface, TimestampableIn
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\RaceDriver", inversedBy="raceDriverRaceResult")
-     * @ORM\JoinColumn()
+     * @ORM\JoinColumn(nullable=false)
      * @Assert\NotBlank()
      */
     private $raceDriver;

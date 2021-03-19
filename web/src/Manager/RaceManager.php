@@ -34,10 +34,12 @@ class RaceManager
         $raceDriverRepository = $this->em->getRepository(RaceDriver::class);
         $raceDrivers = $raceDriverRepository
             ->createQueryBuilder('rd')
-            ->leftJoin('rd.startingGrid', 'rdsg')
+            ->leftJoin('rd.raceDriverRaceStartingGrid', 'rdrsg')
             ->where('rd.race = :race')
-            ->orderBy('rdsg.position DESC')
+            ->orderBy('rdrsg.position', 'DESC')
             ->setParameter('race', $race)
+            ->getQuery()
+            ->getResult()
         ;
         foreach ($raceDrivers as $raceDriver) {
             $data['race_drivers'][] = $raceDriver->toArray();

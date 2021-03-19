@@ -28,6 +28,7 @@ security:
                 target: auth.login
             remember_me:
                 secret: '%kernel.secret%'
+            entry_point: App\Security\EntryPoint\LoginFormAuthenticationEntryPoint
 
     role_hierarchy:
         ROLE_USER_MODERATOR:

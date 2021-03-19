@@ -52,11 +52,13 @@ class RaceDriver implements Interfaces\ArrayInterface, TimestampableInterface
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\RaceDriverRaceStartingGrid", mappedBy="raceDriver", cascade={"persist"})
+     * @Assert\Valid()
      */
     private $raceDriverRaceStartingGrid;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\RaceDriverRaceResult", mappedBy="raceDriver", cascade={"persist"})
+     * @Assert\Valid()
      */
     private $raceDriverRaceResult;
 

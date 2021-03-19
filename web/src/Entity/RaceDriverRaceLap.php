@@ -81,7 +81,7 @@ class RaceDriverRaceLap implements Interfaces\ArrayInterface, TimestampableInter
         return $this->lap;
     }
 
-    public function setLap(string $lap): self
+    public function setLap(?int $lap): self
     {
         $this->lap = $lap;
 
@@ -93,7 +93,7 @@ class RaceDriverRaceLap implements Interfaces\ArrayInterface, TimestampableInter
         return $this->position;
     }
 
-    public function setPosition(string $position): self
+    public function setPosition(?int $position): self
     {
         $this->position = $position;
 

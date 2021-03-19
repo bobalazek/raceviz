@@ -69,7 +69,7 @@ class RaceDriverRaceStartingGrid implements Interfaces\ArrayInterface, Timestamp
         return $this->position;
     }
 
-    public function setPosition(int $position): self
+    public function setPosition(?int $position): self
     {
         $this->position = $position;
 
@@ -93,7 +93,7 @@ class RaceDriverRaceStartingGrid implements Interfaces\ArrayInterface, Timestamp
         return $this->tyres;
     }
 
-    public function setTyres(string $tyres): self
+    public function setTyres(?string $tyres): self
     {
         $this->tyres = $tyres;
 

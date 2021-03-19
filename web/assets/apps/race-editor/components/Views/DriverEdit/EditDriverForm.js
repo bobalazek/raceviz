@@ -92,9 +92,9 @@ function EditDriverForm({
               type="number"
               value={raceStartingGridPosition ?? ''}
               onChange={(event) => { setRaceStartingGridPosition(event.target.value) }}
-              isInvalid={!!formErrors?.['raceStartingGridPosition']}
+              isInvalid={!!formErrors?.['raceDriverRaceStartingGrid']?.['position']}
             />
-            {renderFormErrors(formErrors?.['raceStartingGridPosition'])}
+            {renderFormErrors(formErrors?.['raceDriverRaceStartingGrid']?.['position'])}
           </Form.Group>
         </div>
         <div className="col-md-6">
@@ -104,7 +104,7 @@ function EditDriverForm({
               as="select"
               value={raceStartingGridTyres ?? ''}
               onChange={(event) => { setRaceStartingGridTyres(event.target.value) }}
-              isInvalid={!!formErrors?.['raceStartingGridTyres']}
+              isInvalid={!!formErrors?.['raceDriverRaceStartingGrid']?.['tyres']}
             >
               <option value="">-- none --</option>
               {Object.keys(appData.tyres).map((key) => {
@@ -120,7 +120,7 @@ function EditDriverForm({
                 );
               })}
             </Form.Control>
-            {renderFormErrors(formErrors?.['raceStartingGridTyres'])}
+            {renderFormErrors(formErrors?.['raceDriverRaceStartingGrid']?.['tyres'])}
           </Form.Group>
         </div>
         <div className="col-md-6">
@@ -129,12 +129,12 @@ function EditDriverForm({
             <Form.Control
               value={raceStartingGridTime ?? ''}
               onChange={(event) => { setRaceStartingGridTime(event.target.value) }}
-              isInvalid={!!formErrors?.['raceStartingGridTime']}
+              isInvalid={!!formErrors?.['raceDriverRaceStartingGrid']?.['time']}
             />
             <Form.Text muted>
               Enter a valid duration time (1:06:20.123 or 1:09.456 or 05.789).
             </Form.Text>
-            {renderFormErrors(formErrors?.['raceStartingGridTime'])}
+            {renderFormErrors(formErrors?.['raceDriverRaceStartingGrid']?.['time'])}
           </Form.Group>
         </div>
       </div>
@@ -147,9 +147,9 @@ function EditDriverForm({
               type="number"
               value={raceResultPosition ?? ''}
               onChange={(event) => { setRaceResultPosition(event.target.value) }}
-              isInvalid={!!formErrors?.['raceResultPosition']}
+              isInvalid={!!formErrors?.['raceDriverRaceResult']?.['position']}
             />
-            {renderFormErrors(formErrors?.['raceResultPosition'])}
+            {renderFormErrors(formErrors?.['raceDriverRaceResult']?.['position'])}
           </Form.Group>
         </div>
         <div className="col-md-6">
@@ -159,9 +159,9 @@ function EditDriverForm({
               type="number"
               value={raceResultPoints ?? ''}
               onChange={(event) => { setRaceResultPoints(event.target.value) }}
-              isInvalid={!!formErrors?.['raceResultPoints']}
+              isInvalid={!!formErrors?.['raceDriverRaceResult']?.['points']}
             />
-            {renderFormErrors(formErrors?.['raceResultPoints'])}
+            {renderFormErrors(formErrors?.['raceDriverRaceResult']?.['points'])}
           </Form.Group>
         </div>
         <div className="col-md-6">
@@ -170,12 +170,12 @@ function EditDriverForm({
             <Form.Control
               value={raceResultTime ?? ''}
               onChange={(event) => { setRaceResultTime(event.target.value) }}
-              isInvalid={!!formErrors?.['raceResultTime']}
+              isInvalid={!!formErrors?.['raceDriverRaceResult']?.['time']}
             />
             <Form.Text muted>
               Enter a valid duration time (1:06:20.123 or 1:09.456 or 05.789).
             </Form.Text>
-            {renderFormErrors(formErrors?.['raceResultTime'])}
+            {renderFormErrors(formErrors?.['raceDriverRaceResult']?.['time'])}
           </Form.Group>
         </div>
         <div className="col-md-6">
@@ -185,9 +185,9 @@ function EditDriverForm({
               type="number"
               value={raceResultLapsBehind ?? ''}
               onChange={(event) => { setRaceResultLapsBehind(event.target.value) }}
-              isInvalid={!!formErrors?.['raceResultLapsBehind']}
+              isInvalid={!!formErrors?.['raceDriverRaceResult']?.['lapsBehind']}
             />
-            {renderFormErrors(formErrors?.['raceResultLapsBehind'])}
+            {renderFormErrors(formErrors?.['raceDriverRaceResult']?.['lapsBehind'])}
           </Form.Group>
         </div>
         <div className="col-md-6">
@@ -197,7 +197,7 @@ function EditDriverForm({
               as="select"
               value={raceResultStatus ?? ''}
               onChange={(event) => { setRaceResultStatus(event.target.value) }}
-              isInvalid={!!formErrors?.['raceResultStatus']}
+              isInvalid={!!formErrors?.['raceDriverRaceResult']?.['status']}
             >
               <option value="">-- none --</option>
               {Object.keys(appData.race_driver_statuses).map((key) => {
@@ -213,7 +213,7 @@ function EditDriverForm({
                 );
               })}
             </Form.Control>
-            {renderFormErrors(formErrors?.['raceResultStatus'])}
+            {renderFormErrors(formErrors?.['raceDriverRaceResult']?.['status'])}
           </Form.Group>
         </div>
         <div className="col-md-6">
@@ -223,9 +223,9 @@ function EditDriverForm({
               as="textarea"
               value={raceResultStatusNote ?? ''}
               onChange={(event) => { setRaceResultStatusNote(event.target.value) }}
-              isInvalid={!!formErrors?.['raceResultStatusNote']}
+              isInvalid={!!formErrors?.['raceDriverRaceResult']?.['statusNote']}
             />
-            {renderFormErrors(formErrors?.['raceResultStatusNote'])}
+            {renderFormErrors(formErrors?.['raceDriverRaceResult']?.['statusNote'])}
           </Form.Group>
         </div>
       </div>

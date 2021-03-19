@@ -68,10 +68,10 @@ class RaceDriverType extends AbstractType
         if ($withActualStartingGridAndResultData) {
             $builder
                 ->add('raceDriverRaceStartingGrid', RaceDriverRaceStartingGridType::class, [
-                    'error_bubbling' => true,
+                    'required' => false,
                 ])
                 ->add('raceDriverRaceResult', RaceDriverRaceResultType::class, [
-                    'error_bubbling' => true,
+                    'required' => false,
                 ])
             ;
         } else {

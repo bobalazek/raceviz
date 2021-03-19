@@ -85,7 +85,7 @@ class RaceDriverRaceResult implements Interfaces\ArrayInterface, TimestampableIn
         return $this->position;
     }
 
-    public function setPosition(int $position): self
+    public function setPosition(?int $position): self
     {
         $this->position = $position;
 
@@ -97,7 +97,7 @@ class RaceDriverRaceResult implements Interfaces\ArrayInterface, TimestampableIn
         return $this->points;
     }
 
-    public function setPoints(int $points): self
+    public function setPoints(?int $points): self
     {
         $this->points = $points;
 
@@ -121,7 +121,7 @@ class RaceDriverRaceResult implements Interfaces\ArrayInterface, TimestampableIn
         return $this->lapsBehind;
     }
 
-    public function setLapsBehind(int $lapsBehind): self
+    public function setLapsBehind(?int $lapsBehind): self
     {
         $this->lapsBehind = $lapsBehind;
 
@@ -133,7 +133,7 @@ class RaceDriverRaceResult implements Interfaces\ArrayInterface, TimestampableIn
         return $this->status;
     }
 
-    public function setStatus(string $status): self
+    public function setStatus(?string $status): self
     {
         $this->status = $status;
 
@@ -145,7 +145,7 @@ class RaceDriverRaceResult implements Interfaces\ArrayInterface, TimestampableIn
         return $this->statusNote;
     }
 
-    public function setStatusNote(string $statusNote): self
+    public function setStatusNote(?string $statusNote): self
     {
         $this->statusNote = $statusNote;
 

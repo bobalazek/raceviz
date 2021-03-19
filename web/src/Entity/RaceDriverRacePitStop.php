@@ -70,7 +70,7 @@ class RaceDriverRacePitStop implements Interfaces\ArrayInterface, TimestampableI
         return $this->lap;
     }
 
-    public function setLap(int $lap): self
+    public function setLap(?int $lap): self
     {
         $this->lap = $lap;
 

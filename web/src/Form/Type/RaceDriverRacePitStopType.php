@@ -36,7 +36,6 @@ class RaceDriverRacePitStopType extends AbstractType
         $resolver->setDefaults([
             'csrf_protection' => true,
             'data_class' => RaceDriverRacePitStop::class,
-            'filter_race' => null,
         ]);
     }
 }

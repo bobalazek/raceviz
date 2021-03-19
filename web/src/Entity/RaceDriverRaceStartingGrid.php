@@ -9,14 +9,14 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\RaceDriverRacePitStopRepository")
- * @ORM\Table(name="race_driver_race_pit_stops")
+ * @ORM\Entity(repositoryClass="App\Repository\RaceDriverRaceStartingGridRepository")
+ * @ORM\Table(name="race_driver_race_starting_grids")
  * @UniqueEntity(
- *   fields={"raceDriver", "lap"},
- *   message="This Race Driver Pit Stop was already added"
+ *   fields={"raceDriver"},
+ *   message="This Race Driver was already added"
  * )
  */
-class RaceDriverRacePitStop implements Interfaces\ArrayInterface, TimestampableInterface
+class RaceDriverRaceStartingGrid implements Interfaces\ArrayInterface, TimestampableInterface
 {
     use TimestampableTrait;
 
@@ -31,21 +31,20 @@ class RaceDriverRacePitStop implements Interfaces\ArrayInterface, TimestampableI
      * @ORM\Column(type="smallint")
      * @Assert\NotBlank()
      */
-    private $lap;
+    private $position;
 
     /**
-     * @ORM\Column(type="time_with_milliseconds")
-     * @Assert\NotBlank()
+     * @ORM\Column(type="time_with_milliseconds", nullable=true)
      */
     private $time;
 
     /**
-     * @ORM\Column(type="time", nullable=true)
+     * @ORM\Column(type="string", length=16, nullable=true)
      */
-    private $timeOfDay;
+    private $tyres;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\RaceDriver", inversedBy="raceDriverRacePitStops")
+     * @ORM\OneToOne(targetEntity="App\Entity\RaceDriver", inversedBy="raceDriverRaceStartingGrid")
      * @ORM\JoinColumn()
      * @Assert\NotBlank()
      */
@@ -55,9 +54,9 @@ class RaceDriverRacePitStop implements Interfaces\ArrayInterface, TimestampableI
     {
         $race = $this->getRaceDriver()->getRace();
         $driver = $this->getRaceDriver()->getDriver();
-        $lap = $this->getLap();
+        $position = $this->getPosition();
 
-        return $driver . ' @ ' . $race . ' (pit stop at lap ' . $lap . ')';
+        return $driver . ' @ ' . $race . ' (at starting grid position ' . $position . ')';
     }
 
     public function getId(): ?int
@@ -65,14 +64,14 @@ class RaceDriverRacePitStop implements Interfaces\ArrayInterface, TimestampableI
         return $this->id;
     }
 
-    public function getLap(): ?int
+    public function getPosition(): ?int
     {
-        return $this->lap;
+        return $this->position;
     }
 
-    public function setLap(int $lap): self
+    public function setPosition(int $position): self
     {
-        $this->lap = $lap;
+        $this->position = $position;
 
         return $this;
     }
@@ -89,14 +88,14 @@ class RaceDriverRacePitStop implements Interfaces\ArrayInterface, TimestampableI
         return $this;
     }
 
-    public function getTimeOfDay(): ?\DateTimeInterface
+    public function getTyres(): ?string
     {
-        return $this->timeOfDay;
+        return $this->tyres;
     }
 
-    public function setTimeOfDay(?\DateTimeInterface $timeOfDay): self
+    public function setTyres(string $tyres): self
     {
-        $this->timeOfDay = $timeOfDay;
+        $this->tyres = $tyres;
 
         return $this;
     }
@@ -117,13 +116,11 @@ class RaceDriverRacePitStop implements Interfaces\ArrayInterface, TimestampableI
     {
         return [
             'id' => $this->getId(),
-            'lap' => $this->getLap(),
+            'position' => $this->getPosition(),
             'time' => $this->getTime()
                 ? $this->getTime()->format('H:i:s.v')
                 : null,
-            'time_of_day' => $this->getTimeOfDay()
-                ? $this->getTimeOfDay()->format('H:i:s')
-                : null,
+            'tyres' => $this->getTyres(),
         ];
     }
 }

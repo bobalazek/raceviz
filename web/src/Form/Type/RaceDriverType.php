@@ -4,6 +4,8 @@ namespace App\Form\Type;
 
 use App\Entity\Driver;
 use App\Entity\RaceDriver;
+use App\Entity\RaceDriverRaceResult;
+use App\Entity\RaceDriverRaceStartingGrid;
 use App\Entity\Team;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -62,15 +64,14 @@ class RaceDriverType extends AbstractType
                     return $queryBuilder;
                 },
             ])
-            ->add('raceStartingGridPosition', NumberType::class)
-            ->add('raceStartingGridTyres', TyresType::class)
-            ->add('raceStartingGridTime', TimeDurationType::class)
-            ->add('raceResultPosition', NumberType::class)
-            ->add('raceResultPoints', NumberType::class)
-            ->add('raceResultTime', TimeDurationType::class)
-            ->add('raceResultLapsBehind', NumberType::class)
-            ->add('raceResultStatus', RaceDriverStatusType::class)
-            ->add('raceResultStatusNote', TextareaType::class)
+            ->add('raceDriverRaceStartingGrid', EntityType::class, [
+                'class' => RaceDriverRaceStartingGrid::class,
+                'required' => false,
+            ])
+            ->add('raceDriverRaceResult', EntityType::class, [
+                'class' => RaceDriverRaceResult::class,
+                'required' => false,
+            ])
         ;
     }
 

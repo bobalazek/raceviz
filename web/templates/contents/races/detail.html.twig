@@ -1,5 +1,22 @@
 {% extends 'layouts/app.html.twig' %}
 
+{% block body %}
+  {% if is_granted('ROLE_ADMIN') %}
+    <a href="{{ url('races.edit', {
+      raceSlug: race.getSlug(),
+    }) }}" style="
+      position: fixed;
+      right: 0;
+      margin: 10px;
+      padding: 10px 20px;
+      background-color: #fff;
+    ">
+      Edit race (admin only)
+    </a>
+  {% endif %}
+  {{ parent() }}
+{% endblock %}
+
 {% block body_javascripts %}
   <script>
     var appData = {{ app_data | json_encode | raw }};

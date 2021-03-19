@@ -8,6 +8,8 @@ use App\Entity\Race;
 use App\Entity\RaceDriver;
 use App\Entity\RaceDriverRaceLap;
 use App\Entity\RaceDriverRacePitStop;
+use App\Entity\RaceDriverRaceResult;
+use App\Entity\RaceDriverRaceStartingGrid;
 use App\Entity\Season;
 use App\Entity\SeasonDriver;
 use App\Entity\SeasonTeam;
@@ -57,7 +59,7 @@ class DashboardController extends AbstractDashboardController
     {
         return [
             MenuItem::linkToDashboard('Dashboard', 'fa fa-home'),
-            MenuItem::section('App'),
+            MenuItem::section('Data'),
             MenuItem::linkToCrud('Circuits', 'fas fa-folder-open', Circuit::class),
             MenuItem::linkToCrud('Seasons', 'fas fa-folder-open', Season::class),
             MenuItem::linkToCrud('Season Teams', 'fas fa-folder-open', SeasonTeam::class),
@@ -69,6 +71,8 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Race Drivers', 'fas fa-folder-open', RaceDriver::class),
             MenuItem::linkToCrud('Race Drivers - Race - Laps', 'fas fa-folder-open', RaceDriverRaceLap::class),
             MenuItem::linkToCrud('Race Drivers - Race - Pit Stops', 'fas fa-folder-open', RaceDriverRacePitStop::class),
+            MenuItem::linkToCrud('Race Drivers - Race - Starting Grids', 'fas fa-folder-open', RaceDriverRaceStartingGrid::class),
+            MenuItem::linkToCrud('Race Drivers - Race - Results', 'fas fa-folder-open', RaceDriverRaceResult::class),
             MenuItem::section('Users'),
             MenuItem::linkToCrud('Users', 'fas fa-folder-open', User::class),
             MenuItem::linkToCrud('User Actions', 'fas fa-folder-open', UserAction::class),

@@ -30,51 +30,6 @@ class RaceDriver implements Interfaces\ArrayInterface, TimestampableInterface
     private $id;
 
     /**
-     * @ORM\Column(type="smallint", nullable=true)
-     */
-    private $raceStartingGridPosition;
-
-    /**
-     * @ORM\Column(type="string", length=16, nullable=true)
-     */
-    private $raceStartingGridTyres;
-
-    /**
-     * @ORM\Column(type="time_with_milliseconds", nullable=true)
-     */
-    private $raceStartingGridTime;
-
-    /**
-     * @ORM\Column(type="smallint", nullable=true)
-     */
-    private $raceResultPosition;
-
-    /**
-     * @ORM\Column(type="smallint", nullable=true)
-     */
-    private $raceResultPoints;
-
-    /**
-     * @ORM\Column(type="time_with_milliseconds", nullable=true)
-     */
-    private $raceResultTime;
-
-    /**
-     * @ORM\Column(type="smallint", nullable=true)
-     */
-    private $raceResultLapsBehind;
-
-    /**
-     * @ORM\Column(type="string", length=16, nullable=true)
-     */
-    private $raceResultStatus;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $raceResultStatusNote;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Race", inversedBy="raceDrivers")
      * @ORM\JoinColumn()
      * @Assert\NotBlank()
@@ -94,6 +49,16 @@ class RaceDriver implements Interfaces\ArrayInterface, TimestampableInterface
      * @Assert\NotBlank()
      */
     private $driver;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\RaceDriverRaceStartingGrid", mappedBy="raceDriver")
+     */
+    private $raceDriverRaceStartingGrid;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\RaceDriverRaceResult", mappedBy="raceDriver")
+     */
+    private $raceDriverRaceResult;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\RaceDriverRaceLap", mappedBy="raceDriver", cascade={"remove"})
@@ -119,114 +84,6 @@ class RaceDriver implements Interfaces\ArrayInterface, TimestampableInterface
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getRaceStartingGridPosition(): ?int
-    {
-        return $this->raceStartingGridPosition;
-    }
-
-    public function setRaceStartingGridPosition(?int $raceStartingGridPosition): self
-    {
-        $this->raceStartingGridPosition = $raceStartingGridPosition;
-
-        return $this;
-    }
-
-    public function getRaceStartingGridTyres(): ?string
-    {
-        return $this->raceStartingGridTyres;
-    }
-
-    public function setRaceStartingGridTyres(?string $raceStartingGridTyres): self
-    {
-        $this->raceStartingGridTyres = $raceStartingGridTyres;
-
-        return $this;
-    }
-
-    public function getRaceStartingGridTime(): ?\DateTimeInterface
-    {
-        return $this->raceStartingGridTime;
-    }
-
-    public function setRaceStartingGridTime(?\DateTimeInterface $raceStartingGridTime): self
-    {
-        $this->raceStartingGridTime = $raceStartingGridTime;
-
-        return $this;
-    }
-
-    public function getRaceResultPosition(): ?int
-    {
-        return $this->raceResultPosition;
-    }
-
-    public function setRaceResultPosition(?int $raceResultPosition): self
-    {
-        $this->raceResultPosition = $raceResultPosition;
-
-        return $this;
-    }
-
-    public function getRaceResultPoints(): ?int
-    {
-        return $this->raceResultPoints;
-    }
-
-    public function setRaceResultPoints(?int $raceResultPoints): self
-    {
-        $this->raceResultPoints = $raceResultPoints;
-
-        return $this;
-    }
-
-    public function getRaceResultTime(): ?\DateTimeInterface
-    {
-        return $this->raceResultTime;
-    }
-
-    public function setRaceResultTime(?\DateTimeInterface $raceResultTime): self
-    {
-        $this->raceResultTime = $raceResultTime;
-
-        return $this;
-    }
-
-    public function getRaceResultLapsBehind(): ?int
-    {
-        return $this->raceResultLapsBehind;
-    }
-
-    public function setRaceResultLapsBehind(?int $raceResultLapsBehind): self
-    {
-        $this->raceResultLapsBehind = $raceResultLapsBehind;
-
-        return $this;
-    }
-
-    public function getRaceResultStatus(): ?string
-    {
-        return $this->raceResultStatus;
-    }
-
-    public function setRaceResultStatus(?string $raceResultStatus): self
-    {
-        $this->raceResultStatus = $raceResultStatus;
-
-        return $this;
-    }
-
-    public function getRaceResultStatusNote(): ?string
-    {
-        return $this->raceResultStatusNote;
-    }
-
-    public function setRaceResultStatusNote(?string $raceResultStatusNote): self
-    {
-        $this->raceResultStatusNote = $raceResultStatusNote;
-
-        return $this;
     }
 
     public function getRace(): ?Race
@@ -261,6 +118,30 @@ class RaceDriver implements Interfaces\ArrayInterface, TimestampableInterface
     public function setDriver(?Driver $driver): self
     {
         $this->driver = $driver;
+
+        return $this;
+    }
+
+    public function getRaceDriverRaceStartingGrid(): ?RaceDriverRaceStartingGrid
+    {
+        return $this->raceDriverRaceStartingGrid;
+    }
+
+    public function setRaceDriverRaceStartingGrid(?RaceDriverRaceStartingGrid $raceDriverRaceStartingGrid): self
+    {
+        $this->raceDriverRaceStartingGrid = $raceDriverRaceStartingGrid;
+
+        return $this;
+    }
+
+    public function getRaceDriverRaceResult(): ?RaceDriverRaceResult
+    {
+        return $this->raceDriverRaceResult;
+    }
+
+    public function setRaceDriverRaceResult(?RaceDriverRaceResult $raceDriverRaceResult): self
+    {
+        $this->raceDriverRaceResult = $raceDriverRaceResult;
 
         return $this;
     }
@@ -329,21 +210,14 @@ class RaceDriver implements Interfaces\ArrayInterface, TimestampableInterface
     {
         return [
             'id' => $this->getId(),
-            'race_starting_grid_position' => $this->getRaceStartingGridPosition(),
-            'race_starting_grid_tyres' => $this->getRaceStartingGridTyres(),
-            'race_starting_grid_time' => $this->getRaceStartingGridTime()
-                ? $this->getRaceStartingGridTime()->format('i:s.v')
-                : null,
-            'race_result_position' => $this->getRaceResultPosition(),
-            'race_result_points' => $this->getRaceResultPoints(),
-            'race_result_time' => $this->getRaceResultTime()
-                ? $this->getRaceResultTime()->format('i:s.v')
-                : null,
-            'race_result_laps_behind' => $this->getRaceResultLapsBehind(),
-            'race_result_status' => $this->getRaceResultStatus(),
-            'race_result_status_note' => $this->getRaceResultStatusNote(),
             'race_laps_count' => $this->getRaceDriverRaceLaps()->count(),
             'race_pit_stops_count' => $this->getRaceDriverRacePitStops()->count(),
+            'race_driver_race_result' => $this->getRaceDriverRaceResult()
+                ? $this->getRaceDriverRaceResult()->toArray()
+                : null,
+            'race_driver_race_starting_grid' => $this->getRaceDriverRaceStartingGrid()
+                ? $this->getRaceDriverRaceStartingGrid()->toArray()
+                : null,
             'team' => $this->getTeam()
                 ? $this->getTeam()->toArray()
                 : null,

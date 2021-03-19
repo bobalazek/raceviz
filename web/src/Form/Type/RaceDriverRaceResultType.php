@@ -3,18 +3,18 @@
 namespace App\Form\Type;
 
 use App\Entity\RaceDriver;
-use App\Entity\RaceDriverRaceLap;
+use App\Entity\RaceDriverRaceResult;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\TimeType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class RaceDriverRaceLapType.
+ * Class RaceDriverRaceResultType.
  */
-class RaceDriverRaceLapType extends AbstractType
+class RaceDriverRaceResultType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -22,14 +22,12 @@ class RaceDriverRaceLapType extends AbstractType
             ->add('raceDriver', EntityType::class, [
                 'class' => RaceDriver::class,
             ])
-            ->add('lap', NumberType::class)
             ->add('position', NumberType::class)
+            ->add('points', NumberType::class)
             ->add('time', TimeDurationType::class)
-            ->add('timeOfDay', TimeType::class, [
-                'with_seconds' => true,
-                'widget' => 'single_text',
-            ])
-            ->add('tyres', TyresType::class)
+            ->add('lapsBehind', NumberType::class)
+            ->add('status', RaceDriverStatusType::class)
+            ->add('statusNote', TextareaType::class)
         ;
     }
 
@@ -37,7 +35,7 @@ class RaceDriverRaceLapType extends AbstractType
     {
         $resolver->setDefaults([
             'csrf_protection' => true,
-            'data_class' => RaceDriverRaceLap::class,
+            'data_class' => RaceDriverRaceResult::class,
         ]);
     }
 }

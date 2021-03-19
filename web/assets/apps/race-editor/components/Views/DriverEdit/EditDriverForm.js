@@ -24,15 +24,15 @@ import {
 function EditDriverForm({
   selectedRaceDriver,
 }) {
-  const [raceStartingGridPosition, setRaceStartingGridPosition] = useState(selectedRaceDriver.race_starting_grid_position);
-  const [raceStartingGridTyres, setRaceStartingGridTyres] = useState(selectedRaceDriver.race_starting_grid_tyres);
-  const [raceStartingGridTime, setRaceStartingGridTime] = useState(selectedRaceDriver.race_starting_grid_time);
-  const [raceResultPosition, setRaceResultPosition] = useState(selectedRaceDriver.race_result_position);
-  const [raceResultPoints, setRaceResultPoints] = useState(selectedRaceDriver.race_result_points);
-  const [raceResultTime, setRaceResultTime] = useState(selectedRaceDriver.race_result_time);
-  const [raceResultLapsBehind, setRaceResultLapsBehind] = useState(selectedRaceDriver.race_result_laps_behind);
-  const [raceResultStatus, setRaceResultStatus] = useState(selectedRaceDriver.race_result_status);
-  const [raceResultStatusNote, setRaceResultStatusNote] = useState(selectedRaceDriver.race_result_status_note);
+  const [raceStartingGridPosition, setRaceStartingGridPosition] = useState(selectedRaceDriver.race_driver_starting_grid?.position);
+  const [raceStartingGridTyres, setRaceStartingGridTyres] = useState(selectedRaceDriver.race_driver_starting_grid?.tyres);
+  const [raceStartingGridTime, setRaceStartingGridTime] = useState(selectedRaceDriver.race_driver_starting_grid?.time);
+  const [raceResultPosition, setRaceResultPosition] = useState(selectedRaceDriver.race_driver_result?.position);
+  const [raceResultPoints, setRaceResultPoints] = useState(selectedRaceDriver.race_driver_result?.points);
+  const [raceResultTime, setRaceResultTime] = useState(selectedRaceDriver.race_driver_result?.time);
+  const [raceResultLapsBehind, setRaceResultLapsBehind] = useState(selectedRaceDriver.race_driver_result?.laps_behind);
+  const [raceResultStatus, setRaceResultStatus] = useState(selectedRaceDriver.race_driver_result?.status);
+  const [raceResultStatusNote, setRaceResultStatusNote] = useState(selectedRaceDriver.race_driver_result?.status_note);
 
   const [formErrors, setFormErrors] = useState(null);
   const [formSubmitting, setFormSubmitting] = useState(false);
@@ -50,15 +50,19 @@ function EditDriverForm({
       ;
 
       await axios.put(url, qs.stringify({
-          raceStartingGridPosition,
-          raceStartingGridTyres,
-          raceStartingGridTime,
-          raceResultPosition,
-          raceResultPoints,
-          raceResultTime,
-          raceResultLapsBehind,
-          raceResultStatus,
-          raceResultStatusNote,
+        raceDriverRaceStartingGrid: {
+          position: raceStartingGridPosition,
+          time: raceStartingGridTime,
+          tyres: raceStartingGridTyres,
+        },
+        raceDriverRaceResult: {
+          position: raceResultPosition,
+          points: raceResultPoints,
+          time: raceResultTime,
+          lapsBehind: raceResultLapsBehind,
+          status: raceResultStatus,
+          statusNote: raceResultStatusNote,
+        },
       }));
 
       setFormErrors(null);

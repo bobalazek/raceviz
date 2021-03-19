@@ -166,7 +166,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         $targetPath = $this->getTargetPath($request->getSession(), $providerKey);
         if (
             $targetPath &&
-            strpos($targetPath, '/api/') === false
+            false === strpos($targetPath, '/api/')
         ) {
             return new RedirectResponse($targetPath);
         }

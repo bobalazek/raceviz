@@ -163,7 +163,11 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
             $request->getSession()->set('tfa_in_progress', true);
         }
 
-        if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
+        $targetPath = $this->getTargetPath($request->getSession(), $providerKey);
+        if (
+            $targetPath &&
+            strpos($targetPath, '/api/') === false
+        ) {
             return new RedirectResponse($targetPath);
         }
 

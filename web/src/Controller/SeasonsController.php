@@ -48,6 +48,8 @@ class SeasonsController extends AbstractController
         foreach ($series as $key => $value) {
             $seasons = $seasonRepository->findBy([
                 'series' => $key,
+            ], [
+                'name' => 'DESC',
             ]);
             $seasonsBySeries[] = [
                 'name' => $value,

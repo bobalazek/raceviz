@@ -41,7 +41,7 @@ function DriverLapsForm({
 
       setFormData(laps);
     } catch (error) {
-      setError(error);
+      setError(error.response.data.detail);
     } finally {
       setLoading(false);
     }
@@ -166,9 +166,13 @@ function DriverLapsForm({
 
       loadLaps();
     } catch(error) {
-      toast.error('Please fix the errors first!');
+      if (error.response?.data?.errors) {
+        setFormErrors(error.response.data.errors);
 
-      setFormErrors(error.response.data.errors);
+        toast.error('Please fix the errors first!');
+      } else if (error.response?.data?.detail) {
+        toast.error(error.response.data.detail);
+      }
     } finally {
       setFormSubmitting(false);
     }

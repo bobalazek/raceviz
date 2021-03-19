@@ -25,6 +25,10 @@ class RacesController extends AbstractApiController
      */
     public function detail(int $raceSlug)
     {
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            throw $this->createAccessDeniedException();
+        }
+
         $race = $this->_getRace($raceSlug);
 
         $data = $race->toArray();
@@ -41,6 +45,10 @@ class RacesController extends AbstractApiController
      */
     public function drivers(string $raceSlug)
     {
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            throw $this->createAccessDeniedException();
+        }
+
         $race = $this->_getRace($raceSlug);
 
         /** @var RaceRepository $raceRepository */
@@ -296,8 +304,6 @@ class RacesController extends AbstractApiController
      */
     private function _getRaceDriverLaps(RaceDriver $raceDriver)
     {
-        $race = $raceDriver->getRace();
-
         // Race Laps
         $emptyRaceDriverRaceLap = new RaceDriverRaceLap();
         $raceDriverRaceLapsMap = [];

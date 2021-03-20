@@ -10,7 +10,7 @@ Encore
 
     .addEntry('website', './assets/apps/website/index.js')
     .addEntry('race-editor', './assets/apps/race-editor/index.js')
-    .addEntry('app', './assets/apps/app/index.ts')
+    .addEntry('race-viewer', './assets/apps/race-viewer/index.ts')
 
     .splitEntryChunks()
 

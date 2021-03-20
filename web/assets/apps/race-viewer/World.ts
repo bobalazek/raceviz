@@ -4,18 +4,6 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 import Application from './Application';
 
-// Resources
-import carsMercedes2021Resource from './Resources/models/cars/mercedes_2021.glb';
-import carsRedBull2021Resource from './Resources/models/cars/red_bull_2021.glb';
-import carsFerrari2021Resource from './Resources/models/cars/ferrari_2021.glb';
-import carsMclaren2021Resource from './Resources/models/cars/mclaren_2021.glb';
-import carsAstonMartin2021Resource from './Resources/models/cars/aston_martin_2021.glb';
-import carsAlpine2021Resource from './Resources/models/cars/alpine_2021.glb';
-import carsAlphatauri2021Resource from './Resources/models/cars/alphatauri_2021.glb';
-import carsAlphaRomeo2021Resource from './Resources/models/cars/alfa_romeo_2021.glb';
-import carsHaas2021Resource from './Resources/models/cars/haas_2021.glb';
-import carsWilliams2021Resource from './Resources/models/cars/williams_2021.glb';
-
 export default class World {
   private followTarget: THREE.Object3D;
 
@@ -38,18 +26,13 @@ export default class World {
 
   async prepareResources() {
     const gltfLoader = new GLTFLoader(Application.loadingManager);
-    const resources = {
-      mercedes: carsMercedes2021Resource,
-      redBull: carsRedBull2021Resource,
-      ferrari: carsFerrari2021Resource,
-      mclaren: carsMclaren2021Resource,
-      astonMartin: carsAstonMartin2021Resource,
-      alpine: carsAlpine2021Resource,
-      alphatauri: carsAlphatauri2021Resource,
-      alphaRomeo: carsAlphaRomeo2021Resource,
-      hass: carsHaas2021Resource,
-      williams: carsWilliams2021Resource,
-    };
+    const resources = {};
+    for (const key in Application.parameters.race_drivers) {
+      const raceDriver = Application.parameters.race_drivers[key];
+      const vehicleModelUrl = raceDriver.vehicle_model_url;
+
+      resources[raceDriver.season_driver.code] = vehicleModelUrl;
+    }
 
     let vehicles = [];
     let i = 0;

@@ -5,6 +5,8 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -66,9 +68,19 @@ class SeasonDriver implements Interfaces\ArrayInterface, TimestampableInterface
     private $team;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Vehicle")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Vehicle")
      */
     private $vehicle;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\RaceDriver", mappedBy="seasonDriver")
+     */
+    private $raceDrivers;
+
+    public function __construct()
+    {
+        $this->raceDrivers = new ArrayCollection();
+    }
 
     public function __toString()
     {
@@ -169,6 +181,36 @@ class SeasonDriver implements Interfaces\ArrayInterface, TimestampableInterface
     public function setVehicle(?Vehicle $vehicle): self
     {
         $this->vehicle = $vehicle;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RaceDriver[]
+     */
+    public function getRaceDrivers(): Collection
+    {
+        return $this->raceDrivers;
+    }
+
+    public function addRaceDriver(RaceDriver $raceDriver): self
+    {
+        if (!$this->raceDrivers->contains($raceDriver)) {
+            $this->raceDrivers[] = $raceDriver;
+            $raceDriver->setSeasonDriver($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRaceDriver(RaceDriver $raceDriver): self
+    {
+        if ($this->raceDrivers->contains($raceDriver)) {
+            $this->raceDrivers->removeElement($raceDriver);
+            if ($raceDriver->getSeasonDriver() === $this) {
+                $raceDriver->setSeasonDriver(null);
+            }
+        }
 
         return $this;
     }

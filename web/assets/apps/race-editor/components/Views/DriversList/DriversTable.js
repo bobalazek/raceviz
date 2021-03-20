@@ -52,8 +52,8 @@ function DriversTable({
           {data.map((entry) => {
             return (
               <tr key={entry.id}>
-                <td>{entry.driver.name}</td>
-                <td>{entry.team.name}</td>
+                <td>{entry.season_driver.driver.name}</td>
+                <td>{entry.season_driver.team.name}</td>
                 <td>{entry.race_laps_count}</td>
                 <td>{entry.race_pit_stops_count}</td>
                 <td>

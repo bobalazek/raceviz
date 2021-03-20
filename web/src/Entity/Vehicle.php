@@ -71,7 +71,7 @@ class Vehicle implements Interfaces\ArrayInterface, TimestampableInterface
 
     public function __toString()
     {
-        return $this->getName() . '(' . $this->getType() . ')';
+        return $this->getName() . ' (' . $this->getType() . ')';
     }
 
     public function getId(): ?int

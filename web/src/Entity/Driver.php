@@ -55,18 +55,12 @@ class Driver implements Interfaces\ArrayInterface, TimestampableInterface
     private $ergastDriverId;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\RaceDriver", mappedBy="driver")
-     */
-    private $raceDrivers;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\SeasonDriver", mappedBy="driver")
      */
     private $seasonDrivers;
 
     public function __construct()
     {
-        $this->raceDrivers = new ArrayCollection();
         $this->seasonDrivers = new ArrayCollection();
     }
 
@@ -136,36 +130,6 @@ class Driver implements Interfaces\ArrayInterface, TimestampableInterface
     public function setErgastDriverId(?string $ergastDriverId): self
     {
         $this->ergastDriverId = $ergastDriverId;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|RaceDriver[]
-     */
-    public function getRaceDrivers(): Collection
-    {
-        return $this->raceDrivers;
-    }
-
-    public function addRaceDriver(RaceDriver $raceDriver): self
-    {
-        if (!$this->raceDrivers->contains($raceDriver)) {
-            $this->raceDrivers[] = $raceDriver;
-            $raceDriver->setDriver($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRaceDriver(RaceDriver $raceDriver): self
-    {
-        if ($this->raceDrivers->contains($raceDriver)) {
-            $this->raceDrivers->removeElement($raceDriver);
-            if ($raceDriver->getDriver() === $this) {
-                $raceDriver->setDriver(null);
-            }
-        }
 
         return $this;
     }

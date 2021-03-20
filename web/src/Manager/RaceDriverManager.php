@@ -11,7 +11,6 @@ use App\Form\Type\RaceDriverRaceLapType;
 use App\Form\Type\RaceDriverRacePitStopType;
 use App\Repository\RaceDriverRaceLapRepository;
 use App\Repository\RaceDriverRacePitStopRepository;
-use App\Repository\RaceDriverRepository;
 use App\Repository\SeasonDriverRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -61,33 +60,12 @@ class RaceDriverManager
             'temporary' => false,
         ]);
 
-        /** @var RaceDriverRepository $raceDriverRepository */
-        $raceDriverRepository = $this->em->getRepository(RaceDriver::class);
-
-        $raceDrivers = $raceDriverRepository->findBy([
-            'race' => $race,
-        ]);
-
-        $raceDriversMap = [];
-        foreach ($raceDrivers as $raceDriver) {
-            $driverId = $raceDriver->getDriver()->getId();
-            $raceDriversMap[$driverId] = $raceDriver;
-        }
-
         $addedRaceDrivers = [];
         foreach ($seasonDrivers as $seasonDriver) {
-            $driver = $seasonDriver->getDriver();
-            $team = $seasonDriver->getTeam();
-            $driverId = $driver->getId();
-            if (isset($raceDriversMap[$driverId])) {
-                continue;
-            }
-
             $raceDriver = new RaceDriver();
             $raceDriver
                 ->setRace($race)
-                ->setDriver($driver)
-                ->setTeam($team)
+                ->setSeasonDriver($seasonDriver)
             ;
 
             $this->em->persist($raceDriver);

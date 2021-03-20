@@ -53,14 +53,15 @@ class Season implements Interfaces\ArrayInterface, TimestampableInterface
     private $seasonDrivers;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Vehicle")
-     */
-    private $safetyVehicle;
-
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Vehicle")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Vehicle")
+     * @Assert\NotBlank()
      */
     private $genericVehicle;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Vehicle")
+     */
+    private $safetyVehicle;
 
     public function __construct()
     {
@@ -193,18 +194,6 @@ class Season implements Interfaces\ArrayInterface, TimestampableInterface
         return $this;
     }
 
-    public function getSafetyVehicle(): ?Vehicle
-    {
-        return $this->safetyVehicle;
-    }
-
-    public function setSafetyVehicle(?Vehicle $safetyVehicle): self
-    {
-        $this->safetyVehicle = $safetyVehicle;
-
-        return $this;
-    }
-
     public function getGenericVehicle(): ?Vehicle
     {
         return $this->genericVehicle;
@@ -213,6 +202,18 @@ class Season implements Interfaces\ArrayInterface, TimestampableInterface
     public function setGenericVehicle(?Vehicle $genericVehicle): self
     {
         $this->genericVehicle = $genericVehicle;
+
+        return $this;
+    }
+
+    public function getSafetyVehicle(): ?Vehicle
+    {
+        return $this->safetyVehicle;
+    }
+
+    public function setSafetyVehicle(?Vehicle $safetyVehicle): self
+    {
+        $this->safetyVehicle = $safetyVehicle;
 
         return $this;
     }

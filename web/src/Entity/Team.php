@@ -72,11 +72,6 @@ class Team implements Interfaces\ArrayInterface, TimestampableInterface
     private $defunctedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\RaceDriver", mappedBy="team")
-     */
-    private $raceDrivers;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\SeasonTeam", mappedBy="team")
      */
     private $seasonTeams;
@@ -88,7 +83,6 @@ class Team implements Interfaces\ArrayInterface, TimestampableInterface
 
     public function __construct()
     {
-        $this->raceDrivers = new ArrayCollection();
         $this->seasonTeams = new ArrayCollection();
         $this->seasonDrivers = new ArrayCollection();
     }
@@ -195,36 +189,6 @@ class Team implements Interfaces\ArrayInterface, TimestampableInterface
     public function setDefunctedAt(?\DateTimeInterface $defunctedAt): self
     {
         $this->defunctedAt = $defunctedAt;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|RaceDriver[]
-     */
-    public function getRaceDrivers(): Collection
-    {
-        return $this->raceDrivers;
-    }
-
-    public function addRaceDriver(RaceDriver $raceDriver): self
-    {
-        if (!$this->raceDrivers->contains($raceDriver)) {
-            $this->raceDrivers[] = $raceDriver;
-            $raceDriver->setTeam($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRaceDriver(RaceDriver $raceDriver): self
-    {
-        if ($this->raceDrivers->contains($raceDriver)) {
-            $this->raceDrivers->removeElement($raceDriver);
-            if ($raceDriver->getTeam() === $this) {
-                $raceDriver->setTeam(null);
-            }
-        }
 
         return $this;
     }

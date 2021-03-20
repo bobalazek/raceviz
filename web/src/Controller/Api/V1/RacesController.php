@@ -56,7 +56,8 @@ class RacesController extends AbstractApiController
         $raceDrivers = $raceRepository
             ->createQueryBuilder('rd')
             ->where('rd.race = :race')
-            ->leftJoin('rd.team', 't')
+            ->leftJoin('rd.seasonDriver', 'sd')
+            ->leftJoin('sd.team', 't')
             ->setParameter('race', $race)
             ->orderBy('t.name')
             ->getQuery()
@@ -175,8 +176,8 @@ class RacesController extends AbstractApiController
         $raceDriver = $this->_getRaceDriver($raceDriverId);
 
         $formData = $request->request->all();
-        $formData['team'] = $raceDriver->getTeam()->getId();
-        $formData['driver'] = $raceDriver->getDriver()->getId();
+        $formData['team'] = $raceDriver->getSeasonDriver()->getTeam()->getId();
+        $formData['driver'] = $raceDriver->getSeasonDriver()->getDriver()->getId();
 
         if (
             isset($formData['raceDriverRaceStartingGrid']) &&

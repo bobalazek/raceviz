@@ -28,15 +28,15 @@ class SeasonCrudController extends AbstractCrudController
         $name = TextField::new('name');
         $slug = TextField::new('slug');
         $series = SeriesField::new('series');
-        $safetyVehicle = AssociationField::new('safetyVehicle');
         $genericVehicle = AssociationField::new('genericVehicle');
+        $safetyVehicle = AssociationField::new('safetyVehicle');
 
         return [
             $name,
             $slug,
             $series,
-            $safetyVehicle,
             $genericVehicle,
+            $safetyVehicle,
         ];
     }
 }

@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Season;
 use App\Entity\SeasonTeam;
 use App\Entity\Team;
+use App\Entity\Vehicle;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -43,6 +44,13 @@ class SeasonTeamFixtures extends Fixture implements DependentFixtureInterface
                             'slug' => $entry['team_slug'],
                         ])
                 )
+                ->setVehicle(
+                    $manager
+                        ->getRepository(Vehicle::class)
+                        ->findOneBy([
+                            'slug' => $entry['vehicle_slug'],
+                        ])
+                )
             ;
 
             $manager->persist($entity);
@@ -56,6 +64,7 @@ class SeasonTeamFixtures extends Fixture implements DependentFixtureInterface
         return [
             SeasonFixtures::class,
             TeamFixtures::class,
+            VehicleFixtures::class,
         ];
     }
 }

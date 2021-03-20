@@ -143,7 +143,7 @@ class ErgastManager
         $allDriversLapData = $this->getLapsData($ergastSeriesSeasonAndRound);
         foreach ($raceDrivers as $raceDriver) {
             /** @var RaceDriver $raceDriver */
-            $driver = $raceDriver->getDriver();
+            $driver = $raceDriver->getSeasonDriver()->getDriver();
 
             $ergastDriverId = $driver->getErgastDriverId();
             if (!isset($allDriversLapData[$ergastDriverId])) {

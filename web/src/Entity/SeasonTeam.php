@@ -42,7 +42,8 @@ class SeasonTeam implements Interfaces\ArrayInterface, TimestampableInterface
     private $team;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Vehicle")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Vehicle")
+     * @Assert\NotBlank()
      */
     private $vehicle;
 

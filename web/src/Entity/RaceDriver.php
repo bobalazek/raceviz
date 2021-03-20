@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="App\Repository\RaceDriverRepository")
  * @ORM\Table(name="race_drivers")
  * @UniqueEntity(
- *   fields={"race", "driver"},
+ *   fields={"race", "seasonDriver"},
  *   message="This Driver was already added to this Race."
  * )
  */
@@ -37,18 +37,11 @@ class RaceDriver implements Interfaces\ArrayInterface, TimestampableInterface
     private $race;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Team", inversedBy="raceDrivers")
+     * @ORM\ManyToOne(targetEntity="App\Entity\SeasonDriver", inversedBy="raceDrivers")
      * @ORM\JoinColumn()
      * @Assert\NotBlank()
      */
-    private $team;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Driver", inversedBy="raceDrivers")
-     * @ORM\JoinColumn()
-     * @Assert\NotBlank()
-     */
-    private $driver;
+    private $seasonDriver;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\RaceDriverRaceStartingGrid", mappedBy="raceDriver", cascade={"persist"})
@@ -80,7 +73,7 @@ class RaceDriver implements Interfaces\ArrayInterface, TimestampableInterface
 
     public function __toString()
     {
-        return $this->getDriver() . ' @ ' . $this->getRace();
+        return $this->getSeasonDriver() . ' @ ' . $this->getRace();
     }
 
     public function getId(): ?int
@@ -100,26 +93,14 @@ class RaceDriver implements Interfaces\ArrayInterface, TimestampableInterface
         return $this;
     }
 
-    public function getTeam(): ?Team
+    public function getSeasonDriver(): ?SeasonDriver
     {
-        return $this->team;
+        return $this->seasonDriver;
     }
 
-    public function setTeam(?Team $team): self
+    public function setSeasonDriver(?SeasonDriver $seasonDriver): self
     {
-        $this->team = $team;
-
-        return $this;
-    }
-
-    public function getDriver(): ?Driver
-    {
-        return $this->driver;
-    }
-
-    public function setDriver(?Driver $driver): self
-    {
-        $this->driver = $driver;
+        $this->seasonDriver = $seasonDriver;
 
         return $this;
     }
@@ -228,11 +209,8 @@ class RaceDriver implements Interfaces\ArrayInterface, TimestampableInterface
             'race_driver_race_starting_grid' => $this->getRaceDriverRaceStartingGrid()
                 ? $this->getRaceDriverRaceStartingGrid()->toArray()
                 : null,
-            'team' => $this->getTeam()
-                ? $this->getTeam()->toArray()
-                : null,
-            'driver' => $this->getDriver()
-                ? $this->getDriver()->toArray()
+            'season_driver' => $this->getSeasonDriver()
+                ? $this->getSeasonDriver()->toArray()
                 : null,
         ];
     }

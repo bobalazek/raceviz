@@ -22,7 +22,6 @@ import {
 } from '../../../api';
 import {
   useSeasonsDriversFetch,
-  useSeasonsTeamsFetch,
 } from '../../../hooks';
 import {
   renderFormErrors,
@@ -34,56 +33,21 @@ function NewDriverForm() {
   const {
     data: seasonDrivers,
   } = useSeasonsDriversFetch();
-  const {
-    data: seasonTeams,
-  } = useSeasonsTeamsFetch();
 
   const [seasonDriverId, setSeasonDriverId] = useState(0);
-  const [seasonTeamId, setSeasonTeamId] = useState(0);
-  const [driverId, setDriverId] = useState(0);
-  const [teamId, setTeamId] = useState(0);
 
   const [formSubmitting, setFormSubmitting] = useState(false);
   const [formErrors, setFormErrors] = useState(null);
 
   const raceDrivers = useSelector(selectData);
-  const addedDriverIds = raceDrivers.map((entry) => {
-    return entry.driver.id;
+  const addedSeasonDriverIds = raceDrivers.map((entry) => {
+    return entry.id;
   });
 
   const onSeasonDriverChange = (event) => {
     const value = parseInt(event.target.value);
 
     setSeasonDriverId(value);
-
-    const seasonDriver = seasonDrivers.find((entry) => {
-      return entry.id === value;
-    });
-
-    setDriverId(seasonDriver.driver.id);
-    setFormErrors(null);
-
-    const seasonDriverTeam = seasonTeams.find((entry) => {
-      return entry.team.id === seasonDriver.team.id;
-    });
-    if (!seasonDriverTeam) {
-      return;
-    }
-
-    setSeasonTeamId(seasonDriverTeam.team.id);
-    setTeamId(seasonDriverTeam.team.id);
-  };
-
-  const onSeasonTeamChange = (event) => {
-    const value = parseInt(event.target.value);
-
-    setSeasonTeamId(value);
-
-    const seasonTeam = seasonTeams.find((entry) => {
-      return entry.id === value;
-    });
-
-    setTeamId(seasonTeam.team.id);
     setFormErrors(null);
   };
 
@@ -99,16 +63,12 @@ function NewDriverForm() {
       ;
 
       await axios.post(url, qs.stringify({
-          driver: driverId,
-          team: teamId,
+        seasonDriver: seasonDriverId,
       }));
 
       toast.success('You have successfully added the driver.');
 
       setSeasonDriverId(0);
-      setSeasonTeamId(0);
-      setDriverId(0);
-      setTeamId(0);
 
       window.dispatchEvent(new CustomEvent('driver-editor:new-driver'));
     } catch(error) {
@@ -126,62 +86,34 @@ function NewDriverForm() {
 
   return (
     <Form noValidate onSubmit={onSubmit}>
-      <div className="row">
-        <div className="col-md-6">
-          <Form.Group>
-            <Form.Label>Driver</Form.Label>
-            <Form.Control
-              as="select"
-              value={seasonDriverId}
-              onChange={onSeasonDriverChange}
-              isInvalid={!!formErrors?.['driver']}
-            >
-              <option value="0">-- none --</option>
-              {seasonDrivers.map((entry) => {
-                const alreadyAddedDriver = addedDriverIds.includes(entry.driver.id);
-                return (
-                  <option
-                    key={entry.id}
-                    value={entry.id}
-                    disabled={alreadyAddedDriver}
-                  >
-                    {entry.driver.name}
-                    {' '}
-                    ({entry.team.name})
-                    {entry.temporary && ' (temporary)'}
-                    {alreadyAddedDriver && ' (already added)'}
-                  </option>
-                );
-              })}
-            </Form.Control>
-            {renderFormErrors(formErrors?.['driver'])}
-          </Form.Group>
-        </div>
-        <div className="col-md-6">
-          <Form.Group>
-            <Form.Label>Team</Form.Label>
-            <Form.Control
-              as="select"
-              value={seasonTeamId}
-              onChange={onSeasonTeamChange}
-              isInvalid={!!formErrors?.['team']}
-            >
-              <option value="0">-- none --</option>
-              {seasonTeams.map((entry) => {
-                return (
-                  <option
-                    key={entry.id}
-                    value={entry.id}
-                  >
-                    {entry.team.name}
-                  </option>
-                );
-              })}
-            </Form.Control>
-            {renderFormErrors(formErrors?.['team'])}
-          </Form.Group>
-        </div>
-      </div>
+      <Form.Group>
+        <Form.Label>Season Driver</Form.Label>
+        <Form.Control
+          as="select"
+          value={seasonDriverId}
+          onChange={onSeasonDriverChange}
+          isInvalid={!!formErrors?.['seasonDriver']}
+        >
+          <option value="0">-- none --</option>
+          {seasonDrivers.map((entry) => {
+            const alreadyAddedSeasonDriver = addedSeasonDriverIds.includes(entry.id);
+            return (
+              <option
+                key={entry.id}
+                value={entry.id}
+                disabled={alreadyAddedSeasonDriver}
+              >
+                {entry.driver.name}
+                {' '}
+                ({entry.team.name})
+                {entry.temporary && ' (temporary)'}
+                {alreadyAddedSeasonDriver && ' (already added)'}
+              </option>
+            );
+          })}
+        </Form.Control>
+        {renderFormErrors(formErrors?.['seasonDriver'])}
+      </Form.Group>
       {renderFormErrors(formErrors?.['*'], true)}
       <Button
         block

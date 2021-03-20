@@ -84,7 +84,7 @@ class ErgastController extends AbstractApiController
             throw $this->createNotFoundException();
         }
 
-        $driver = $raceDriver->getDriver();
+        $driver = $raceDriver->getSeasonDriver()->getDriver();
         $ergastDriverId = $driver->getErgastDriverId();
         if (!$ergastDriverId) {
             throw new InvalidParameterException('This driver has no ergast driver id set!');

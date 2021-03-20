@@ -2,11 +2,10 @@
 
 namespace App\Form\Type;
 
-use App\Entity\Driver;
 use App\Entity\RaceDriver;
 use App\Entity\RaceDriverRaceResult;
 use App\Entity\RaceDriverRaceStartingGrid;
-use App\Entity\Team;
+use App\Entity\SeasonDriver;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -24,11 +23,12 @@ class RaceDriverType extends AbstractType
         $withActualStartingGridAndResultData = $options['with_actual_starting_grid_and_result_data'];
 
         $builder
-            ->add('driver', EntityType::class, [
-                'class' => Driver::class,
+            ->add('seasonDriver', EntityType::class, [
+                'class' => SeasonDriver::class,
                 'query_builder' => function (EntityRepository $er) use ($filterRace) {
                     $queryBuilder = $er
-                        ->createQueryBuilder('d')
+                        ->createQueryBuilder('sd')
+                        ->leftJoin('sd.driver', 'd')
                         ->orderBy('d.lastName')
                         ->addOrderBy('d.firstName')
                     ;
@@ -37,26 +37,6 @@ class RaceDriverType extends AbstractType
                         $queryBuilder
                             ->where('sd.season = :season')
                             ->setParameter('season', $filterRace->getSeason())
-                            ->innerJoin('d.seasonDrivers', 'sd')
-                        ;
-                    }
-
-                    return $queryBuilder;
-                },
-            ])
-            ->add('team', EntityType::class, [
-                'class' => Team::class,
-                'query_builder' => function (EntityRepository $er) use ($filterRace) {
-                    $queryBuilder = $er
-                        ->createQueryBuilder('t')
-                        ->orderBy('t.name')
-                    ;
-
-                    if ($filterRace) {
-                        $queryBuilder
-                            ->where('st.season = :season')
-                            ->setParameter('season', $filterRace->getSeason())
-                            ->innerJoin('t.seasonTeams', 'st')
                         ;
                     }
 

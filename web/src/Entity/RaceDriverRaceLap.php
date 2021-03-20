@@ -65,10 +65,10 @@ class RaceDriverRaceLap implements Interfaces\ArrayInterface, TimestampableInter
     public function __toString()
     {
         $race = $this->getRaceDriver()->getRace();
-        $driver = $this->getRaceDriver()->getDriver();
+        $seasonDriver = $this->getRaceDriver()->getSeasonDriver();
         $lap = $this->getLap();
 
-        return $driver . ' @ ' . $race . ' (lap ' . $lap . ')';
+        return $seasonDriver . ' @ ' . $race . ' (lap ' . $lap . ')';
     }
 
     public function getId(): ?int

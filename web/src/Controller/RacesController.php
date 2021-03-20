@@ -7,7 +7,6 @@ use App\Manager\RaceManager;
 use App\Repository\RaceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -16,20 +15,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class RacesController extends AbstractController
 {
     /**
-     * @var ParameterBagInterface
-     */
-    private $params;
-
-    /**
      * @var EntityManagerInterface
      */
     private $em;
 
     public function __construct(
-        ParameterBagInterface $params,
         EntityManagerInterface $em
     ) {
-        $this->params = $params;
         $this->em = $em;
     }
 

@@ -61,6 +61,8 @@ export default class World {
     this.followTarget = vehicles[0];
 
     const speed = 0.2;
+    const wheelSpin = speed * 2;
+
     Application.emitter.on('tick', () => {
       for (let i = 0; i < vehicles.length; i++) {
         const vehicleMesh = <THREE.Object3D>vehicles[i];
@@ -72,7 +74,6 @@ export default class World {
 
         vehicleMesh.position.z += speed;
 
-        const wheelSpin = speed * 2;
         vehicleMeshWheelFL.rotateY(wheelSpin);
         vehicleMeshWheelFR.rotateY(-wheelSpin);
         vehicleMeshWheelRL.rotateY(wheelSpin);

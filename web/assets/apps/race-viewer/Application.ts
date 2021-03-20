@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { WEBGL } from 'three/examples/jsm/WebGL.js';
+import Stats from 'three/examples/jsm/libs/stats.module.js';
 import {
   Emitter,
   createNanoEvents,
@@ -37,6 +38,7 @@ export default class Application {
   public static scene: THREE.Scene;
   public static camera: THREE.PerspectiveCamera;
   public static clock: THREE.Clock;
+  public static stats: Stats;
 
   public static boot(config: ApplicationConfigInterface, parameters?: any): Application {
     this.config = config;
@@ -68,6 +70,7 @@ export default class Application {
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera();
 
+    this.prepareStats();
     this.prepareRendererSize();
 
     this.world = new World();
@@ -89,6 +92,19 @@ export default class Application {
     }
 
     this.renderer.setSize(this.width, this.height);
+  }
+
+  private static prepareStats() {
+    this.stats = Stats();
+    this.stats.domElement.style.cssText = [
+      'position: fixed;',
+      'top: 0;',
+      'right: 0;',
+      'cursor: pointer;',
+      'opacity: 0.9;',
+      'z-index: 10000;',
+    ].join(' ');
+    document.body.appendChild(this.stats.dom);
   }
 
   private static prepareNoWebGLWarning() {
@@ -126,6 +142,10 @@ export default class Application {
 
     if (this.scene && this.camera) {
       this.renderer.render(this.scene, this.camera);
+    }
+
+    if (this.stats) {
+      this.stats.update();
     }
   }
 }

@@ -5,6 +5,8 @@ namespace App\Controller\Api\V1;
 use App\Entity\Race;
 use App\Entity\RaceDriver;
 use App\Manager\ErrorManager;
+use App\Repository\RaceDriverRepository;
+use App\Repository\RaceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;

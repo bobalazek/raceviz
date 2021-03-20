@@ -40,8 +40,8 @@ function NewDriverForm() {
   const [formErrors, setFormErrors] = useState(null);
 
   const raceDrivers = useSelector(selectData);
-  const addedSeasonDriverIds = raceDrivers.map((entry) => {
-    return entry.id;
+  const addedDriverIds = raceDrivers.map((entry) => {
+    return entry.season_driver.driver.id;
   });
 
   const onSeasonDriverChange = (event) => {
@@ -96,18 +96,18 @@ function NewDriverForm() {
         >
           <option value="0">-- none --</option>
           {seasonDrivers.map((entry) => {
-            const alreadyAddedSeasonDriver = addedSeasonDriverIds.includes(entry.id);
+            const isAlreadyAddedSeasonDriver = addedDriverIds.includes(entry.driver.id);
             return (
               <option
                 key={entry.id}
                 value={entry.id}
-                disabled={alreadyAddedSeasonDriver}
+                disabled={isAlreadyAddedSeasonDriver}
               >
                 {entry.driver.name}
                 {' '}
                 ({entry.team.name})
                 {entry.temporary && ' (temporary)'}
-                {alreadyAddedSeasonDriver && ' (already added)'}
+                {isAlreadyAddedSeasonDriver && ' (already added)'}
               </option>
             );
           })}

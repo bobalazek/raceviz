@@ -14,14 +14,14 @@ import {
 
 import {
   API_PUT_RACES_DRIVERS,
-} from '../../../api';
+} from '../../../../api';
 import {
   renderFormErrors,
-} from '../../Shared/helpers';
+} from '../../../Shared/helpers';
 
 /* global appData */
 
-function EditDriverForm({
+function FormEdit({
   selectedRaceDriver,
 }) {
   const [raceStartingGridPosition, setRaceStartingGridPosition] = useState(selectedRaceDriver.race_driver_race_starting_grid?.position);
@@ -243,8 +243,8 @@ function EditDriverForm({
   );
 }
 
-EditDriverForm.propTypes = {
+FormEdit.propTypes = {
   selectedRaceDriver: PropTypes.object,
 };
 
-export default EditDriverForm;
+export default FormEdit;

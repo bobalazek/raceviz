@@ -13,16 +13,16 @@ import {
   selectLoading,
   selectData,
   selectError,
-} from '../../../store/driversListSlice';
+} from '../../../../store/driversListSlice';
 import {
   DriversService,
-} from '../../../api.js';
-import DriversTable from './DriversTable';
-import confirm from '../../Shared/ConfirmDialog';
+} from '../../../../api.js';
+import Table from './Table';
+import confirm from '../../../Shared/ConfirmDialog';
 
 /* global appData */
 
-function DriversTableWrapper() {
+function TableWrapper() {
   const loaded = useSelector(selectLoaded);
   const loading = useSelector(selectLoading);
   const data = useSelector(selectData);
@@ -114,10 +114,10 @@ function DriversTableWrapper() {
         </div>
       )}
       {loaded && data.length > 0 && (
-        <DriversTable data={data} />
+        <Table data={data} />
       )}
     </div>
   );
 }
 
-export default DriversTableWrapper;
+export default TableWrapper;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-function GeneralView() {
+function Page() {
   return (
     <>
       <p>You know, it requires some work to set this up, so sadly it is not ready yet. :(</p>
@@ -9,4 +9,4 @@ function GeneralView() {
   );
 }
 
-export default GeneralView;
+export default Page;

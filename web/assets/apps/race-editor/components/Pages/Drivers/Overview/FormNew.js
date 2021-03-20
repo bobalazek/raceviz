@@ -16,20 +16,20 @@ import {
 
 import {
   selectData,
-} from '../../../store/driversListSlice';
+} from '../../../../store/driversListSlice';
 import {
   API_POST_RACES_DRIVERS,
-} from '../../../api';
+} from '../../../../api';
 import {
   useSeasonsDriversFetch,
-} from '../../../hooks';
+} from '../../../../hooks';
 import {
   renderFormErrors,
-} from '../../Shared/helpers';
+} from '../../../Shared/helpers';
 
 /* global appData */
 
-function NewDriverForm() {
+function FormNew() {
   const {
     data: seasonDrivers,
   } = useSeasonsDriversFetch();
@@ -128,4 +128,4 @@ function NewDriverForm() {
   );
 }
 
-export default NewDriverForm;
+export default FormNew;

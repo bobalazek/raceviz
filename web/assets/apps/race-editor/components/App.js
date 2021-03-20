@@ -2,21 +2,13 @@ import React, {
   useState,
 } from 'react';
 import {
-  useSelector
-} from 'react-redux';
-import {
   Nav,
 }  from 'react-bootstrap';
 
-import GeneralView from './Views/General/GeneralView';
-import DriversListView from './Views/DriversList/DriversListView';
-import DriverEditView from './Views/DriverEdit/DriverEditView';
-import {
-  selectSelectedRaceDriver,
-} from '../store/appSlice';
+import GeneralPage from './Pages/General/Page';
+import DriversPage from './Pages/Drivers/Page';
 
 function App() {
-  const selectedRaceDriver = useSelector(selectSelectedRaceDriver);
   const [tab, setTab] = useState('general');
 
   return (
@@ -39,17 +31,8 @@ function App() {
         </Nav.Item>
       </Nav>
       <div className="p-4 border-left border-right border-bottom">
-        {tab === 'general' && <GeneralView />}
-        {tab === 'drivers' && (
-          <>
-            {!!selectedRaceDriver && (
-              <DriverEditView />
-            )}
-            {!selectedRaceDriver && (
-              <DriversListView />
-            )}
-          </>
-        )}
+        {tab === 'general' && <GeneralPage />}
+        {tab === 'drivers' && <DriversPage />}
       </div>
     </>
   );

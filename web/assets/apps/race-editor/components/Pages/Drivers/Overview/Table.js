@@ -2,18 +2,20 @@ import React from 'react';
 import {
   useStore,
 } from 'react-redux';
+import {
+  Button,
+} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
 import {
   DriversService,
-} from '../../../api';
+} from '../../../../api';
 import {
   setSelectedRaceDriver,
-} from '../../../store/appSlice';
-import confirm from '../../Shared/ConfirmDialog';
-import { Button } from 'react-bootstrap';
+} from '../../../../store/appSlice';
+import confirm from '../../../Shared/ConfirmDialog';
 
-function DriversTable({
+function Table({
   data,
 }) {
   const store = useStore();
@@ -83,8 +85,8 @@ function DriversTable({
   );
 }
 
-DriversTable.propTypes = {
+Table.propTypes = {
   data: PropTypes.array,
 };
 
-export default DriversTable;
+export default Table;

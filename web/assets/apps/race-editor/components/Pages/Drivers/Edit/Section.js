@@ -13,11 +13,11 @@ import {
 import {
   setSelectedRaceDriver,
   selectSelectedRaceDriver,
-} from '../../../store/appSlice';
-import EditDriverForm from './EditDriverForm';
-import DriverLapsForm from './DriverLapsForm';
+} from '../../../../store/appSlice';
+import FormEdit from './FormEdit';
+import FormLaps from './FormLaps';
 
-function DriverEditView() {
+function Section() {
   const store = useStore();
   const selectedRaceDriver = useSelector(selectSelectedRaceDriver);
   const [tab, setTab] = useState('general');
@@ -56,11 +56,11 @@ function DriverEditView() {
         </Nav.Item>
       </Nav>
       <div className="p-4 border-left border-right border-bottom">
-        {tab === 'general' && <EditDriverForm selectedRaceDriver={selectedRaceDriver} />}
-        {tab === 'laps' && <DriverLapsForm selectedRaceDriver={selectedRaceDriver} />}
+        {tab === 'general' && <FormEdit selectedRaceDriver={selectedRaceDriver} />}
+        {tab === 'laps' && <FormLaps selectedRaceDriver={selectedRaceDriver} />}
       </div>
     </>
   );
 }
 
-export default DriverEditView;
+export default Section;

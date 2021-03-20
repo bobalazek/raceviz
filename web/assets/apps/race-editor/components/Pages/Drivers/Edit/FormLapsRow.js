@@ -6,11 +6,11 @@ import {
 
 import {
   renderFormErrors,
-} from '../../Shared/helpers';
+} from '../../../Shared/helpers';
 
 /* global appData */
 
-function DriverLapsFormRow({
+function FormLapsRow({
   index,
   entry,
   entryErrors,
@@ -143,7 +143,7 @@ function DriverLapsFormRow({
   )
 }
 
-DriverLapsFormRow.propTypes = {
+FormLapsRow.propTypes = {
   index: PropTypes.number,
   entry: PropTypes.object,
   entryErrors: PropTypes.object,
@@ -151,4 +151,4 @@ DriverLapsFormRow.propTypes = {
   setFormHadPitStopData: PropTypes.func,
 };
 
-export default DriverLapsFormRow;
+export default FormLapsRow;

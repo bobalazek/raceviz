@@ -13,16 +13,16 @@ import {
 
 import {
   DriversService,
-} from '../../../api';
+} from '../../../../api';
 import {
   renderFormErrors,
-} from '../../Shared/helpers';
-import confirm from '../../Shared/ConfirmDialog';
-import DriverLapsFormRow from './DriverLapsFormRow';
+} from '../../../Shared/helpers';
+import confirm from '../../../Shared/ConfirmDialog';
+import DriverLapsFormRow from './FormLapsRow';
 
 /* global appData */
 
-function DriverLapsForm({
+function FormLaps({
   selectedRaceDriver,
 }) {
   const [loading, setLoading] = useState(false);
@@ -255,8 +255,8 @@ function DriverLapsForm({
   );
 }
 
-DriverLapsForm.propTypes = {
+FormLaps.propTypes = {
   selectedRaceDriver: PropTypes.object,
 };
 
-export default DriverLapsForm;
+export default FormLaps;

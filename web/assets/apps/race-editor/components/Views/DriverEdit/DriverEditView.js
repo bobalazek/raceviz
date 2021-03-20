@@ -29,8 +29,8 @@ function DriverEditView() {
   return (
     <>
       <h2>
-        <span>{selectedRaceDriver.driver.name} </span>
-        <small>({selectedRaceDriver.team.name}) </small>
+        <span>{selectedRaceDriver.season_driver.driver.name} </span>
+        <small>({selectedRaceDriver.season_driver.team.name}) </small>
         <Button
           size="sm"
           onClick={onBackToListClick}

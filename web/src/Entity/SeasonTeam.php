@@ -7,6 +7,7 @@ use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SeasonTeamRepository")
@@ -15,6 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *   fields={"season", "team"},
  *   message="This Season Team was already added"
  * )
+ * @Vich\Uploadable()
  */
 class SeasonTeam implements Interfaces\ArrayInterface, TimestampableInterface
 {

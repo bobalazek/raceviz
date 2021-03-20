@@ -54,10 +54,10 @@ class RaceDriverRacePitStop implements Interfaces\ArrayInterface, TimestampableI
     public function __toString()
     {
         $race = $this->getRaceDriver()->getRace();
-        $driver = $this->getRaceDriver()->getDriver();
+        $seasonDriver = $this->getRaceDriver()->getSeasonDriver();
         $lap = $this->getLap();
 
-        return $driver . ' @ ' . $race . ' (pit stop at lap ' . $lap . ')';
+        return $seasonDriver . ' @ ' . $race . ' (pit stop at lap ' . $lap . ')';
     }
 
     public function getId(): ?int

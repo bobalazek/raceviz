@@ -53,10 +53,10 @@ class RaceDriverRaceStartingGrid implements Interfaces\ArrayInterface, Timestamp
     public function __toString()
     {
         $race = $this->getRaceDriver()->getRace();
-        $driver = $this->getRaceDriver()->getDriver();
+        $seasonDriver = $this->getRaceDriver()->getSeasonDriver();
         $position = $this->getPosition();
 
-        return $driver . ' @ ' . $race . ' (at starting grid position ' . $position . ')';
+        return $seasonDriver . ' @ ' . $race . ' (at starting grid position ' . $position . ')';
     }
 
     public function getId(): ?int

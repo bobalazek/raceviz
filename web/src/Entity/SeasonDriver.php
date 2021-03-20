@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SeasonDriverRepository")
@@ -17,6 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *   fields={"season", "driver", "team"},
  *   message="This Season Driver for this Team was already added"
  * )
+ * @Vich\Uploadable()
  */
 class SeasonDriver implements Interfaces\ArrayInterface, TimestampableInterface
 {

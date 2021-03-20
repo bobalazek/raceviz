@@ -9,6 +9,7 @@ use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RaceDriverRepository")
@@ -17,6 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *   fields={"race", "seasonDriver"},
  *   message="This Driver was already added to this Race."
  * )
+ * @Vich\Uploadable()
  */
 class RaceDriver implements Interfaces\ArrayInterface, TimestampableInterface
 {

@@ -69,10 +69,10 @@ class RaceDriverRaceResult implements Interfaces\ArrayInterface, TimestampableIn
     public function __toString()
     {
         $race = $this->getRaceDriver()->getRace();
-        $driver = $this->getRaceDriver()->getDriver();
+        $seasonDriver = $this->getRaceDriver()->getSeasonDriver();
         $position = $this->getPosition();
 
-        return $driver . ' @ ' . $race . ' (at result position ' . $position . ')';
+        return $seasonDriver . ' @ ' . $race . ' (at result position ' . $position . ')';
     }
 
     public function getId(): ?int

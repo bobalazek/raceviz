@@ -2,6 +2,8 @@
 
 namespace App\Controller\Api\V1;
 
+use App\Entity\Race;
+use App\Entity\RaceDriver;
 use App\Manager\ErrorManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -46,8 +48,45 @@ class AbstractApiController extends AbstractController
         $this->errorManager = $errorManager;
     }
 
-    public function getFormErrors(FormInterface $form)
+    protected function _getFormErrors(FormInterface $form)
     {
         return $this->errorManager->getFormErrors($form);
+    }
+
+    /**
+     * @return Race
+     */
+    protected function _getRace(string $raceSlug)
+    {
+        /** @var RaceRepository $raceRepository */
+        $raceRepository = $this->em->getRepository(Race::class);
+
+        $race = $raceRepository->findOneBy([
+            'slug' => $raceSlug,
+        ]);
+
+        if (!$race) {
+            throw $this->createNotFoundException();
+        }
+
+        return $race;
+    }
+
+    /**
+     * @return RaceDriver
+     */
+    protected function _getRaceDriver(int $raceDriverId)
+    {
+        /** @var RaceDriverRepository $raceDriverRepository */
+        $raceDriverRepository = $this->em->getRepository(RaceDriver::class);
+
+        $raceDriver = $raceDriverRepository->findOneBy([
+            'id' => $raceDriverId,
+        ]);
+        if (!$raceDriver) {
+            throw $this->createNotFoundException();
+        }
+
+        return $raceDriver;
     }
 }

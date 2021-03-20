@@ -15,6 +15,7 @@ export default class World {
     Application.preloader.show();
 
     await this.prepareResources();
+    await this.prepareCircuit();
     await this.prepareCamera();
     await this.prepareControls();
     await this.prepareLights();
@@ -59,7 +60,7 @@ export default class World {
 
     this.followTarget = vehicles[0];
 
-    const speed = 0.1;
+    const speed = 0.2;
     Application.emitter.on('tick', () => {
       for (let i = 0; i < vehicles.length; i++) {
         const vehicleMesh = <THREE.Object3D>vehicles[i];
@@ -80,6 +81,10 @@ export default class World {
     });
   }
 
+  async prepareCircuit() {
+    // TODO
+  }
+
   async prepareCamera() {
     Application.camera.far = 5000;
     Application.camera.position.set(-16, 8, -16);
@@ -90,7 +95,7 @@ export default class World {
     const controls = new OrbitControls(Application.camera, Application.renderer.domElement);
     controls.enableDamping = true;
     controls.minDistance = 4;
-    controls.maxDistance = 24;
+    controls.maxDistance = 64;
     controls.minPolarAngle = -Math.PI;
     controls.maxPolarAngle = (Math.PI / 2) - 0.1; /* so we don't hit into the ground */
 

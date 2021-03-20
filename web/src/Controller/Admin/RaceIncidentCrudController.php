@@ -35,9 +35,6 @@ class RaceIncidentCrudController extends AbstractCrudController
             ->setFormType(RaceIncidentTypeType::class)
         ;
         $description = TextareaField::new('description');
-        $flag = Field::new('flag')
-            ->setFormType(RaceFlagType::class)
-        ;
         $lap = NumberField::new('lap');
         $lapSector = NumberField::new('lapSector');
         $lapLocation = NumberField::new('lapLocation');
@@ -45,17 +42,20 @@ class RaceIncidentCrudController extends AbstractCrudController
         $timeOfDay = TimeField::new('timeOfDay')
             ->setFormTypeOption('with_seconds', true)
         ;
+        $flag = Field::new('flag')
+            ->setFormType(RaceFlagType::class)
+        ;
 
         return [
             $race,
             $type,
             $description,
-            $flag,
             $lap,
             $lapSector,
             $lapLocation,
             $timeDuration,
             $timeOfDay,
+            $flag,
         ];
     }
 }

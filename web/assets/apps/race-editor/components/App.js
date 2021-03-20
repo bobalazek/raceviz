@@ -7,6 +7,7 @@ import {
 
 import GeneralPage from './Pages/General/Page';
 import DriversPage from './Pages/Drivers/Page';
+import IncidentsPage from './Pages/Incidents/Page';
 
 function App() {
   const [tab, setTab] = useState('general');
@@ -29,10 +30,16 @@ function App() {
             Drivers
           </Nav.Link>
         </Nav.Item>
+        <Nav.Item>
+          <Nav.Link eventKey="incidents">
+            Incidents
+          </Nav.Link>
+        </Nav.Item>
       </Nav>
       <div className="p-4 border-left border-right border-bottom">
         {tab === 'general' && <GeneralPage />}
         {tab === 'drivers' && <DriversPage />}
+        {tab === 'incidents' && <IncidentsPage />}
       </div>
     </>
   );

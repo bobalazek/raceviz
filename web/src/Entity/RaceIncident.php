@@ -34,11 +34,6 @@ class RaceIncident implements Interfaces\ArrayInterface, TimestampableInterface
     private $description;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $flag;
-
-    /**
      * @ORM\Column(type="smallint")
      * @Assert\NotBlank()
      */
@@ -57,7 +52,7 @@ class RaceIncident implements Interfaces\ArrayInterface, TimestampableInterface
     private $lapLocation;
 
     /**
-     * @ORM\Column(type="time_with_milliseconds")
+     * @ORM\Column(type="time_with_milliseconds", nullable=true)
      */
     private $timeDuration;
 
@@ -65,6 +60,11 @@ class RaceIncident implements Interfaces\ArrayInterface, TimestampableInterface
      * @ORM\Column(type="time", nullable=true)
      */
     private $timeOfDay;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $flag;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Race", inversedBy="raceIncidents")
@@ -103,18 +103,6 @@ class RaceIncident implements Interfaces\ArrayInterface, TimestampableInterface
     public function setDescription(?string $description): self
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getFlag(): ?string
-    {
-        return $this->flag;
-    }
-
-    public function setFlag(?string $flag): self
-    {
-        $this->flag = $flag;
 
         return $this;
     }
@@ -175,6 +163,18 @@ class RaceIncident implements Interfaces\ArrayInterface, TimestampableInterface
     public function setTimeOfDay(?\DateTimeInterface $timeOfDay): self
     {
         $this->timeOfDay = $timeOfDay;
+
+        return $this;
+    }
+
+    public function getFlag(): ?string
+    {
+        return $this->flag;
+    }
+
+    public function setFlag(?string $flag): self
+    {
+        $this->flag = $flag;
 
         return $this;
     }

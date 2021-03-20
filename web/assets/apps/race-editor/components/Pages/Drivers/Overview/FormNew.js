@@ -114,6 +114,9 @@ function FormNew() {
         </Form.Control>
         {renderFormErrors(formErrors?.['seasonDriver'])}
       </Form.Group>
+      <p className="text-muted">
+        In case you do not see the wanted season driver here, go to the <a href="/admin" target="_blank">admin area</a>, click the &quot;Season Drivers&quot; menu point and add it there!
+      </p>
       {renderFormErrors(formErrors?.['*'], true)}
       <Button
         block

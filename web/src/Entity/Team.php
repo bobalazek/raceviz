@@ -102,7 +102,7 @@ class Team implements Interfaces\ArrayInterface, TimestampableInterface
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->name = $name;
 
@@ -114,7 +114,7 @@ class Team implements Interfaces\ArrayInterface, TimestampableInterface
         return $this->fullName;
     }
 
-    public function setFullName(string $fullName): self
+    public function setFullName(?string $fullName): self
     {
         $this->fullName = $fullName;
 
@@ -126,7 +126,7 @@ class Team implements Interfaces\ArrayInterface, TimestampableInterface
         return $this->location;
     }
 
-    public function setLocation(string $location): self
+    public function setLocation(?string $location): self
     {
         $this->location = $location;
 

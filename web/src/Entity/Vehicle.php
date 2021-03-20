@@ -84,7 +84,7 @@ class Vehicle implements Interfaces\ArrayInterface, TimestampableInterface
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->name = $name;
 
@@ -96,7 +96,7 @@ class Vehicle implements Interfaces\ArrayInterface, TimestampableInterface
         return $this->type;
     }
 
-    public function setType(string $type): self
+    public function setType(?string $type): self
     {
         $this->type = $type;
 

@@ -20,9 +20,6 @@ parameters:
         f2: Formula 2
         f3: Formula 3
         fe: Formula E
-    app.vehicle_types:
-        race: Race Vehicle
-        safety: Safety Vehicle
     app.tyres:
         hard: Hard (H)
         medium: Medium (M)
@@ -45,6 +42,20 @@ parameters:
         dnp: DNP (Did Not Practice)
         ex: Excluded (EX)
         wd: Withdrawn (WD)
+    app.vehicle_types:
+        race: Race Vehicle
+        safety: Safety Vehicle
+    app.race_incident_types:
+        collision: Collision
+        vehicle_malfunction: Vehicle Malfunction
+        other: Other
+    app.race_flags:
+        green: Green
+        yellow: Yellow
+        red: Red
+        white: White
+        black: Black
+        chequered: Chequered
 
     # Credentials
     app.oauth.facebook:

@@ -3,10 +3,11 @@
 namespace App\Controller\Admin;
 
 use App\Admin\Field\TimeWithMillisecondsField;
-use App\Admin\Field\TyresField;
 use App\Entity\RaceDriverRaceStartingGrid;
+use App\Form\Type\TyresType;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 
 class RaceDriverRaceStartingGridCrudController extends AbstractCrudController
@@ -23,7 +24,9 @@ class RaceDriverRaceStartingGridCrudController extends AbstractCrudController
             ->setFormTypeOption('html5', true)
         ;
         $timeDuration = TimeWithMillisecondsField::new('timeDuration');
-        $tyres = TyresField::new('tyres');
+        $tyres = Field::new('tyres')
+            ->setFormType(TyresType::class)
+        ;
 
         return [
             $raceDriver,

@@ -84,9 +84,15 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
      */
     private $raceDrivers;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\RaceIncident", mappedBy="race")
+     */
+    private $raceIncidents;
+
     public function __construct()
     {
         $this->raceDrivers = new ArrayCollection();
+        $this->raceIncidents = new ArrayCollection();
     }
 
     public function __toString()
@@ -104,7 +110,7 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->name = $name;
 
@@ -116,7 +122,7 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
         return $this->laps;
     }
 
-    public function setLaps(int $laps): self
+    public function setLaps(?int $laps): self
     {
         $this->laps = $laps;
 
@@ -128,7 +134,7 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
         return $this->lapDistance;
     }
 
-    public function setLapDistance(int $lapDistance): self
+    public function setLapDistance(?int $lapDistance): self
     {
         $this->lapDistance = $lapDistance;
 
@@ -140,7 +146,7 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
         return $this->round;
     }
 
-    public function setRound(int $round): self
+    public function setRound(?int $round): self
     {
         $this->round = $round;
 
@@ -231,6 +237,36 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
             $this->raceDrivers->removeElement($raceDriver);
             if ($raceDriver->getRace() === $this) {
                 $raceDriver->setRace(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RaceIncident[]
+     */
+    public function getRaceIncidents(): Collection
+    {
+        return $this->raceIncidents;
+    }
+
+    public function addRaceIncident(RaceIncident $raceIncident): self
+    {
+        if (!$this->raceIncidents->contains($raceIncident)) {
+            $this->raceIncidents[] = $raceIncident;
+            $raceIncident->setRace($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRaceIncident(RaceIncident $raceIncident): self
+    {
+        if ($this->raceIncidents->contains($raceIncident)) {
+            $this->raceIncidents->removeElement($raceIncident);
+            if ($raceIncident->getRace() === $this) {
+                $raceIncident->setRace(null);
             }
         }
 

@@ -2,11 +2,12 @@
 
 namespace App\Controller\Admin;
 
-use App\Admin\Field\SeriesField;
 use App\Entity\Season;
+use App\Form\Type\SeriesType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class SeasonCrudController extends AbstractCrudController
@@ -27,7 +28,9 @@ class SeasonCrudController extends AbstractCrudController
     {
         $name = TextField::new('name');
         $slug = TextField::new('slug');
-        $series = SeriesField::new('series');
+        $series = Field::new('series')
+            ->setFormType(SeriesType::class)
+        ;
         $genericVehicle = AssociationField::new('genericVehicle');
         $safetyVehicle = AssociationField::new('safetyVehicle');
 

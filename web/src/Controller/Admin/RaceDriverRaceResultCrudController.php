@@ -2,11 +2,12 @@
 
 namespace App\Controller\Admin;
 
-use App\Admin\Field\RaceDriverRaceResultStatusField;
 use App\Admin\Field\TimeWithMillisecondsField;
 use App\Entity\RaceDriverRaceResult;
+use App\Form\Type\RaceDriverStatusType;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 
@@ -28,7 +29,9 @@ class RaceDriverRaceResultCrudController extends AbstractCrudController
         ;
         $timeDuration = TimeWithMillisecondsField::new('timeDuration');
         $lapsBehind = NumberField::new('lapsBehind');
-        $status = RaceDriverRaceResultStatusField::new('status');
+        $status = Field::new('status')
+            ->setFormType(RaceDriverStatusType::class)
+        ;
         $statusNote = TextareaField::new('statusNote');
 
         return [

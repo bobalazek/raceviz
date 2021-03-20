@@ -2,8 +2,8 @@
 
 namespace App\Controller\Admin;
 
-use App\Admin\Field\VehicleTypeField;
 use App\Entity\Vehicle;
+use App\Form\Type\VehicleTypeType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
@@ -28,7 +28,9 @@ class VehicleCrudController extends AbstractCrudController
     {
         $name = TextField::new('name');
         $slug = TextField::new('slug');
-        $type = VehicleTypeField::new('type');
+        $type = Field::new('type')
+            ->setFormType(VehicleTypeType::class)
+        ;
         $file = Field::new('file')
             ->setFormType(VichFileType::class)
             ->onlyOnForms()

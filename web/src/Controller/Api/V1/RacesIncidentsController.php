@@ -288,7 +288,8 @@ class RacesIncidentsController extends AbstractApiController
         $raceIncidentRaceDrivers = $raceIncidentRaceDriverRepository
             ->createQueryBuilder('rird')
             ->where('rird.raceIncident = :raceIncident')
-            ->orderBy('rdrl.lap')
+            ->leftJoin('rird.raceIncident', 'ri')
+            ->orderBy('ri.lap')
             ->setParameter('raceIncident', $raceIncident)
             ->getQuery()
             ->getResult()

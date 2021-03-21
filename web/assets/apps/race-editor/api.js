@@ -20,6 +20,12 @@ export const API_POST_RACES_INCIDENTS = '/api/v1/races/{raceSlug}/incidents';
 export const API_PUT_RACES_INCIDENTS = '/api/v1/races/{raceSlug}/incidents/{raceIncidentId}';
 export const API_DELETE_RACES_INCIDENTS = '/api/v1/races/{raceSlug}/incidents/{raceIncidentId}';
 
+// Races - Incidents - Race Drivers
+export const API_GET_RACES_INCIDENTS_RACE_DRIVERS = '/api/v1/races/{raceSlug}/incidents/{raceIncidentId}/race-drivers';
+export const API_POST_RACES_INCIDENTS_RACE_DRIVERS = '/api/v1/races/{raceSlug}/incidents{raceIncidentId}/race-drivers';
+export const API_PUT_RACES_INCIDENTS_RACE_DRIVERS = '/api/v1/races/{raceSlug}/incidents/{raceIncidentId}/race-drivers/{raceIncidentRaceDriverId}';
+export const API_DELETE_RACES_INCIDENTS_RACER_DRIVERS = '/api/v1/races/{raceSlug}/incidents/{raceIncidentId}/race-drivers/{raceIncidentRaceDriverId}';
+
 // Ergast
 export const API_GET_ERGAST_RACE_DRIVER_RACE_LAPS = '/api/v1/ergast/{raceSlug}/{raceDriverId}/laps';
 export const API_POST_ERGAST_RACE_DRIVER_LAPS_PREPARE_ALL = '/api/v1/ergast/{raceSlug}/race-driver-laps-prepare-all';

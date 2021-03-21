@@ -11,6 +11,7 @@ import {
   setData,
 } from '../../../../store/selectedRaceIncidentSlice';
 import FormSave from '../Shared/FormSave';
+import TableWrapper from './TableWrapper';
 
 function Section({
   selectedRaceIncident,
@@ -36,7 +37,7 @@ function Section({
       <FormSave selectedRaceIncident={selectedRaceIncident} />
       <hr />
       <h3>Involved Race Drivers</h3>
-      TODO
+      <TableWrapper selectedRaceIncident={selectedRaceIncident} />
     </>
   );
 }

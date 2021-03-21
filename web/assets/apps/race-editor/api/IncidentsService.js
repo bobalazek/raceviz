@@ -13,6 +13,7 @@ import {
 import {
   API_DELETE_RACES_INCIDENTS,
   API_GET_RACES_INCIDENTS,
+  API_GET_RACES_INCIDENTS_RACE_DRIVERS,
 } from '../api';
 
 /* global appData */
@@ -41,6 +42,21 @@ const IncidentsService = {
     }
 
     return null;
+  },
+  loadRaceDrivers: async (args) => {
+    const raceIncidentId = args?.raceIncident.id;
+    if (!raceIncidentId) {
+      throw new Error('Please set a valid raceIncidentId');
+    }
+
+    const url = API_GET_RACES_INCIDENTS_RACE_DRIVERS
+      .replace('{raceSlug}', appData.race.slug)
+      .replace('{raceIncidentId}', raceIncidentId)
+    ;
+
+    const response = await axios.get(url);
+
+    return response.data.data;
   },
   delete: async (args) => {
     const raceSlug = appData.race.slug;

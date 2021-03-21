@@ -3,12 +3,12 @@ import {
 } from '@reduxjs/toolkit';
 
 import appReducer from './store/appSlice';
-import driversListReducer from './store/driversListSlice';
+import driversReducer from './store/driversSlice';
 
 const store = configureStore({
   reducer: {
     app: appReducer,
-    driversList: driversListReducer,
+    drivers: driversReducer,
   },
 });
 

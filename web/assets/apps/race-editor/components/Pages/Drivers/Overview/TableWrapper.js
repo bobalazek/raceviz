@@ -13,7 +13,7 @@ import {
   selectLoading,
   selectData,
   selectError,
-} from '../../../../store/driversListSlice';
+} from '../../../../store/driversSlice';
 import {
   DriversService,
 } from '../../../../api.js';

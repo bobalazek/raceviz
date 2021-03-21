@@ -16,7 +16,7 @@ import {
 
 import {
   selectData,
-} from '../../../../store/driversListSlice';
+} from '../../../../store/driversSlice';
 import {
   API_POST_RACES_DRIVERS,
 } from '../../../../api';

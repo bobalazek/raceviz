@@ -24,23 +24,20 @@ class RaceDriverCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         $race = AssociationField::new('race');
-        $team = AssociationField::new('team');
-        $driver = AssociationField::new('driver');
+        $seasonDriver = AssociationField::new('seasonDriver');
         $raceDriverRaceStartingGrid = AssociationField::new('raceDriverRaceStartingGrid');
         $raceDriverRaceResult = AssociationField::new('raceDriverRaceResult');
 
         if (Crud::PAGE_INDEX === $pageName) {
             return [
                 $race,
-                $team,
-                $driver,
+                $seasonDriver,
             ];
         }
 
         return [
             $race,
-            $team,
-            $driver,
+            $seasonDriver,
             $raceDriverRaceStartingGrid,
             $raceDriverRaceResult,
         ];

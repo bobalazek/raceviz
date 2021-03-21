@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
@@ -30,6 +32,7 @@ class RaceIncident implements Interfaces\ArrayInterface, TimestampableInterface
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank()
      */
     private $description;
 
@@ -73,9 +76,19 @@ class RaceIncident implements Interfaces\ArrayInterface, TimestampableInterface
      */
     private $race;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\RaceIncidentRaceDriver", mappedBy="raceIncident")
+     */
+    private $raceIncidentRaceDrivers;
+
+    public function __construct()
+    {
+        $this->raceIncidentRaceDrivers = new ArrayCollection();
+    }
+
     public function __toString()
     {
-        return $this->getDescription() . ' @ ' . $this->getRace();
+        return $this->getRace() . ' (lap: ' . $this->getLap() . '; description: ' . $this->getDescription() . ')';
     }
 
     public function getId(): ?int
@@ -187,6 +200,36 @@ class RaceIncident implements Interfaces\ArrayInterface, TimestampableInterface
     public function setRace(?Race $race): self
     {
         $this->race = $race;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RaceIncidentRaceDriver[]
+     */
+    public function getRaceIncidentRaceDrivers(): Collection
+    {
+        return $this->raceIncidentRaceDrivers;
+    }
+
+    public function addRaceIncidentRaceDriver(RaceIncidentRaceDriver $raceIncidentRaceDriver): self
+    {
+        if (!$this->raceIncidentRaceDrivers->contains($raceIncidentRaceDriver)) {
+            $this->raceIncidentRaceDrivers[] = $raceIncidentRaceDriver;
+            $raceIncidentRaceDriver->setRaceIncident($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRaceIncidentRaceDriver(RaceIncidentRaceDriver $raceIncidentRaceDriver): self
+    {
+        if ($this->raceIncidentRaceDrivers->contains($raceIncidentRaceDriver)) {
+            $this->raceIncidentRaceDrivers->removeElement($raceIncidentRaceDriver);
+            if ($raceIncidentRaceDriver->getRaceIncident() === $this) {
+                $raceIncidentRaceDriver->setRaceIncident(null);
+            }
+        }
 
         return $this;
     }

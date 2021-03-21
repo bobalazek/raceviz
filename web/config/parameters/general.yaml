@@ -46,8 +46,9 @@ parameters:
         race: Race Vehicle
         safety: Safety Vehicle
     app.race_incident_types:
-        collision: Collision
-        vehicle_malfunction: Vehicle Malfunction
+        vehicle_collision: Vehicle Collision # between to cars
+        vehicle_crash: Vehicle Crash # for example into a barrier
+        vehicle_failure: Vehicle Failure
         other: Other
     app.race_flags:
         green: Green

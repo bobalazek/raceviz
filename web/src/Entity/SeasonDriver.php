@@ -90,7 +90,7 @@ class SeasonDriver implements Interfaces\ArrayInterface, TimestampableInterface
         $driver = $this->getDriver();
         $team = $this->getTeam();
 
-        return $season . ' @ ' . $driver . ' (' . $team . ')';
+        return $driver . ' for ' . $team . ' (' . $season . ')';
     }
 
     public function getId(): ?int

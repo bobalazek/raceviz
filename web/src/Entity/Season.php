@@ -72,7 +72,7 @@ class Season implements Interfaces\ArrayInterface, TimestampableInterface
 
     public function __toString()
     {
-        return $this->getName() . ' @ ' . $this->getSeries();
+        return $this->getName() . ' (' . $this->getSeries() . ')';
     }
 
     public function getId(): ?int

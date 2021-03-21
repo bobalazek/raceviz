@@ -67,10 +67,16 @@ class RaceDriver implements Interfaces\ArrayInterface, TimestampableInterface
      */
     private $raceDriverRacePitStops;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\RaceIncidentRaceDriver", mappedBy="raceDriver")
+     */
+    private $raceIncidentRaceDrivers;
+
     public function __construct()
     {
         $this->raceDriverRaceLaps = new ArrayCollection();
         $this->raceDriverRacePitStops = new ArrayCollection();
+        $this->raceIncidentRaceDrivers = new ArrayCollection();
     }
 
     public function __toString()
@@ -193,6 +199,36 @@ class RaceDriver implements Interfaces\ArrayInterface, TimestampableInterface
             $this->raceDriverRacePitStops->removeElement($raceDriverRacePitStop);
             if ($raceDriverRacePitStop->getRaceDriver() === $this) {
                 $raceDriverRacePitStop->setRaceDriver(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RaceIncidentRaceDriver[]
+     */
+    public function getRaceIncidentRaceDrivers(): Collection
+    {
+        return $this->raceIncidentRaceDrivers;
+    }
+
+    public function addRaceIncidentRaceDriver(RaceIncidentRaceDriver $raceIncidentRaceDriver): self
+    {
+        if (!$this->raceIncidentRaceDrivers->contains($raceIncidentRaceDriver)) {
+            $this->raceIncidentRaceDrivers[] = $raceIncidentRaceDriver;
+            $raceIncidentRaceDriver->setRaceDriver($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRaceIncidentRaceDriver(RaceIncidentRaceDriver $raceIncidentRaceDriver): self
+    {
+        if ($this->raceIncidentRaceDrivers->contains($raceIncidentRaceDriver)) {
+            $this->raceIncidentRaceDrivers->removeElement($raceIncidentRaceDriver);
+            if ($raceIncidentRaceDriver->getRaceDriver() === $this) {
+                $raceIncidentRaceDriver->setRaceDriver(null);
             }
         }
 

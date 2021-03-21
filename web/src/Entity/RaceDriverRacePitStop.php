@@ -30,6 +30,7 @@ class RaceDriverRacePitStop implements Interfaces\ArrayInterface, TimestampableI
     /**
      * @ORM\Column(type="smallint")
      * @Assert\NotBlank()
+     * @Assert\LessThan(32768)
      */
     private $lap;
 

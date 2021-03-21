@@ -34,18 +34,21 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
     /**
      * @ORM\Column(type="smallint")
      * @Assert\NotBlank()
+     * @Assert\LessThan(32768)
      */
     private $laps;
 
     /**
      * @ORM\Column(type="smallint")
      * @Assert\NotBlank()
+     * @Assert\LessThan(32768)
      */
     private $lapDistance;
 
     /**
      * @ORM\Column(type="smallint")
      * @Assert\NotBlank()
+     * @Assert\LessThan(32768)
      */
     private $round;
 

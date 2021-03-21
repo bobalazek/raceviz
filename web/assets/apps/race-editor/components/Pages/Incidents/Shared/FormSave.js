@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Form as Form,
+  Form,
   Button,
 } from 'react-bootstrap';
 import axios from 'axios';
@@ -12,7 +12,9 @@ import {
   toast,
 } from 'react-toastify';
 
+import IncidentsService from '../../../../api/IncidentsService';
 import {
+  API_POST_RACES_INCIDENTS,
   API_PUT_RACES_INCIDENTS,
 } from '../../../../api';
 import {
@@ -42,26 +44,47 @@ function FormSave({
 
     setFormSubmitting(true);
 
-    try {
-      const url = API_PUT_RACES_INCIDENTS
-        .replace('{raceSlug}', appData.race.slug)
-        .replace('{raceIncidentId}', selectedRaceIncident.id)
-      ;
+    const formData = qs.stringify({
+      type,
+      description,
+      flag,
+      lap,
+      lapSector,
+      lapLocation,
+      timeDuration,
+      timeOfDay,
+    });
 
-      await axios.put(url, qs.stringify({
-        type,
-        description,
-        flag,
-        lap,
-        lapSector,
-        lapLocation,
-        timeDuration,
-        timeOfDay,
-      }));
+    try {
+      if (selectedRaceIncident) {
+        const url = API_PUT_RACES_INCIDENTS
+          .replace('{raceSlug}', appData.race.slug)
+          .replace('{raceIncidentId}', selectedRaceIncident.id)
+        ;
+
+        await axios.put(url, formData);
+      } else {
+        const url = API_POST_RACES_INCIDENTS
+          .replace('{raceSlug}', appData.race.slug)
+        ;
+
+        await axios.post(url, formData);
+      }
+
+      IncidentsService.loadAll();
+
+      setType(null);
+      setDescription(null);
+      setFlag(null);
+      setLap(null);
+      setLapSector(null);
+      setLapLocation(null);
+      setTimeDuration(null);
+      setTimeOfDay(null);
 
       setFormErrors(null);
 
-      toast.success('You have successfully edited the incident.');
+      toast.success('You have successfully saved the incident.');
     } catch(error) {
       if (error.response?.data?.errors) {
         setFormErrors(error.response.data.errors);

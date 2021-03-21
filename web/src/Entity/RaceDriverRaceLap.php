@@ -30,12 +30,14 @@ class RaceDriverRaceLap implements Interfaces\ArrayInterface, TimestampableInter
     /**
      * @ORM\Column(type="smallint")
      * @Assert\NotBlank()
+     * @Assert\LessThan(32768)
      */
     private $lap;
 
     /**
      * @ORM\Column(type="smallint")
      * @Assert\NotBlank()
+     * @Assert\LessThan(32768)
      */
     private $position;
 

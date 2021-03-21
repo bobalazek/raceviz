@@ -34,6 +34,7 @@ class SeasonDriver implements Interfaces\ArrayInterface, TimestampableInterface
     /**
      * @ORM\Column(type="smallint")
      * @Assert\NotBlank()
+     * @Assert\LessThan(32768)
      */
     private $number;
 

@@ -39,7 +39,7 @@ class RaceIncidentType extends AbstractType
         $resolver->setDefaults([
             'csrf_protection' => true,
             'data_class' => RaceIncident::class,
-            'face_filter' => null,
+            'filter_race' => null,
         ]);
     }
 }

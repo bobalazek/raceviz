@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import TableWrapper from './TableWrapper';
 import FormSave from '../Shared/FormSave';
@@ -7,7 +8,9 @@ import {
   useEventListener,
 } from '../../../../hooks';
 
-function Section() {
+function Section({
+  selectedRaceDriver,
+}) {
   IncidentsService.loadAll();
   useEventListener('race-editor:reload-incidents', () => {
     IncidentsService.loadAll();
@@ -16,11 +19,15 @@ function Section() {
   return (
     <>
       <h2>New Incident</h2>
-      <FormSave />
+      <FormSave selectedRaceDriver={selectedRaceDriver} />
       <hr />
       <TableWrapper />
     </>
   );
 }
+
+Section.propTypes = {
+  selectedRaceDriver: PropTypes.object,
+};
 
 export default Section;

@@ -44,11 +44,13 @@ class RaceIncident implements Interfaces\ArrayInterface, TimestampableInterface
     /**
      * @ORM\Column(type="smallint")
      * @Assert\NotBlank()
+     * @Assert\LessThan(32768)
      */
     private $lap;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
+     * @Assert\LessThan(32768)
      */
     private $lapSector;
 

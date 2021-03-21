@@ -4,8 +4,10 @@ namespace App\Controller\Api\V1;
 
 use App\Entity\Race;
 use App\Entity\RaceDriver;
+use App\Entity\RaceIncident;
 use App\Manager\ErrorManager;
 use App\Repository\RaceDriverRepository;
+use App\Repository\RaceIncidentRepository;
 use App\Repository\RaceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -81,7 +83,6 @@ class AbstractApiController extends AbstractController
     {
         /** @var RaceDriverRepository $raceDriverRepository */
         $raceDriverRepository = $this->em->getRepository(RaceDriver::class);
-
         $raceDriver = $raceDriverRepository->findOneBy([
             'id' => $raceDriverId,
         ]);
@@ -90,5 +91,22 @@ class AbstractApiController extends AbstractController
         }
 
         return $raceDriver;
+    }
+
+    /**
+     * @return RaceIncident
+     */
+    protected function _getRaceIncident(int $raceIncidentId)
+    {
+        /** @var RaceIncidentRepository $raceIncidentRepository */
+        $raceIncidentRepository = $this->em->getRepository(RaceIncident::class);
+        $raceIncident = $raceIncidentRepository->findOneBy([
+            'id' => $raceIncidentId,
+        ]);
+        if (!$raceIncident) {
+            throw $this->createNotFoundException();
+        }
+
+        return $raceIncident;
     }
 }

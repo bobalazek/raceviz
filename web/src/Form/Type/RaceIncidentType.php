@@ -19,10 +19,9 @@ class RaceIncidentType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $filterRace = $options['filter_race'];
+
         $builder
-            ->add('race', EntityType::class, [
-                'class' => Race::class,
-            ])
             ->add('type', RaceIncidentTypeType::class)
             ->add('description', TextareaType::class)
             ->add('flag', RaceFlagType::class)
@@ -42,6 +41,7 @@ class RaceIncidentType extends AbstractType
         $resolver->setDefaults([
             'csrf_protection' => true,
             'data_class' => RaceIncident::class,
+            'face_filter' => null,
         ]);
     }
 }

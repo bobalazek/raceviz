@@ -5,9 +5,7 @@ import FormNew from './FormNew';
 import {
   useEventListener,
 } from '../../../../hooks';
-import {
-  DriversService,
-} from '../../../../api';
+import DriversService from '../../../../api/DriversService';
 
 function Section() {
   DriversService.loadAll();

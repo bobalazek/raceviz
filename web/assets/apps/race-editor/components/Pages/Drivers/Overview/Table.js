@@ -8,11 +8,9 @@ import {
 import PropTypes from 'prop-types';
 
 import {
-  DriversService,
-} from '../../../../api';
-import {
-  setSelectedRaceDriver,
-} from '../../../../store/appSlice';
+  setData,
+} from '../../../../store/selectedRaceDriverSlice';
+import DriversService from '../../../../api/DriversService';
 import confirm from '../../../Shared/ConfirmDialog';
 
 function Table({
@@ -23,7 +21,7 @@ function Table({
   const onEditButtonClick = (raceDriver, event) => {
     event.preventDefault();
 
-    store.dispatch(setSelectedRaceDriver(raceDriver));
+    store.dispatch(setData(raceDriver));
   };
 
   const onDeleteButtonClick = async (raceDriver, event) => {

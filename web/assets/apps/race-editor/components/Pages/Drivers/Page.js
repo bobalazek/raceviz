@@ -6,19 +6,19 @@ import {
 import OverviewSection from './Overview/Section';
 import EditSection from './Edit/Section';
 import {
-  selectSelectedRaceDriver,
-} from '../../../store/appSlice';
+  selectData,
+} from '../../../store/selectedRaceDriverSlice';
 
 function Page() {
-  const selectedRaceDriver = useSelector(selectSelectedRaceDriver);
+  const selectedRaceDriver = useSelector(selectData);
 
   return (
     <>
       {!!selectedRaceDriver && (
-        <EditSection />
+        <EditSection selectedRaceDriver={selectedRaceDriver} />
       )}
       {!selectedRaceDriver && (
-        <OverviewSection />
+        <OverviewSection selectedRaceDriver={selectedRaceDriver} />
       )}
     </>
   );

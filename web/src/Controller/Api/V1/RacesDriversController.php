@@ -10,6 +10,7 @@ use App\Form\Type\RaceDriverType;
 use App\Manager\RaceDriverManager;
 use App\Repository\RaceDriverRaceLapRepository;
 use App\Repository\RaceDriverRacePitStopRepository;
+use App\Repository\RaceDriverRepository;
 use App\Repository\RaceRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,7 +23,7 @@ class RacesDriversController extends AbstractApiController
     /**
      * @Route("/api/v1/races/{raceSlug}/drivers", name="api.v1.races.drivers", methods={"GET"})
      */
-    public function drivers(string $raceSlug)
+    public function index(string $raceSlug)
     {
         if (!$this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException();
@@ -30,9 +31,9 @@ class RacesDriversController extends AbstractApiController
 
         $race = $this->_getRace($raceSlug);
 
-        /** @var RaceRepository $raceRepository */
-        $raceRepository = $this->em->getRepository(RaceDriver::class);
-        $raceDrivers = $raceRepository
+        /** @var RaceDriverRepository $raceDriverRepository */
+        $raceDriverRepository = $this->em->getRepository(RaceDriver::class);
+        $raceDrivers = $raceDriverRepository
             ->createQueryBuilder('rd')
             ->where('rd.race = :race')
             ->leftJoin('rd.seasonDriver', 'sd')
@@ -58,7 +59,7 @@ class RacesDriversController extends AbstractApiController
     /**
      * @Route("/api/v1/races/{raceSlug}/drivers", name="api.v1.races.drivers.new", methods={"POST"})
      */
-    public function driversNew(string $raceSlug, Request $request)
+    public function new(string $raceSlug, Request $request)
     {
         if (!$this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException();
@@ -98,7 +99,7 @@ class RacesDriversController extends AbstractApiController
     /**
      * @Route("/api/v1/races/{raceSlug}/drivers/prepare-all", name="api.v1.races.drivers.prepare_all", methods={"POST"})
      */
-    public function driversPrepareAll(string $raceSlug, RaceDriverManager $raceDriverManager)
+    public function prepareAll(string $raceSlug, RaceDriverManager $raceDriverManager)
     {
         if (!$this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException();
@@ -123,7 +124,7 @@ class RacesDriversController extends AbstractApiController
     /**
      * @Route("/api/v1/races/{raceSlug}/drivers/{raceDriverId}", name="api.v1.races.drivers.delete", methods={"DELETE"})
      */
-    public function driversDelete(string $raceSlug, int $raceDriverId)
+    public function delete(string $raceSlug, int $raceDriverId)
     {
         if (!$this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException();
@@ -145,7 +146,7 @@ class RacesDriversController extends AbstractApiController
     /**
      * @Route("/api/v1/races/{raceSlug}/drivers/{raceDriverId}", name="api.v1.races.drivers.edit", methods={"PUT"})
      */
-    public function driversEdit(string $raceSlug, int $raceDriverId, Request $request)
+    public function edit(string $raceSlug, int $raceDriverId, Request $request)
     {
         if (!$this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException();
@@ -155,8 +156,7 @@ class RacesDriversController extends AbstractApiController
         $raceDriver = $this->_getRaceDriver($raceDriverId);
 
         $formData = $request->request->all();
-        $formData['team'] = $raceDriver->getSeasonDriver()->getTeam()->getId();
-        $formData['driver'] = $raceDriver->getSeasonDriver()->getDriver()->getId();
+        $formData['seasonDriver'] = $raceDriver->getSeasonDriver()->getId();
 
         if (
             isset($formData['raceDriverRaceStartingGrid']) &&
@@ -198,7 +198,7 @@ class RacesDriversController extends AbstractApiController
     /**
      * @Route("/api/v1/races/{raceSlug}/drivers/{raceDriverId}/laps", name="api.v1.races.drivers.laps", methods={"GET"})
      */
-    public function driversLaps(string $raceSlug, int $raceDriverId)
+    public function laps(string $raceSlug, int $raceDriverId)
     {
         if (!$this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException();
@@ -219,7 +219,7 @@ class RacesDriversController extends AbstractApiController
     /**
      * @Route("/api/v1/races/{raceSlug}/drivers/{raceDriverId}/laps", name="api.v1.races.drivers.laps.edit", methods={"PUT"})
      */
-    public function driversLapsEdit(string $raceSlug, int $raceDriverId, Request $request, RaceDriverManager $raceDriverManager)
+    public function lapsEdit(string $raceSlug, int $raceDriverId, Request $request, RaceDriverManager $raceDriverManager)
     {
         if (!$this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException();

@@ -14,9 +14,7 @@ import {
   selectData,
   selectError,
 } from '../../../../store/driversSlice';
-import {
-  DriversService,
-} from '../../../../api.js';
+import DriversService from '../../../../api/DriversService';
 import Table from './Table';
 import confirm from '../../../Shared/ConfirmDialog';
 

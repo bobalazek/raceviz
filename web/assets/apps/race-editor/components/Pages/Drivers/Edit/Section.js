@@ -1,9 +1,9 @@
 import React, {
   useState,
 } from 'react';
+import PropTypes from 'prop-types';
 import {
   useStore,
-  useSelector,
 } from 'react-redux';
 import {
   Nav,
@@ -11,26 +11,26 @@ import {
 }  from 'react-bootstrap';
 
 import {
-  setSelectedRaceDriver,
-  selectSelectedRaceDriver,
-} from '../../../../store/appSlice';
+  setData,
+} from '../../../../store/selectedRaceDriverSlice';
 import FormEdit from './FormEdit';
 import FormLaps from './FormLaps';
 
-function Section() {
+function Section({
+  selectedRaceDriver,
+}) {
   const store = useStore();
-  const selectedRaceDriver = useSelector(selectSelectedRaceDriver);
   const [tab, setTab] = useState('general');
 
   const onBackToListClick = () => {
-    store.dispatch(setSelectedRaceDriver(null));
+    store.dispatch(setData(null));
   };
 
   return (
     <>
       <h2>
-        <span>{selectedRaceDriver.season_driver.driver.name} </span>
-        <small>({selectedRaceDriver.season_driver.team.name}) </small>
+        <span>{selectedRaceDriver?.season_driver?.driver.name} </span>
+        <small>({selectedRaceDriver?.season_driver?.team.name}) </small>
         <Button
           size="sm"
           onClick={onBackToListClick}
@@ -62,5 +62,9 @@ function Section() {
     </>
   );
 }
+
+Section.propTypes = {
+  selectedRaceDriver: PropTypes.object,
+};
 
 export default Section;

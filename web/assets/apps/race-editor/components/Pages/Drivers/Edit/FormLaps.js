@@ -12,11 +12,9 @@ import {
 } from 'react-toastify';
 
 import {
-  DriversService,
-} from '../../../../api';
-import {
   renderFormErrors,
 } from '../../../Shared/helpers';
+import DriversService from '../../../../api/DriversService';
 import confirm from '../../../Shared/ConfirmDialog';
 import DriverLapsFormRow from './FormLapsRow';
 

@@ -3,11 +3,11 @@ import {
 } from '@reduxjs/toolkit';
 
 export const slice = createSlice({
-  name: 'drivers',
+  name: 'selectedRaceDriver',
   initialState: {
     loading: false,
     loaded: false,
-    data: [],
+    data: null,
     error: null,
   },
   reducers: {
@@ -33,9 +33,9 @@ export const {
   setError,
 } = slice.actions;
 
-export const selectLoading = state => state.drivers.loading;
-export const selectLoaded = state => state.drivers.loaded;
-export const selectData = state => state.drivers.data;
-export const selectError = state => state.drivers.error;
+export const selectLoading = state => state.selectedRaceDriver.loading;
+export const selectLoaded = state => state.selectedRaceDriver.loaded;
+export const selectData = state => state.selectedRaceDriver.data;
+export const selectError = state => state.selectedRaceDriver.error;
 
 export default slice.reducer;

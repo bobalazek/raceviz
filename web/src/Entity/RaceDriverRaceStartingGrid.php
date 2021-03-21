@@ -30,6 +30,7 @@ class RaceDriverRaceStartingGrid implements Interfaces\ArrayInterface, Timestamp
     /**
      * @ORM\Column(type="smallint")
      * @Assert\NotBlank()
+     * @Assert\GreaterThanOrEqual(0)
      * @Assert\LessThan(32768)
      */
     private $position;

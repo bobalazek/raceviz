@@ -34,6 +34,7 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
     /**
      * @ORM\Column(type="smallint")
      * @Assert\NotBlank()
+     * @Assert\GreaterThanOrEqual(0)
      * @Assert\LessThan(32768)
      */
     private $laps;
@@ -41,6 +42,7 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
     /**
      * @ORM\Column(type="smallint")
      * @Assert\NotBlank()
+     * @Assert\GreaterThanOrEqual(0)
      * @Assert\LessThan(32768)
      */
     private $lapDistance;
@@ -48,6 +50,7 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
     /**
      * @ORM\Column(type="smallint")
      * @Assert\NotBlank()
+     * @Assert\GreaterThanOrEqual(0)
      * @Assert\LessThan(32768)
      */
     private $round;

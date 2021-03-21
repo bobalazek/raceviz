@@ -30,6 +30,7 @@ class RaceDriverRaceLap implements Interfaces\ArrayInterface, TimestampableInter
     /**
      * @ORM\Column(type="smallint")
      * @Assert\NotBlank()
+     * @Assert\GreaterThanOrEqual(0)
      * @Assert\LessThan(32768)
      */
     private $lap;
@@ -37,6 +38,7 @@ class RaceDriverRaceLap implements Interfaces\ArrayInterface, TimestampableInter
     /**
      * @ORM\Column(type="smallint")
      * @Assert\NotBlank()
+     * @Assert\GreaterThanOrEqual(0)
      * @Assert\LessThan(32768)
      */
     private $position;

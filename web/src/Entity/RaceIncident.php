@@ -44,12 +44,14 @@ class RaceIncident implements Interfaces\ArrayInterface, TimestampableInterface
     /**
      * @ORM\Column(type="smallint")
      * @Assert\NotBlank()
+     * @Assert\GreaterThanOrEqual(0)
      * @Assert\LessThan(32768)
      */
     private $lap;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
+     * @Assert\GreaterThanOrEqual(0)
      * @Assert\LessThan(32768)
      */
     private $lapSector;
@@ -58,6 +60,8 @@ class RaceIncident implements Interfaces\ArrayInterface, TimestampableInterface
      * Where on the lap did the accident happen 0 (lap start) - 1 (360 degrees around the track)?
      *
      * @ORM\Column(type="float", nullable=true)
+     * @Assert\GreaterThanOrEqual(0)
+     * @Assert\LessThan(1)
      */
     private $lapLocation;
 

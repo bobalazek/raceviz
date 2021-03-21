@@ -15,10 +15,10 @@ function Page() {
   return (
     <>
       {!!selectedRaceIncident && (
-        <EditSection selectedRaceIncident={selectedRaceIncident} />
+        <EditSection />
       )}
       {!selectedRaceIncident && (
-        <OverviewSection selectedRaceIncident={selectedRaceIncident} />
+        <OverviewSection />
       )}
     </>
   );

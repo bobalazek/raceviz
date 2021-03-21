@@ -9,7 +9,8 @@ import PropTypes from 'prop-types';
 
 import {
   setData,
-} from '../../../../store/selectedRaceIncidentSlice';
+  setModalOpen,
+} from '../../../../store/selectedRaceIncidentRaceDriverSlice';
 import IncidentsService from '../../../../api/IncidentsService';
 import confirm from '../../../Shared/ConfirmDialog';
 
@@ -18,10 +19,11 @@ function Table({
 }) {
   const store = useStore();
 
-  const onEditButtonClick = (raceIncident, event) => {
+  const onEditButtonClick = (raceIncidentRaceDriver, event) => {
     event.preventDefault();
 
-    store.dispatch(setData(raceIncident));
+    store.dispatch(setModalOpen(true));
+    store.dispatch(setData(raceIncidentRaceDriver));
   };
 
   const onDeleteButtonClick = async (raceIncidentRaceDriver, event) => {

@@ -2,14 +2,19 @@ import React, {
   useState,
   useEffect,
 } from 'react';
-import PropTypes from 'prop-types';
+import {
+  useSelector,
+} from 'react-redux';
 
+import {
+  selectData,
+} from '../../../../store/selectedRaceIncidentSlice';
 import IncidentsService from '../../../../api/IncidentsService';
 import Table from './Table';
 
-function TableWrapper({
-  selectedRaceIncident,
-}) {
+function TableWrapper() {
+  const selectedRaceIncident = useSelector(selectData);
+
   const [loading, setLoading] = useState(false);
   const [loaded, setLoaded] = useState(null);
   const [data, setData] = useState([]);
@@ -57,9 +62,5 @@ function TableWrapper({
     </div>
   );
 }
-
-TableWrapper.propTypes = {
-  selectedRaceIncident: PropTypes.object,
-};
 
 export default TableWrapper;

@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {
+  useSelector,
   useStore,
 } from 'react-redux';
 import {
@@ -8,18 +8,28 @@ import {
 }  from 'react-bootstrap';
 
 import {
+  selectData,
   setData,
 } from '../../../../store/selectedRaceIncidentSlice';
+import {
+  setData as setDataRaceDriver,
+  setModalOpen,
+} from '../../../../store/selectedRaceIncidentRaceDriverSlice';
 import FormSave from '../Shared/FormSave';
 import TableWrapper from './TableWrapper';
+import ModalRaceDriver from './ModalRaceDriver';
 
-function Section({
-  selectedRaceIncident,
-}) {
+function Section() {
   const store = useStore();
+  const selectedRaceIncident = useSelector(selectData);
 
   const onBackToListClick = () => {
     store.dispatch(setData(null));
+  };
+
+  const onNewRaceDriverClick = () => {
+    store.dispatch(setModalOpen(true));
+    store.dispatch(setDataRaceDriver(null));
   };
 
   return (
@@ -36,14 +46,19 @@ function Section({
       </h2>
       <FormSave selectedRaceIncident={selectedRaceIncident} />
       <hr />
-      <h3>Involved Race Drivers</h3>
+      <h3>
+        <span>Involved Race Drivers </span>
+        <Button
+          size="sm"
+          onClick={onNewRaceDriverClick}
+        >
+          Add New Involved Race Driver
+        </Button>
+      </h3>
       <TableWrapper selectedRaceIncident={selectedRaceIncident} />
+      <ModalRaceDriver />
     </>
   );
 }
-
-Section.propTypes = {
-  selectedRaceIncident: PropTypes.object,
-};
 
 export default Section;

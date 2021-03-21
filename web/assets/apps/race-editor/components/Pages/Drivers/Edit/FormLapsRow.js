@@ -42,7 +42,7 @@ function FormLapsRow({
             <Form.Label>Time Duration</Form.Label>
             <Form.Control
               value={entry.race_lap?.['time_duration'] ?? ''}
-              onChange={(event) => { setFormLapData(index, 'race_lap', 'timeDuration', event.target.value) }}
+              onChange={(event) => { setFormLapData(index, 'race_lap', 'time_duration', event.target.value) }}
               isInvalid={!!entryErrors?.['race_lap']?.['timeDuration']}
             />
             <Form.Text muted>

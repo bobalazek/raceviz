@@ -15,10 +15,10 @@ function Page() {
   return (
     <>
       {!!selectedRaceDriver && (
-        <EditSection selectedRaceDriver={selectedRaceDriver} />
+        <EditSection />
       )}
       {!selectedRaceDriver && (
-        <OverviewSection selectedRaceDriver={selectedRaceDriver} />
+        <OverviewSection />
       )}
     </>
   );

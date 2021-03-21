@@ -1,7 +1,9 @@
 import React, {
   useState,
 } from 'react';
-import PropTypes from 'prop-types';
+import {
+  useSelector,
+} from 'react-redux';
 import {
   Form,
   Button,
@@ -12,7 +14,9 @@ import {
   toast,
 } from 'react-toastify';
 
-import IncidentsService from '../../../../api/IncidentsService';
+import {
+  selectData,
+} from '../../../../store/selectedRaceIncidentSlice';
 import {
   API_POST_RACES_INCIDENTS,
   API_PUT_RACES_INCIDENTS,
@@ -20,12 +24,13 @@ import {
 import {
   renderFormErrors,
 } from '../../../Shared/helpers';
+import IncidentsService from '../../../../api/IncidentsService';
 
 /* global appData */
 
-function FormSave({
-  selectedRaceIncident,
-}) {
+function FormSave() {
+  const selectedRaceIncident = useSelector(selectData);
+
   const [type, setType] = useState(selectedRaceIncident?.type);
   const [description, setDescription] = useState(selectedRaceIncident?.description);
   const [flag, setFlag] = useState(selectedRaceIncident?.flag);
@@ -250,9 +255,5 @@ function FormSave({
     </Form>
   );
 }
-
-FormSave.propTypes = {
-  selectedRaceIncident: PropTypes.object,
-};
 
 export default FormSave;

@@ -1,9 +1,9 @@
 import React, {
   useState,
 } from 'react';
-import PropTypes from 'prop-types';
 import {
   useStore,
+  useSelector,
 } from 'react-redux';
 import {
   Nav,
@@ -12,14 +12,15 @@ import {
 
 import {
   setData,
+  selectData,
 } from '../../../../store/selectedRaceDriverSlice';
 import FormEdit from './FormEdit';
 import FormLaps from './FormLaps';
 
-function Section({
-  selectedRaceDriver,
-}) {
+function Section() {
   const store = useStore();
+  const selectedRaceDriver = useSelector(selectData);
+
   const [tab, setTab] = useState('general');
 
   const onBackToListClick = () => {
@@ -62,9 +63,5 @@ function Section({
     </>
   );
 }
-
-Section.propTypes = {
-  selectedRaceDriver: PropTypes.object,
-};
 
 export default Section;

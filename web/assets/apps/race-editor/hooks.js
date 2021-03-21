@@ -6,11 +6,48 @@ import {
 import axios from 'axios';
 
 import {
+  API_GET_RACES_DRIVERS,
   API_GET_SEASONS_DRIVERS,
   API_GET_SEASONS_TEAMS,
 } from './api';
 
 /* global appData */
+
+export const useRaceDriversFetch = () => {
+  const [loading, setLoading] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+  const [data, setData] = useState([]);
+  const [error, setError] = useState(null);
+
+  const seasonSlug = appData.race.season.slug;
+  const raceSlug = appData.race.slug;
+
+  useEffect(async () => {
+    setLoading(true);
+
+    try {
+      const url = API_GET_RACES_DRIVERS
+        .replace('{seasonSlug}', seasonSlug)
+        .replace('{raceSlug}', raceSlug)
+      ;
+
+      const response = await axios.get(url);
+      setData(response.data.data);
+    } catch (error) {
+      setError(error.response.error);
+    } finally {
+      setLoading(false);
+      setLoaded(true);
+    }
+  }, [seasonSlug, raceSlug]);
+
+  return {
+    loading,
+    loaded,
+    data,
+    error,
+  };
+};
 
 export const useSeasonsDriversFetch = () => {
   const [loading, setLoading] = useState(false);

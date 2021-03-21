@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {
+  useState,
+} from 'react';
 import {
   useStore,
   useSelector,
@@ -6,25 +8,92 @@ import {
 import {
   Modal,
   Button,
+  Form,
 }  from 'react-bootstrap';
+import axios from 'axios';
+import qs from 'qs';
+import {
+  toast,
+} from 'react-toastify';
 
+import {
+  selectData,
+} from '../../../../store/selectedRaceIncidentSlice';
 import {
   setModalOpen,
   selectModalOpen,
 } from '../../../../store/selectedRaceIncidentRaceDriverSlice';
+import {
+  useRaceDriversFetch,
+} from '../../../../hooks';
+import {
+  API_POST_RACES_INCIDENTS_RACE_DRIVERS,
+} from '../../../../api';
+import {
+  renderFormErrors,
+} from '../../../Shared/helpers';
+
+/* global appData */
 
 function ModalRaceDriver() {
   const store = useStore();
   const show = useSelector(selectModalOpen);
+  const selectedRaceIncident = useSelector(selectData);
+
+  const {
+    data: raceDrivers,
+  } = useRaceDriversFetch();
+
+  const [raceDriverId, setRaceDriverId] = useState(0);
+
+  const [formSubmitting, setFormSubmitting] = useState(false);
+  const [formErrors, setFormErrors] = useState(null);
+
+  const onRaceDriverChange = (event) => {
+    const value = parseInt(event.target.value);
+
+    setRaceDriverId(value);
+    setFormErrors(null);
+  };
 
   const onHide = () => {
     store.dispatch(setModalOpen(false));
   };
 
-  const onSaveButtonClick = () => {
-    // TODO
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    event.stopPropagation();
 
-    store.dispatch(setModalOpen(false));
+    setFormSubmitting(true);
+
+    try {
+      const url = API_POST_RACES_INCIDENTS_RACE_DRIVERS
+        .replace('{raceSlug}', appData.race.slug)
+        .replace('{raceIncidentId}', selectedRaceIncident.id)
+      ;
+
+      await axios.post(url, qs.stringify({
+        raceDriver: raceDriverId,
+      }));
+
+      toast.success('You have successfully added the driver.');
+
+      setRaceDriverId(0);
+
+      window.dispatchEvent(new CustomEvent('race-editor:reload-drivers'));
+
+      store.dispatch(setModalOpen(false));
+    } catch(error) {
+      if (error.response?.data?.errors) {
+        setFormErrors(error.response.data.errors);
+
+        toast.error('Please fix the errors first!');
+      } else if (error.response?.data?.detail) {
+        toast.error(error.response.data.detail);
+      }
+    } finally {
+      setFormSubmitting(false);
+    }
   };
 
   return (
@@ -39,7 +108,33 @@ function ModalRaceDriver() {
         <Modal.Title>Involved Race Driver</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        TODO
+        <Form noValidate onSubmit={onSubmit}>
+          <Form.Group>
+            <Form.Label>Race Driver</Form.Label>
+            <Form.Control
+              as="select"
+              value={raceDriverId}
+              onChange={onRaceDriverChange}
+              isInvalid={!!formErrors?.['raceDriver']}
+            >
+              <option value="0">-- none --</option>
+              {raceDrivers.map((entry) => {
+                return (
+                  <option
+                    key={entry.id}
+                    value={entry.id}
+                  >
+                    {entry.season_driver.driver.name}
+                    {' '}
+                    ({entry.season_driver.team.name})
+                  </option>
+                );
+              })}
+            </Form.Control>
+            {renderFormErrors(formErrors?.['raceDriver'])}
+          </Form.Group>
+          {renderFormErrors(formErrors?.['*'], true)}
+        </Form>
       </Modal.Body>
       <Modal.Footer>
         <Button
@@ -50,7 +145,8 @@ function ModalRaceDriver() {
         </Button>
         <Button
           variant="primary"
-          onClick={onSaveButtonClick}
+          onClick={onSubmit}
+          disabled={formSubmitting}
         >
           Save
         </Button>

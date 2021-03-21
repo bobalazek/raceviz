@@ -167,6 +167,7 @@ class RacesIncidentsController extends AbstractApiController
         ;
 
         $formData = $request->request->all();
+        $formData['raceIncident'] = $raceIncident->getId();
 
         $form = $this->createForm(RaceIncidentRaceDriverType::class, $raceIncidentRaceDriver, [
             'filter_race' => $race,

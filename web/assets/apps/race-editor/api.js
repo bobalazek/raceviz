@@ -22,7 +22,7 @@ export const API_DELETE_RACES_INCIDENTS = '/api/v1/races/{raceSlug}/incidents/{r
 
 // Races - Incidents - Race Drivers
 export const API_GET_RACES_INCIDENTS_RACE_DRIVERS = '/api/v1/races/{raceSlug}/incidents/{raceIncidentId}/race-drivers';
-export const API_POST_RACES_INCIDENTS_RACE_DRIVERS = '/api/v1/races/{raceSlug}/incidents{raceIncidentId}/race-drivers';
+export const API_POST_RACES_INCIDENTS_RACE_DRIVERS = '/api/v1/races/{raceSlug}/incidents/{raceIncidentId}/race-drivers';
 export const API_PUT_RACES_INCIDENTS_RACE_DRIVERS = '/api/v1/races/{raceSlug}/incidents/{raceIncidentId}/race-drivers/{raceIncidentRaceDriverId}';
 export const API_DELETE_RACES_INCIDENTS_RACER_DRIVERS = '/api/v1/races/{raceSlug}/incidents/{raceIncidentId}/race-drivers/{raceIncidentRaceDriverId}';
 

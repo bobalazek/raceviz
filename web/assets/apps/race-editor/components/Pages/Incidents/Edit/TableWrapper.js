@@ -1,5 +1,4 @@
 import React, {
-  useState,
   useEffect,
 } from 'react';
 import {
@@ -7,37 +6,30 @@ import {
 } from 'react-redux';
 
 import {
-  selectData,
+  selectData as selectRaceIncidentData,
 } from '../../../../store/selectedRaceIncidentSlice';
+import {
+  selectLoading,
+  selectLoaded,
+  selectData,
+  selectError,
+} from '../../../../store/incidentRaceDriversSlice';
 import IncidentsService from '../../../../api/IncidentsService';
 import Table from './Table';
 
 function TableWrapper() {
-  const selectedRaceIncident = useSelector(selectData);
+  const selectedRaceIncident = useSelector(selectRaceIncidentData);
 
-  const [loading, setLoading] = useState(false);
-  const [loaded, setLoaded] = useState(null);
-  const [data, setData] = useState([]);
-  const [error, setError] = useState(null);
+  const loading = useSelector(selectLoading);
+  const loaded = useSelector(selectLoaded);
+  const data = useSelector(selectData);
+  const error = useSelector(selectError);
 
-  const loadLaps = async () => {
-    setLoading(true);
-
-    try {
-      const raceDrivers = await IncidentsService.loadRaceDrivers({
-        raceIncident: selectedRaceIncident,
-      });
-
-      setData(raceDrivers);
-    } catch (error) {
-      setError(error.response.data.detail);
-    } finally {
-      setLoading(false);
-      setLoaded(true);
-    }
-  };
-
-  useEffect(loadLaps, [selectedRaceIncident]);
+  useEffect(async () => {
+    await IncidentsService.loadRaceDrivers({
+      raceIncident: selectedRaceIncident,
+    });
+  }, [selectedRaceIncident])
 
   return (
     <div>
@@ -53,7 +45,7 @@ function TableWrapper() {
       )}
       {loaded && data.length === 0 && (
         <div className="alert alert-info">
-          No Incidents found yet.
+          No involved race drivers found yet.
         </div>
       )}
       {loaded && data.length > 0 && (

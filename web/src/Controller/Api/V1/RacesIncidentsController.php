@@ -230,7 +230,7 @@ class RacesIncidentsController extends AbstractApiController
     }
 
     /**
-     * @Route("/api/v1/races/{raceSlug}/drivers/{raceIncidentId}/race-drivers/{raceIncidentRaceDriverId}", name="api.v1.races.incidents.race_drivers.delete", methods={"DELETE"})
+     * @Route("/api/v1/races/{raceSlug}/incidents/{raceIncidentId}/race-drivers/{raceIncidentRaceDriverId}", name="api.v1.races.incidents.race_drivers.delete", methods={"DELETE"})
      */
     public function raceDriversDelete(
         string $raceSlug,

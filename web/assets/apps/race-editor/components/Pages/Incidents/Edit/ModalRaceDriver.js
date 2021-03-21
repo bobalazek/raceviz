@@ -32,6 +32,7 @@ import {
 import {
   renderFormErrors,
 } from '../../../Shared/helpers';
+import IncidentsService from '../../../../api/IncidentsService';
 
 /* global appData */
 
@@ -83,6 +84,10 @@ function ModalRaceDriver() {
       window.dispatchEvent(new CustomEvent('race-editor:reload-drivers'));
 
       store.dispatch(setModalOpen(false));
+
+      await IncidentsService.loadRaceDrivers({
+        raceIncident: selectedRaceIncident,
+      });
     } catch(error) {
       if (error.response?.data?.errors) {
         setFormErrors(error.response.data.errors);

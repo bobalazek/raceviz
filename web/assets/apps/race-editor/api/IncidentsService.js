@@ -11,9 +11,16 @@ import {
   setError,
 } from '../store/incidentsSlice';
 import {
+  setLoading as setRaceDriversLoading,
+  setLoaded as setRaceDriversLoaded,
+  setData as setRaceDriversData,
+  setError as setRaceDriversError,
+} from '../store/incidentRaceDriversSlice';
+import {
   API_DELETE_RACES_INCIDENTS,
   API_GET_RACES_INCIDENTS,
   API_GET_RACES_INCIDENTS_RACE_DRIVERS,
+  API_DELETE_RACES_INCIDENTS_RACER_DRIVERS,
 } from '../api';
 
 /* global appData */
@@ -49,14 +56,27 @@ const IncidentsService = {
       throw new Error('Please set a valid raceIncidentId');
     }
 
-    const url = API_GET_RACES_INCIDENTS_RACE_DRIVERS
-      .replace('{raceSlug}', appData.race.slug)
-      .replace('{raceIncidentId}', raceIncidentId)
-    ;
+    store.dispatch(setRaceDriversLoading(true));
 
-    const response = await axios.get(url);
+    try {
+      const url = API_GET_RACES_INCIDENTS_RACE_DRIVERS
+        .replace('{raceSlug}', appData.race.slug)
+        .replace('{raceIncidentId}', raceIncidentId)
+      ;
 
-    return response.data.data;
+      const response = await axios.get(url);
+
+      store.dispatch(setRaceDriversData(response.data.data));
+
+      return response;
+    } catch (error) {
+      store.dispatch(setRaceDriversError(error.response.error));
+    } finally {
+      store.dispatch(setRaceDriversLoading(false));
+      store.dispatch(setRaceDriversLoaded(true));
+    }
+
+    return null;
   },
   delete: async (args) => {
     const raceSlug = appData.race.slug;
@@ -78,6 +98,45 @@ const IncidentsService = {
 
       IncidentsService.loadAll({
         raceSlug,
+      });
+
+      return response;
+    } catch (error) {
+      toast.error(error.response.data.detail);
+    }
+
+    return null;
+  },
+  deleteRaceDriver: async (args) => {
+    const raceSlug = appData.race.slug;
+
+    const storeState = store.getState();
+    const raceIncident = storeState.selectedRaceIncident.data;
+
+    const raceIncidentId = raceIncident.id;
+    if (!raceIncidentId) {
+      throw new Error('Please set a valid raceIncidentId');
+    }
+
+    const raceIncidentRaceDriverId = args?.raceIncidentRaceDriver.id;
+    if (!raceIncidentRaceDriverId) {
+      throw new Error('Please set a valid raceIncidentRaceDriverId');
+    }
+
+    try {
+      const url = API_DELETE_RACES_INCIDENTS_RACER_DRIVERS
+        .replace('{raceSlug}', raceSlug)
+        .replace('{raceIncidentId}', raceIncidentId)
+        .replace('{raceIncidentRaceDriverId}', raceIncidentRaceDriverId)
+      ;
+
+      const response = await axios.delete(url);
+
+      toast.success('The incident race driver was successfully deleted!');
+
+      IncidentsService.loadRaceDrivers({
+        raceSlug,
+        raceIncident,
       });
 
       return response;

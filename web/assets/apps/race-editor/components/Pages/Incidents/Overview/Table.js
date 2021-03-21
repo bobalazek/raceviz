@@ -47,7 +47,7 @@ function Table({
             <th>Lap</th>
             <th>Lap Sector</th>
             <th>Lap Location</th>
-            <th>Time</th>
+            <th>Time Duration</th>
             <th>Time Of Day</th>
             <th>Actions</th>
           </tr>

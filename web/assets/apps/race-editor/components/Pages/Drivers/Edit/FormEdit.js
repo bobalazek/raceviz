@@ -125,7 +125,7 @@ function FormEdit({
         </div>
         <div className="col-md-6">
           <Form.Group>
-            <Form.Label>Time</Form.Label>
+            <Form.Label>Time Duration</Form.Label>
             <Form.Control
               value={raceStartingGridTimeDuration ?? ''}
               onChange={(event) => { setRaceStartingGridTimeDuration(event.target.value) }}
@@ -166,7 +166,7 @@ function FormEdit({
         </div>
         <div className="col-md-6">
           <Form.Group>
-            <Form.Label>Time</Form.Label>
+            <Form.Label>Time Duration</Form.Label>
             <Form.Control
               value={raceResultTimeDuration ?? ''}
               onChange={(event) => { setRaceResultTimeDuration(event.target.value) }}

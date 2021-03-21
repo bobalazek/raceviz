@@ -162,12 +162,12 @@ class RaceIncident implements Interfaces\ArrayInterface, TimestampableInterface
         return $this;
     }
 
-    public function getLapLocation(): ?int
+    public function getLapLocation(): ?float
     {
         return $this->lapLocation;
     }
 
-    public function setLapLocation(?int $lapLocation): self
+    public function setLapLocation(?float $lapLocation): self
     {
         $this->lapLocation = $lapLocation;
 

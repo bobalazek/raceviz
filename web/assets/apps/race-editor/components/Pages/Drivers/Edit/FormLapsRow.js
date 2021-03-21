@@ -39,7 +39,7 @@ function FormLapsRow({
       <div className="row">
         <div className="col-md-3">
           <Form.Group>
-            <Form.Label>Time</Form.Label>
+            <Form.Label>Time Duration</Form.Label>
             <Form.Control
               value={entry.race_lap?.['time_duration'] ?? ''}
               onChange={(event) => { setFormLapData(index, 'race_lap', 'timeDuration', event.target.value) }}
@@ -110,7 +110,7 @@ function FormLapsRow({
           <div className="row">
             <div className="col-md-3">
               <Form.Group>
-                <Form.Label>Time</Form.Label>
+                <Form.Label>Time Duration</Form.Label>
                 <Form.Control
                   value={entry.race_pit_stop?.['time_duration'] ?? ''}
                   onChange={(event) => { setFormLapData(index, 'race_pit_stop', 'time_duration', event.target.value) }}

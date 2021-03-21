@@ -73,14 +73,16 @@ function FormSave({
 
       IncidentsService.loadAll();
 
-      setType(null);
-      setDescription(null);
-      setFlag(null);
-      setLap(null);
-      setLapSector(null);
-      setLapLocation(null);
-      setTimeDuration(null);
-      setTimeOfDay(null);
+      if (!selectedRaceIncident) {
+        setType(null);
+        setDescription(null);
+        setFlag(null);
+        setLap(null);
+        setLapSector(null);
+        setLapLocation(null);
+        setTimeDuration(null);
+        setTimeOfDay(null);
+      }
 
       setFormErrors(null);
 
@@ -210,7 +212,7 @@ function FormSave({
         </div>
         <div className="col-md-3">
           <Form.Group>
-            <Form.Label>Time</Form.Label>
+            <Form.Label>Time Duration</Form.Label>
             <Form.Control
               value={timeDuration ?? ''}
               onChange={(event) => { setTimeDuration(event.target.value) }}

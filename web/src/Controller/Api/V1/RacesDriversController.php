@@ -218,8 +218,12 @@ class RacesDriversController extends AbstractApiController
     /**
      * @Route("/api/v1/races/{raceSlug}/drivers/{raceDriverId}/laps", name="api.v1.races.drivers.laps.edit", methods={"PUT"})
      */
-    public function lapsEdit(string $raceSlug, int $raceDriverId, Request $request, RaceDriverManager $raceDriverManager)
-    {
+    public function lapsEdit(
+        string $raceSlug,
+        int $raceDriverId,
+        Request $request,
+        RaceDriverManager $raceDriverManager
+    ) {
         if (!$this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException();
         }
@@ -228,10 +232,10 @@ class RacesDriversController extends AbstractApiController
         $raceDriver = $this->_getRaceDriver($raceDriverId);
 
         $formData = json_decode($request->request->get('data'), true);
-        $errorResponse = $raceDriverManager->saveLaps($raceDriver, $formData);
-        if ($errorResponse) {
+        $errors = $raceDriverManager->saveLaps($raceDriver, $formData);
+        if ($errors) {
             return $this->json([
-                'errors' => $errorResponse,
+                'errors' => $errors,
             ], 400);
         }
 

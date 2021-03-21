@@ -13,6 +13,8 @@ import {
 import IncidentsService from '../../../../api/IncidentsService';
 import confirm from '../../../Shared/ConfirmDialog';
 
+/* global appData */
+
 function Table({
   data,
 }) {
@@ -56,9 +58,9 @@ function Table({
           {data.map((entry) => {
             return (
               <tr key={entry.id}>
-                <td>{entry.type}</td>
+                <td>{appData.race_incident_types[entry.type]}</td>
                 <td>{entry.description}</td>
-                <td>{entry.flag}</td>
+                <td>{appData.race_flags[entry.flag]}</td>
                 <td>{entry.lap}</td>
                 <td>{entry.lap_sector}</td>
                 <td>{entry.lap_location}</td>

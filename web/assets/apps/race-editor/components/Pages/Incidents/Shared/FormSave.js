@@ -102,7 +102,6 @@ function FormSave({
 
   return (
     <Form noValidate onSubmit={onSubmit}>
-      <h3>Type</h3>
       <div className="row">
         <div className="col-md-3">
           <Form.Group>

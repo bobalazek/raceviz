@@ -12,7 +12,7 @@ class RacesController extends AbstractApiController
     /**
      * @Route("/api/v1/races/{raceSlug}", name="api.v1.races.detail", methods={"GET"})
      */
-    public function detail(int $raceSlug)
+    public function detail(string $raceSlug)
     {
         if (!$this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException();

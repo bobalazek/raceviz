@@ -70,7 +70,7 @@ function FormNew() {
 
       setSeasonDriverId(0);
 
-      window.dispatchEvent(new CustomEvent('driver-editor:new-driver'));
+      window.dispatchEvent(new CustomEvent('race-editor:reload-drivers'));
     } catch(error) {
       if (error.response?.data?.errors) {
         setFormErrors(error.response.data.errors);

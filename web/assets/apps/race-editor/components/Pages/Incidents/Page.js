@@ -1,9 +1,21 @@
 import React from 'react';
+import {
+  useSelector
+} from 'react-redux';
+
+import OverviewSection from './Overview/Section';
+import {
+  selectData,
+} from '../../../store/selectedRaceIncidentSlice';
 
 function Page() {
+  const selectedRaceIncident = useSelector(selectData);
+
   return (
     <>
-      TODO
+      {!selectedRaceIncident && (
+        <OverviewSection selectedRaceIncident={selectedRaceIncident} />
+      )}
     </>
   );
 }

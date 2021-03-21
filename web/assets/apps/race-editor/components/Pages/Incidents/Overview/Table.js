@@ -9,8 +9,8 @@ import PropTypes from 'prop-types';
 
 import {
   setData,
-} from '../../../../store/selectedRaceDriverSlice';
-import DriversService from '../../../../api/DriversService';
+} from '../../../../store/selectedRaceIncidentSlice';
+import IncidentsService from '../../../../api/IncidentsService';
 import confirm from '../../../Shared/ConfirmDialog';
 
 function Table({
@@ -18,20 +18,20 @@ function Table({
 }) {
   const store = useStore();
 
-  const onEditButtonClick = (raceDriver, event) => {
+  const onEditButtonClick = (raceIncident, event) => {
     event.preventDefault();
 
-    store.dispatch(setData(raceDriver));
+    store.dispatch(setData(raceIncident));
   };
 
-  const onDeleteButtonClick = async (raceDriver, event) => {
+  const onDeleteButtonClick = async (raceIncident, event) => {
     event.preventDefault();
 
     if (await confirm(
-      'Are you sure you want to remove the driver?'
+      'Are you sure you want to remove the incident?'
     )) {
-      await DriversService.delete({
-        raceDriver,
+      await IncidentsService.delete({
+        raceIncident,
       });
     }
   };
@@ -41,10 +41,14 @@ function Table({
       <table className="table">
         <thead>
           <tr>
-            <th>Driver</th>
-            <th>Team</th>
-            <th>Laps</th>
-            <th>Pit Stops</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Flag</th>
+            <th>Lap</th>
+            <th>Lap Sector</th>
+            <th>Lap Location</th>
+            <th>Time</th>
+            <th>Time Of Day</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -52,10 +56,14 @@ function Table({
           {data.map((entry) => {
             return (
               <tr key={entry.id}>
-                <td>{entry.season_driver.driver.name}</td>
-                <td>{entry.season_driver.team.name}</td>
-                <td>{entry.race_laps_count}</td>
-                <td>{entry.race_pit_stops_count}</td>
+                <td>{entry.type}</td>
+                <td>{entry.description}</td>
+                <td>{entry.flag}</td>
+                <td>{entry.lap}</td>
+                <td>{entry.lap_sector}</td>
+                <td>{entry.lap_location}</td>
+                <td>{entry.time_duration}</td>
+                <td>{entry.time_of_day}</td>
                 <td>
                   <div className="btn-group">
                     <Button

@@ -16,7 +16,7 @@ class RacesIncidentsController extends AbstractApiController
     /**
      * @Route("/api/v1/races/{raceSlug}/incidents", name="api.v1.races.incidents", methods={"GET"})
      */
-    public function index(int $raceSlug)
+    public function index(string $raceSlug)
     {
         if (!$this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException();

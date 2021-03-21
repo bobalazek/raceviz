@@ -2,14 +2,14 @@ import React from 'react';
 
 import TableWrapper from './TableWrapper';
 import FormNew from './FormNew';
+import DriversService from '../../../../api/DriversService';
 import {
   useEventListener,
 } from '../../../../hooks';
-import DriversService from '../../../../api/DriversService';
 
 function Section() {
   DriversService.loadAll();
-  useEventListener('driver-editor:new-driver', () => {
+  useEventListener('race-editor:reload-drivers', () => {
     DriversService.loadAll();
   });
 

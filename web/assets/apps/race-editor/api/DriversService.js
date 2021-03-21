@@ -171,7 +171,7 @@ const DriversService = {
     }
 
     return null;
-  }
+  },
 };
 
 export default DriversService;

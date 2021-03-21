@@ -31,6 +31,11 @@ class RaceIncident implements Interfaces\ArrayInterface, TimestampableInterface
     private $type;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $flag;
+
+    /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank()
      */
@@ -63,11 +68,6 @@ class RaceIncident implements Interfaces\ArrayInterface, TimestampableInterface
      * @ORM\Column(type="time", nullable=true)
      */
     private $timeOfDay;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $flag;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Race", inversedBy="raceIncidents")
@@ -104,6 +104,18 @@ class RaceIncident implements Interfaces\ArrayInterface, TimestampableInterface
     public function setType(?string $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getFlag(): ?string
+    {
+        return $this->flag;
+    }
+
+    public function setFlag(?string $flag): self
+    {
+        $this->flag = $flag;
 
         return $this;
     }
@@ -180,18 +192,6 @@ class RaceIncident implements Interfaces\ArrayInterface, TimestampableInterface
         return $this;
     }
 
-    public function getFlag(): ?string
-    {
-        return $this->flag;
-    }
-
-    public function setFlag(?string $flag): self
-    {
-        $this->flag = $flag;
-
-        return $this;
-    }
-
     public function getRace(): ?Race
     {
         return $this->race;
@@ -239,8 +239,8 @@ class RaceIncident implements Interfaces\ArrayInterface, TimestampableInterface
         return [
             'id' => $this->getId(),
             'type' => $this->getType(),
-            'description' => $this->getDescription(),
             'flag' => $this->getFlag(),
+            'description' => $this->getDescription(),
             'lap' => $this->getLap(),
             'lap_sector' => $this->getLapSector(),
             'lap_location' => $this->getLapLocation(),

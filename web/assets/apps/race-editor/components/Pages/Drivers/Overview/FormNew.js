@@ -90,18 +90,18 @@ function FormNew() {
         >
           <option value="0">-- none --</option>
           {seasonDrivers.map((entry) => {
-            const isAlreadyAddedSeasonDriver = addedDriverIds.includes(entry.driver.id);
+            const isAlreadyAddedDriver = addedDriverIds.includes(entry.driver.id);
             return (
               <option
                 key={entry.id}
                 value={entry.id}
-                disabled={isAlreadyAddedSeasonDriver}
+                disabled={isAlreadyAddedDriver}
               >
                 {entry.driver.name}
                 {' '}
                 ({entry.team.name})
                 {entry.temporary && ' (temporary)'}
-                {isAlreadyAddedSeasonDriver && ' (already added)'}
+                {isAlreadyAddedDriver && ' (already added)'}
               </option>
             );
           })}

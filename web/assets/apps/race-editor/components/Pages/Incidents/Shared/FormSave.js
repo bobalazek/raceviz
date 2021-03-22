@@ -97,6 +97,20 @@ function FormSave() {
       <div className="row">
         <div className="col-md-3">
           <Form.Group>
+            <Form.Label>Description</Form.Label>
+            <Form.Control
+              as="textarea"
+              value={description ?? ''}
+              onChange={(event) => { setDescription(event.target.value) }}
+              isInvalid={!!formErrors?.['description']}
+            />
+            {renderFormErrors(formErrors?.['description'])}
+          </Form.Group>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-md-3">
+          <Form.Group>
             <Form.Label>Type</Form.Label>
             <Form.Control
               as="select"
@@ -175,18 +189,6 @@ function FormSave() {
         </div>
       </div>
       <div className="row">
-        <div className="col-md-3">
-          <Form.Group>
-            <Form.Label>Description</Form.Label>
-            <Form.Control
-              type="textarea"
-              value={description ?? ''}
-              onChange={(event) => { setDescription(event.target.value) }}
-              isInvalid={!!formErrors?.['description']}
-            />
-            {renderFormErrors(formErrors?.['description'])}
-          </Form.Group>
-        </div>
         <div className="col-md-3">
           <Form.Group>
             <Form.Label>Lap</Form.Label>

@@ -24,6 +24,9 @@ import {
   selectData as selectRaceDriverData,
 } from '../../../../store/selectedRaceIncidentRaceDriverSlice';
 import {
+  selectData as selectIncidentRaceDriversData,
+} from '../../../../store/incidentRaceDriversSlice';
+import {
   useRaceDriversFetch,
 } from '../../../../hooks';
 import {
@@ -36,20 +39,23 @@ function ModalRaceDriver() {
   const show = useSelector(selectModalOpen);
   const selectedRaceIncident = useSelector(selectData);
   const selectedRaceIncidentRaceDriver = useSelector(selectRaceDriverData);
-
-  // TODO: disable already added race drivers below in the select!
-
+  const raceIndicentRaceDrivers = useSelector(selectIncidentRaceDriversData);
+  const addedRaceDriverIds = raceIndicentRaceDrivers.map((entry) => {
+    return entry.race_driver.id;
+  });
   const {
     data: raceDrivers,
   } = useRaceDriversFetch();
 
   const [raceDriverId, setRaceDriverId] = useState(0);
+  const [description, setDescription] = useState('');
 
   const [formSubmitting, setFormSubmitting] = useState(false);
   const [formErrors, setFormErrors] = useState(null);
 
   useEffect(() => {
     setRaceDriverId(selectedRaceIncidentRaceDriver?.race_driver?.id ?? 0);
+    setDescription(selectedRaceIncidentRaceDriver?.description ?? '');
     setFormErrors(null);
   }, [selectedRaceIncidentRaceDriver])
 
@@ -72,6 +78,7 @@ function ModalRaceDriver() {
 
     const formData = {
       raceDriver: raceDriverId,
+      description,
     };
 
     try {
@@ -82,6 +89,7 @@ function ModalRaceDriver() {
       });
 
       setRaceDriverId(0);
+      setDescription('');
 
       store.dispatch(setModalOpen(false));
 
@@ -126,19 +134,35 @@ function ModalRaceDriver() {
             >
               <option value="0">-- none --</option>
               {raceDrivers.map((entry) => {
+                const isAlreadyAddedRaceDriver = (
+                  raceDriverId !== entry.id &&
+                  addedRaceDriverIds.includes(entry.id)
+                );
                 return (
                   <option
                     key={entry.id}
                     value={entry.id}
+                    disabled={isAlreadyAddedRaceDriver}
                   >
                     {entry.season_driver.driver.name}
                     {' '}
                     ({entry.season_driver.team.name})
+                    {isAlreadyAddedRaceDriver && ' (already added)'}
                   </option>
                 );
               })}
             </Form.Control>
             {renderFormErrors(formErrors?.['raceDriver'])}
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Description</Form.Label>
+            <Form.Control
+              as="textarea"
+              value={description ?? ''}
+              onChange={(event) => { setDescription(event.target.value) }}
+              isInvalid={!!formErrors?.['description']}
+            />
+            {renderFormErrors(formErrors?.['description'])}
           </Form.Group>
           {renderFormErrors(formErrors?.['*'], true)}
         </Form>

@@ -99,6 +99,7 @@ class RaceIncidentRaceDriver implements Interfaces\ArrayInterface, Timestampable
     {
         return [
             'id' => $this->getId(),
+            'description' => $this->getDescription(),
             'race_driver' => $this->getRaceDriver()
                 ? $this->getRaceDriver()->toArray()
                 : null,

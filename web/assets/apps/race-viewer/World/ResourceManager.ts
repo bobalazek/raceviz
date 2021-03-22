@@ -4,6 +4,8 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import Application from '../Application';
 
 export default class ResourceManager {
+  public driverVehicles: {[driverCode: string]: THREE.Object3D} = {};
+
   constructor() {
     // Nothing to do here, as we will just call the prepareAsync below in the parent class
   }
@@ -18,25 +20,24 @@ export default class ResourceManager {
       resources[raceDriver.season_driver.code] = vehicleModelUrl;
     }
 
-    let vehicles = [];
     let i = 0;
     for (const key in resources) {
       const resource = resources[key];
       const gltfData = await gltfLoader.loadAsync(resource);
-      const vehicleMesh = <THREE.Object3D>gltfData.scene.children[0];
+      const vehicleObject = <THREE.Object3D>gltfData.scene.children[0];
 
-      vehicleMesh.name = 'vehicles_' + key;
-      vehicleMesh.position.x = (i % 2) * 5;
-      vehicleMesh.position.z = -i * 5;
+      vehicleObject.name = 'vehicles_' + key;
+      vehicleObject.position.x = (i % 2) * 5;
+      vehicleObject.position.z = -i * 5;
 
-      vehicleMesh.traverse((child: any) => {
+      vehicleObject.traverse((child: any) => {
         child.castShadow = true;
         child.receiveShadow = true;
       });
 
-      Application.scene.add(vehicleMesh);
+      this.driverVehicles[key] = vehicleObject;
 
-      vehicles.push(vehicleMesh);
+      Application.scene.add(vehicleObject);
 
       i++;
     }

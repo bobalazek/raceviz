@@ -65,6 +65,7 @@ export default class Application {
     this.renderer.outputEncoding = THREE.sRGBEncoding;
 	  this.renderer.shadowMap.enabled = true;
 	  this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setClearColor(0xffffff, 1);
 
     this.scene = new THREE.Scene();

@@ -7,7 +7,7 @@ import {
 } from 'nanoevents';
 
 import Preloader from './Preloader';
-import World from './World';
+import World from './World/index';
 
 interface ApplicationConfigInterface {
   canvasElement: HTMLCanvasElement;

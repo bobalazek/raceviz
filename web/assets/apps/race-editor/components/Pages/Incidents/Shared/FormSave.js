@@ -8,8 +8,6 @@ import {
   Form,
   Button,
 } from 'react-bootstrap';
-import axios from 'axios';
-import qs from 'qs';
 import {
   toast,
 } from 'react-toastify';
@@ -17,10 +15,6 @@ import {
 import {
   selectData,
 } from '../../../../store/selectedRaceIncidentSlice';
-import {
-  API_POST_RACES_INCIDENTS,
-  API_PUT_RACES_INCIDENTS,
-} from '../../../../api';
 import {
   renderFormErrors,
 } from '../../../Shared/helpers';
@@ -50,7 +44,7 @@ function FormSave() {
 
     setFormSubmitting(true);
 
-    const formData = qs.stringify({
+    const formData = {
       type,
       description,
       flag,
@@ -60,25 +54,15 @@ function FormSave() {
       lapLocation,
       timeDuration,
       timeOfDay,
-    });
+    };
 
     try {
-      if (selectedRaceIncident) {
-        const url = API_PUT_RACES_INCIDENTS
-          .replace('{raceSlug}', appData.race.slug)
-          .replace('{raceIncidentId}', selectedRaceIncident.id)
-        ;
+      await IncidentsService.save({
+        raceIncident: selectedRaceIncident,
+        formData,
+      });
 
-        await axios.put(url, formData);
-      } else {
-        const url = API_POST_RACES_INCIDENTS
-          .replace('{raceSlug}', appData.race.slug)
-        ;
-
-        await axios.post(url, formData);
-      }
-
-      IncidentsService.loadAll();
+      await IncidentsService.loadAll();
 
       if (!selectedRaceIncident) {
         setType(null);

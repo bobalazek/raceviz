@@ -17,6 +17,8 @@ import {
   API_GET_ERGAST_RACE_DRIVER_RACE_LAPS,
   API_POST_ERGAST_RACE_DRIVER_LAPS_PREPARE_ALL,
   API_POST_RACES_DRIVERS_PREPARE_ALL,
+  API_POST_RACES_DRIVERS,
+  API_PUT_RACES_DRIVERS,
   API_PUT_RACES_DRIVERS_LAPS,
   API_DELETE_RACES_DRIVERS,
 } from '../api';
@@ -114,11 +116,9 @@ const DriversService = {
       .replace('{raceDriverId}', raceDriverId)
     ;
 
-    const response = await axios.put(url, qs.stringify({
+    return axios.put(url, qs.stringify({
       data: JSON.stringify(formData),
     }));
-
-    return response;
   },
   prepareAll: async() => {
     const raceSlug = appData.race.slug;
@@ -142,6 +142,28 @@ const DriversService = {
     }
 
     return null;
+  },
+  new: async (args) => {
+    const url = API_POST_RACES_DRIVERS
+      .replace('{raceSlug}', appData.race.slug)
+    ;
+    const formData = qs.stringify(args?.formData);
+
+    return axios.post(url, formData);
+  },
+  edit: async (args) => {
+    const raceDriverId = args?.raceDriver.id;
+    if (!raceDriverId) {
+      throw new Error('Please set a valid raceDriverId');
+    }
+
+    const url = API_PUT_RACES_DRIVERS
+      .replace('{raceSlug}', appData.race.slug)
+      .replace('{raceDriverId}', raceDriverId)
+    ;
+    const formData = qs.stringify(args?.formData);
+
+    return axios.put(url, formData);
   },
   delete: async (args) => {
     const raceSlug = appData.race.slug;

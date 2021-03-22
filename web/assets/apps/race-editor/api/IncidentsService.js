@@ -1,4 +1,5 @@
 import axios from 'axios';
+import qs from 'qs';
 import {
   toast,
 } from 'react-toastify';
@@ -19,8 +20,12 @@ import {
 import {
   API_DELETE_RACES_INCIDENTS,
   API_GET_RACES_INCIDENTS,
+  API_POST_RACES_INCIDENTS,
+  API_PUT_RACES_INCIDENTS,
   API_GET_RACES_INCIDENTS_RACE_DRIVERS,
   API_DELETE_RACES_INCIDENTS_RACER_DRIVERS,
+  API_POST_RACES_INCIDENTS_RACE_DRIVERS,
+  API_PUT_RACES_INCIDENTS_RACE_DRIVERS,
 } from '../api';
 
 /* global appData */
@@ -107,6 +112,25 @@ const IncidentsService = {
 
     return null;
   },
+  save: async (args) => {
+    const raceIncidentId = args?.raceIncident?.id;
+    const formData = qs.stringify(args?.formData);
+
+    if (raceIncidentId) {
+      const url = API_PUT_RACES_INCIDENTS
+        .replace('{raceSlug}', appData.race.slug)
+        .replace('{raceIncidentId}', raceIncidentId)
+      ;
+
+      return axios.put(url, formData);
+    }
+
+    const url = API_POST_RACES_INCIDENTS
+      .replace('{raceSlug}', appData.race.slug)
+    ;
+
+    return axios.post(url, formData);
+  },
   deleteRaceDriver: async (args) => {
     const raceSlug = appData.race.slug;
 
@@ -145,6 +169,32 @@ const IncidentsService = {
     }
 
     return null;
+  },
+  saveRaceDriver: async (args) => {
+    const raceIncidentId = args?.raceIncident?.id;
+    if (!raceIncidentId) {
+      throw new Error('Please set a valid raceIncidentId');
+    }
+
+    const raceIncidentRaceDriverId = args?.raceIncidentRaceDriver?.id;
+    const formData = qs.stringify(args?.formData);
+
+    if (raceIncidentRaceDriverId) {
+      const url = API_PUT_RACES_INCIDENTS_RACE_DRIVERS
+        .replace('{raceSlug}', appData.race.slug)
+        .replace('{raceIncidentId}', raceIncidentId)
+        .replace('{raceIncidentRaceDriverId}', raceIncidentRaceDriverId)
+      ;
+
+      return axios.put(url, formData);
+    }
+
+    const url = API_POST_RACES_INCIDENTS_RACE_DRIVERS
+      .replace('{raceSlug}', appData.race.slug)
+      .replace('{raceIncidentId}', raceIncidentId)
+    ;
+
+    return axios.post(url, formData);
   },
 };
 

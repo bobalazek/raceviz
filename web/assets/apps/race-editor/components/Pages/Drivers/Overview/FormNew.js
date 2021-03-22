@@ -8,8 +8,6 @@ import {
   Form,
   Button,
 } from 'react-bootstrap';
-import axios from 'axios';
-import qs from 'qs';
 import {
   toast,
 } from 'react-toastify';
@@ -18,16 +16,12 @@ import {
   selectData,
 } from '../../../../store/driversSlice';
 import {
-  API_POST_RACES_DRIVERS,
-} from '../../../../api';
-import {
   useSeasonsDriversFetch,
 } from '../../../../hooks';
 import {
   renderFormErrors,
 } from '../../../Shared/helpers';
-
-/* global appData */
+import DriversService from '../../../../api/DriversService';
 
 function FormNew() {
   const {
@@ -55,16 +49,16 @@ function FormNew() {
     event.preventDefault();
     event.stopPropagation();
 
+    const formData = {
+      seasonDriver: seasonDriverId,
+    };
+
     setFormSubmitting(true);
 
     try {
-      const url = API_POST_RACES_DRIVERS
-        .replace('{raceSlug}', appData.race.slug)
-      ;
-
-      await axios.post(url, qs.stringify({
-        seasonDriver: seasonDriverId,
-      }));
+      await DriversService.new({
+        formData,
+      });
 
       toast.success('You have successfully added the driver.');
 

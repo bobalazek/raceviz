@@ -11,8 +11,6 @@ import {
   Button,
   Form,
 }  from 'react-bootstrap';
-import axios from 'axios';
-import qs from 'qs';
 import {
   toast,
 } from 'react-toastify';
@@ -29,15 +27,9 @@ import {
   useRaceDriversFetch,
 } from '../../../../hooks';
 import {
-  API_POST_RACES_INCIDENTS_RACE_DRIVERS,
-  API_PUT_RACES_INCIDENTS_RACE_DRIVERS,
-} from '../../../../api';
-import {
   renderFormErrors,
 } from '../../../Shared/helpers';
 import IncidentsService from '../../../../api/IncidentsService';
-
-/* global appData */
 
 function ModalRaceDriver() {
   const store = useStore();
@@ -78,35 +70,22 @@ function ModalRaceDriver() {
 
     setFormSubmitting(true);
 
-    const formData = qs.stringify({
+    const formData = {
       raceDriver: raceDriverId,
-    });
+    };
 
     try {
-      if (selectedRaceIncidentRaceDriver) {
-        const url = API_PUT_RACES_INCIDENTS_RACE_DRIVERS
-          .replace('{raceSlug}', appData.race.slug)
-          .replace('{raceIncidentId}', selectedRaceIncident.id)
-          .replace('{raceIncidentRaceDriverId}', selectedRaceIncidentRaceDriver.id)
-        ;
-
-        await axios.put(url, formData);
-      } else {
-        const url = API_POST_RACES_INCIDENTS_RACE_DRIVERS
-          .replace('{raceSlug}', appData.race.slug)
-          .replace('{raceIncidentId}', selectedRaceIncident.id)
-        ;
-
-        await axios.post(url, formData);
-      }
-
-      toast.success('You have successfully added the driver.');
+      await IncidentsService.saveRaceDriver({
+        raceIncident: selectedRaceIncident,
+        raceIncidentRaceDriver: selectedRaceIncidentRaceDriver,
+        formData,
+      });
 
       setRaceDriverId(0);
 
-      window.dispatchEvent(new CustomEvent('race-editor:reload-drivers'));
-
       store.dispatch(setModalOpen(false));
+
+      toast.success('You have successfully added the driver.');
 
       await IncidentsService.loadRaceDrivers({
         raceIncident: selectedRaceIncident,

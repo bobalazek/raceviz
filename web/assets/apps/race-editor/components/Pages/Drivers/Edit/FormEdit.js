@@ -6,18 +6,14 @@ import {
   Form,
   Button,
 } from 'react-bootstrap';
-import axios from 'axios';
-import qs from 'qs';
 import {
   toast,
 } from 'react-toastify';
 
 import {
-  API_PUT_RACES_DRIVERS,
-} from '../../../../api';
-import {
   renderFormErrors,
 } from '../../../Shared/helpers';
+import DriversService from '../../../../api/DriversService';
 
 /* global appData */
 
@@ -41,29 +37,29 @@ function FormEdit({
     event.preventDefault();
     event.stopPropagation();
 
+    const formData = {
+      raceDriverRaceStartingGrid: {
+        position: raceStartingGridPosition,
+        timeDuration: raceStartingGridTimeDuration,
+        tyres: raceStartingGridTyres,
+      },
+      raceDriverRaceResult: {
+        position: raceResultPosition,
+        points: raceResultPoints,
+        timeDuration: raceResultTimeDuration,
+        lapsBehind: raceResultLapsBehind,
+        status: raceResultStatus,
+        statusNote: raceResultStatusNote,
+      },
+    };
+
     setFormSubmitting(true);
 
     try {
-      const url = API_PUT_RACES_DRIVERS
-        .replace('{raceSlug}', appData.race.slug)
-        .replace('{raceDriverId}', selectedRaceDriver.id)
-      ;
-
-      await axios.put(url, qs.stringify({
-        raceDriverRaceStartingGrid: {
-          position: raceStartingGridPosition,
-          timeDuration: raceStartingGridTimeDuration,
-          tyres: raceStartingGridTyres,
-        },
-        raceDriverRaceResult: {
-          position: raceResultPosition,
-          points: raceResultPoints,
-          timeDuration: raceResultTimeDuration,
-          lapsBehind: raceResultLapsBehind,
-          status: raceResultStatus,
-          statusNote: raceResultStatusNote,
-        },
-      }));
+      await DriversService.edit({
+        raceDriver: selectedRaceDriver,
+        formData,
+      });
 
       setFormErrors(null);
 

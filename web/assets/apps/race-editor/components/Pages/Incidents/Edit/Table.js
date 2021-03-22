@@ -52,7 +52,10 @@ function Table({
           {data.map((entry) => {
             return (
               <tr key={entry.id}>
-                <td>{entry.race_driver.season_driver.driver.name}</td>
+                <td>
+                  <span>{entry.race_driver.season_driver.driver.name} </span>
+                  <span>({entry.race_driver.season_driver.team.name})</span>
+                </td>
                 <td>{entry.description}</td>
                 <td>
                   <div className="btn-group">

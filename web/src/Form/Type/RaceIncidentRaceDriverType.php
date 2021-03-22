@@ -20,23 +20,9 @@ class RaceIncidentRaceDriverType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $filterRace = $options['filter_race'];
+        $withRaceIncident = $options['with_race_incident'];
 
         $builder
-            ->add('raceIncident', EntityType::class, [
-                'class' => RaceIncident::class,
-                'query_builder' => function (EntityRepository $er) use ($filterRace) {
-                    $queryBuilder = $er->createQueryBuilder('ri');
-
-                    if ($filterRace) {
-                        $queryBuilder
-                            ->where('ri.race = :race')
-                            ->setParameter('race', $filterRace)
-                        ;
-                    }
-
-                    return $queryBuilder;
-                },
-            ])
             ->add('raceDriver', EntityType::class, [
                 'class' => RaceDriver::class,
                 'query_builder' => function (EntityRepository $er) use ($filterRace) {
@@ -54,6 +40,26 @@ class RaceIncidentRaceDriverType extends AbstractType
             ])
             ->add('description', TextareaType::class)
         ;
+
+        if ($withRaceIncident) {
+            $builder
+                ->add('raceIncident', EntityType::class, [
+                    'class' => RaceIncident::class,
+                    'query_builder' => function (EntityRepository $er) use ($filterRace) {
+                        $queryBuilder = $er->createQueryBuilder('ri');
+
+                        if ($filterRace) {
+                            $queryBuilder
+                                ->where('ri.race = :race')
+                                ->setParameter('race', $filterRace)
+                            ;
+                        }
+
+                        return $queryBuilder;
+                    },
+                ])
+            ;
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -62,6 +68,7 @@ class RaceIncidentRaceDriverType extends AbstractType
             'csrf_protection' => true,
             'data_class' => RaceIncidentRaceDriver::class,
             'filter_race' => null,
+            'with_race_incident' => false,
         ]);
     }
 }

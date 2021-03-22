@@ -76,6 +76,7 @@ class RacesDriversController extends AbstractApiController
         $form = $this->createForm(RaceDriverType::class, $raceDriver, [
             'filter_race' => $race,
             'csrf_protection' => false,
+            'with_season_driver' => true,
         ]);
         $form->submit($formData);
 
@@ -155,7 +156,6 @@ class RacesDriversController extends AbstractApiController
         $raceDriver = $this->_getRaceDriver($raceDriverId);
 
         $formData = $request->request->all();
-        $formData['seasonDriver'] = $raceDriver->getSeasonDriver()->getId();
 
         if (
             isset($formData['raceDriverRaceStartingGrid']) &&

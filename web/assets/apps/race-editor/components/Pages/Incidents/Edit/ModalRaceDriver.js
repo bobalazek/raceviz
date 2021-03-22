@@ -1,4 +1,5 @@
 import React, {
+  useEffect,
   useState,
 } from 'react';
 import {
@@ -22,12 +23,14 @@ import {
 import {
   setModalOpen,
   selectModalOpen,
+  selectData as selectRaceDriverData,
 } from '../../../../store/selectedRaceIncidentRaceDriverSlice';
 import {
   useRaceDriversFetch,
 } from '../../../../hooks';
 import {
   API_POST_RACES_INCIDENTS_RACE_DRIVERS,
+  API_PUT_RACES_INCIDENTS_RACE_DRIVERS,
 } from '../../../../api';
 import {
   renderFormErrors,
@@ -40,6 +43,9 @@ function ModalRaceDriver() {
   const store = useStore();
   const show = useSelector(selectModalOpen);
   const selectedRaceIncident = useSelector(selectData);
+  const selectedRaceIncidentRaceDriver = useSelector(selectRaceDriverData);
+
+  // TODO: disable already added race drivers below in the select!
 
   const {
     data: raceDrivers,
@@ -49,6 +55,11 @@ function ModalRaceDriver() {
 
   const [formSubmitting, setFormSubmitting] = useState(false);
   const [formErrors, setFormErrors] = useState(null);
+
+  useEffect(() => {
+    setRaceDriverId(selectedRaceIncidentRaceDriver?.race_driver?.id ?? 0);
+    setFormErrors(null);
+  }, [selectedRaceIncidentRaceDriver])
 
   const onRaceDriverChange = (event) => {
     const value = parseInt(event.target.value);
@@ -67,15 +78,27 @@ function ModalRaceDriver() {
 
     setFormSubmitting(true);
 
-    try {
-      const url = API_POST_RACES_INCIDENTS_RACE_DRIVERS
-        .replace('{raceSlug}', appData.race.slug)
-        .replace('{raceIncidentId}', selectedRaceIncident.id)
-      ;
+    const formData = qs.stringify({
+      raceDriver: raceDriverId,
+    });
 
-      await axios.post(url, qs.stringify({
-        raceDriver: raceDriverId,
-      }));
+    try {
+      if (selectedRaceIncidentRaceDriver) {
+        const url = API_PUT_RACES_INCIDENTS_RACE_DRIVERS
+          .replace('{raceSlug}', appData.race.slug)
+          .replace('{raceIncidentId}', selectedRaceIncident.id)
+          .replace('{raceIncidentRaceDriverId}', selectedRaceIncidentRaceDriver.id)
+        ;
+
+        await axios.put(url, formData);
+      } else {
+        const url = API_POST_RACES_INCIDENTS_RACE_DRIVERS
+          .replace('{raceSlug}', appData.race.slug)
+          .replace('{raceIncidentId}', selectedRaceIncident.id)
+        ;
+
+        await axios.post(url, formData);
+      }
 
       toast.success('You have successfully added the driver.');
 

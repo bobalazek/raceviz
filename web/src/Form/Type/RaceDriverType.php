@@ -20,30 +20,33 @@ class RaceDriverType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $filterRace = $options['filter_race'];
+        $withSeasonDriver = $options['with_season_driver'];
         $withActualStartingGridAndResultData = $options['with_actual_starting_grid_and_result_data'];
 
-        $builder
-            ->add('seasonDriver', EntityType::class, [
-                'class' => SeasonDriver::class,
-                'query_builder' => function (EntityRepository $er) use ($filterRace) {
-                    $queryBuilder = $er
-                        ->createQueryBuilder('sd')
-                        ->leftJoin('sd.driver', 'd')
-                        ->orderBy('d.lastName')
-                        ->addOrderBy('d.firstName')
-                    ;
-
-                    if ($filterRace) {
-                        $queryBuilder
-                            ->where('sd.season = :season')
-                            ->setParameter('season', $filterRace->getSeason())
+        if ($withSeasonDriver) {
+            $builder
+                ->add('seasonDriver', EntityType::class, [
+                    'class' => SeasonDriver::class,
+                    'query_builder' => function (EntityRepository $er) use ($filterRace) {
+                        $queryBuilder = $er
+                            ->createQueryBuilder('sd')
+                            ->leftJoin('sd.driver', 'd')
+                            ->orderBy('d.lastName')
+                            ->addOrderBy('d.firstName')
                         ;
-                    }
 
-                    return $queryBuilder;
-                },
-            ])
-        ;
+                        if ($filterRace) {
+                            $queryBuilder
+                                ->where('sd.season = :season')
+                                ->setParameter('season', $filterRace->getSeason())
+                            ;
+                        }
+
+                        return $queryBuilder;
+                    },
+                ])
+            ;
+        }
 
         if ($withActualStartingGridAndResultData) {
             $builder
@@ -74,6 +77,7 @@ class RaceDriverType extends AbstractType
             'csrf_protection' => true,
             'data_class' => RaceDriver::class,
             'filter_race' => null,
+            'with_season_driver' => false,
             'with_actual_starting_grid_and_result_data' => false,
         ]);
     }

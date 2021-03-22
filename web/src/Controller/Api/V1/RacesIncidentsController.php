@@ -167,7 +167,6 @@ class RacesIncidentsController extends AbstractApiController
         ;
 
         $formData = $request->request->all();
-        $formData['raceIncident'] = $raceIncident->getId();
 
         $form = $this->createForm(RaceIncidentRaceDriverType::class, $raceIncidentRaceDriver, [
             'filter_race' => $race,
@@ -192,7 +191,7 @@ class RacesIncidentsController extends AbstractApiController
     }
 
     /**
-     * @Route("/api/v1/races/{raceSlug}/drivers/{raceIncidentId}/race-drivers/{raceIncidentRaceDriverId}", name="api.v1.races.incidents.race_drivers.edit", methods={"PUT"})
+     * @Route("/api/v1/races/{raceSlug}/incidents/{raceIncidentId}/race-drivers/{raceIncidentRaceDriverId}", name="api.v1.races.incidents.race_drivers.edit", methods={"PUT"})
      */
     public function raceDriversEdit(
         string $raceSlug,
@@ -221,6 +220,9 @@ class RacesIncidentsController extends AbstractApiController
                 'errors' => $this->_getFormErrors($form),
             ], 400);
         }
+
+        $this->em->persist($raceIncidentRaceDriver);
+        $this->em->flush();
 
         return $this->json([
             'success' => true,

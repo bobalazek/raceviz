@@ -6,6 +6,7 @@ use App\Admin\Field\TimeWithMillisecondsField;
 use App\Entity\RaceIncident;
 use App\Form\Type\RaceFlagType;
 use App\Form\Type\RaceIncidentTypeType;
+use App\Form\Type\SafetyVehicleType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -37,6 +38,9 @@ class RaceIncidentCrudController extends AbstractCrudController
         $flag = Field::new('flag')
             ->setFormType(RaceFlagType::class)
         ;
+        $safetyVehicle = Field::new('safetyVehicle')
+            ->setFormType(SafetyVehicleType::class)
+        ;
         $description = TextareaField::new('description');
         $lap = NumberField::new('lap');
         $lapSector = NumberField::new('lapSector');
@@ -50,6 +54,7 @@ class RaceIncidentCrudController extends AbstractCrudController
             $race,
             $type,
             $flag,
+            $safetyVehicle,
             $description,
             $lap,
             $lapSector,

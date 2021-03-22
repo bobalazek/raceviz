@@ -34,6 +34,7 @@ function FormSave() {
   const [type, setType] = useState(selectedRaceIncident?.type);
   const [description, setDescription] = useState(selectedRaceIncident?.description);
   const [flag, setFlag] = useState(selectedRaceIncident?.flag);
+  const [safetyVehicle, setSafetyVehicle] = useState(selectedRaceIncident?.safety_vehicle);
   const [lap, setLap] = useState(selectedRaceIncident?.lap);
   const [lapSector, setLapSector] = useState(selectedRaceIncident?.lap_sector);
   const [lapLocation, setLapLocation] = useState(selectedRaceIncident?.lap_location);
@@ -53,6 +54,7 @@ function FormSave() {
       type,
       description,
       flag,
+      safetyVehicle,
       lap,
       lapSector,
       lapLocation,
@@ -82,6 +84,7 @@ function FormSave() {
         setType(null);
         setDescription(null);
         setFlag(null);
+        setSafetyVehicle(null);
         setLap(null);
         setLapSector(null);
         setLapLocation(null);
@@ -162,6 +165,34 @@ function FormSave() {
         </div>
         <div className="col-md-3">
           <Form.Group>
+            <Form.Label>Safety Vehicle</Form.Label>
+            <Form.Control
+              as="select"
+              value={safetyVehicle ?? ''}
+              onChange={(event) => { setSafetyVehicle(event.target.value) }}
+              isInvalid={!!formErrors?.['safetyVehicle']}
+            >
+              <option value="">-- none --</option>
+              {Object.keys(appData.safety_vehicles).map((key) => {
+                const label = appData.safety_vehicles[key];
+
+                return (
+                  <option
+                    key={key}
+                    value={key}
+                  >
+                    {label}
+                  </option>
+                );
+              })}
+            </Form.Control>
+            {renderFormErrors(formErrors?.['safetyVehicle'])}
+          </Form.Group>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-md-3">
+          <Form.Group>
             <Form.Label>Description</Form.Label>
             <Form.Control
               type="textarea"
@@ -214,6 +245,8 @@ function FormSave() {
             {renderFormErrors(formErrors?.['lapLocation'])}
           </Form.Group>
         </div>
+      </div>
+      <div className="row">
         <div className="col-md-3">
           <Form.Group>
             <Form.Label>Time Duration</Form.Label>

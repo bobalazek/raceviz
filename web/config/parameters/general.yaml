@@ -34,6 +34,9 @@ parameters:
         c3: Compound 3 (C3)
         c4: Compound 4 (C4)
         c5: Compound 5 (C5)
+    app.safety_vehicles:
+        yes: Safety Vehicle
+        yes_virtual: Virtual Safety Vehicle
     app.race_driver_statuses:
         fin: Finished (FIN)
         dnf: DNF (Did Not Finish) / Retired

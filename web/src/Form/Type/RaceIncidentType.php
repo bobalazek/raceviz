@@ -21,6 +21,7 @@ class RaceIncidentType extends AbstractType
 
         $builder
             ->add('type', RaceIncidentTypeType::class)
+            ->add('safetyVehicle', SafetyVehicleType::class)
             ->add('description', TextareaType::class)
             ->add('flag', RaceFlagType::class)
             ->add('lap', NumberType::class)

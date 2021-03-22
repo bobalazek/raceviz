@@ -46,6 +46,7 @@ function Table({
             <th>Type</th>
             <th>Description</th>
             <th>Flag</th>
+            <th>Safety Vehicle</th>
             <th>Lap</th>
             <th>Lap Sector</th>
             <th>Lap Location</th>
@@ -58,9 +59,10 @@ function Table({
           {data.map((entry) => {
             return (
               <tr key={entry.id}>
-                <td>{appData.race_incident_types[entry.type]}</td>
+                <td>{appData.race_incident_types[entry.type] ?? ''}</td>
                 <td>{entry.description}</td>
-                <td>{appData.race_flags[entry.flag]}</td>
+                <td>{appData.race_flags[entry.flag] ?? ''}</td>
+                <td>{appData.safety_vehicles[entry.safety_vehicle] ?? ''}</td>
                 <td>{entry.lap}</td>
                 <td>{entry.lap_sector}</td>
                 <td>{entry.lap_location}</td>

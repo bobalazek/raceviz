@@ -31,6 +31,11 @@ class RaceIncident implements Interfaces\ArrayInterface, TimestampableInterface
     private $type;
 
     /**
+     * @ORM\Column(type="string", length=32, nullable=true)
+     */
+    private $safetyVehicle;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $flag;
@@ -110,6 +115,18 @@ class RaceIncident implements Interfaces\ArrayInterface, TimestampableInterface
     public function setType(?string $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getSafetyVehicle(): ?string
+    {
+        return $this->safetyVehicle;
+    }
+
+    public function setSafetyVehicle(?string $safetyVehicle): self
+    {
+        $this->safetyVehicle = $safetyVehicle;
 
         return $this;
     }
@@ -245,6 +262,7 @@ class RaceIncident implements Interfaces\ArrayInterface, TimestampableInterface
         return [
             'id' => $this->getId(),
             'type' => $this->getType(),
+            'safety_vehicle' => $this->getSafetyVehicle(),
             'flag' => $this->getFlag(),
             'description' => $this->getDescription(),
             'lap' => $this->getLap(),

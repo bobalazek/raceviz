@@ -6,6 +6,7 @@ use App\Entity\Race;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -36,6 +37,7 @@ class RaceCrudController extends AbstractCrudController
         $ergastSeriesSeasonAndRound = TextField::new('ergastSeriesSeasonAndRound')
             ->setHelp('The format must be "(series)/(season)/(round)", for example "f1/2020/16"')
         ;
+        $public = BooleanField::new('public');
         $startedAt = DateTimeField::new('startedAt');
         $season = AssociationField::new('season');
         $circuit = AssociationField::new('circuit');
@@ -49,6 +51,7 @@ class RaceCrudController extends AbstractCrudController
             $url,
             $ergastSeriesSeasonAndRound,
             $startedAt,
+            $public,
             $season,
             $circuit,
         ];

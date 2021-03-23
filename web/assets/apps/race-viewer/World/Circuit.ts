@@ -9,6 +9,7 @@ export default class Circuit {
     this._prepareLights();
     this._prepareGround();
     this._prepareLap();
+    this._prepareVehicles();
   }
 
   private _prepareLights() {
@@ -55,5 +56,24 @@ export default class Circuit {
     curveObject.position.y = 0.1;
 
     Application.scene.add(curveObject);
+  }
+
+  public _prepareVehicles() {
+    let i = 0;
+    for (const key in Application.world.resourceManager.driverVehicles) {
+      const vehicleObject = Application.world.resourceManager.driverVehicles[key];
+
+      vehicleObject.position.x = (i % 2) * 5;
+      vehicleObject.position.z = -i * 5;
+
+      vehicleObject.traverse((child: THREE.Object3D) => {
+        child.castShadow = true;
+        child.receiveShadow = true;
+      });
+
+      Application.scene.add(vehicleObject);
+
+      i++;
+    }
   }
 }

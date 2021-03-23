@@ -12,34 +12,18 @@ export default class ResourceManager {
 
   async prepareAsync() {
     const gltfLoader = new GLTFLoader(Application.loadingManager);
-    const resources = {};
-    for (const key in Application.parameters.race_drivers) {
-      const raceDriver = Application.parameters.race_drivers[key];
+
+    for (let i = 0; i < Application.parameters.race_drivers.length; i++) {
+      const raceDriver = Application.parameters.race_drivers[i];
+      const key = raceDriver.season_driver.code;
       const vehicleModelUrl = raceDriver.vehicle_model_url;
 
-      resources[raceDriver.season_driver.code] = vehicleModelUrl;
-    }
-
-    let i = 0;
-    for (const key in resources) {
-      const resource = resources[key];
-      const gltfData = await gltfLoader.loadAsync(resource);
+      const gltfData = await gltfLoader.loadAsync(vehicleModelUrl);
       const vehicleObject = <THREE.Object3D>gltfData.scene.children[0];
 
       vehicleObject.name = 'vehicles_' + key;
-      vehicleObject.position.x = (i % 2) * 5;
-      vehicleObject.position.z = -i * 5;
-
-      vehicleObject.traverse((child: any) => {
-        child.castShadow = true;
-        child.receiveShadow = true;
-      });
 
       this.driverVehicles[key] = vehicleObject;
-
-      Application.scene.add(vehicleObject);
-
-      i++;
     }
   }
 }

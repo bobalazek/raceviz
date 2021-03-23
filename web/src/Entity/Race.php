@@ -66,6 +66,11 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
     private $ergastSeriesSeasonAndRound;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $public = false;
+
+    /**
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank()
      */
@@ -183,6 +188,23 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
         return $this;
     }
 
+    public function getPublic(): bool
+    {
+        return $this->public;
+    }
+
+    public function isPublic(): bool
+    {
+        return $this->getPublic();
+    }
+
+    public function setPublic(bool $public): self
+    {
+        $this->public = $public;
+
+        return $this;
+    }
+
     public function getStartedAt(): ?\DateTimeInterface
     {
         return $this->startedAt;
@@ -290,6 +312,7 @@ class Race implements Interfaces\ArrayInterface, TimestampableInterface
             'round' => $this->getRound(),
             'url' => $this->getUrl(),
             'ergast_series_season_and_round' => $this->getErgastSeriesSeasonAndRound(),
+            'public' => $this->getPublic(),
             'started_at' => $this->getStartedAt()->format('Y-m-d'),
             'season' => $this->getSeason()->toArray(),
             'circuit' => $this->getCircuit()->toArray(),

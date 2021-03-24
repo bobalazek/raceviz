@@ -25,7 +25,7 @@ export default class Camera {
     const controls = new OrbitControls(Application.camera, Application.renderer.domElement);
     controls.enableDamping = true;
     controls.minDistance = 4;
-    controls.maxDistance = 64;
+    controls.maxDistance = 128;
     controls.minPolarAngle = -Math.PI;
     controls.maxPolarAngle = (Math.PI / 2) - 0.1; /* so we don't hit into the ground */
 

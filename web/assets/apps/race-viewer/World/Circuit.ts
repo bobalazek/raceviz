@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { CurvePath, Vector3 } from 'three';
+import { Vector3 } from 'three';
 
 import Application from '../Application';
 
@@ -29,6 +29,8 @@ export default class Circuit {
     ground.name = 'ground';
     ground.rotation.x = -Math.PI / 2;
     ground.receiveShadow = true;
+    ground.matrixAutoUpdate = false;
+    ground.updateMatrix();
 
     Application.scene.add(ground);
   }
@@ -64,26 +66,27 @@ export default class Circuit {
       i++;
     }
 
-    // https://observablehq.com/@rveciana/three-js-object-moving-object-along-path
     const vehicle = Application.scene.getObjectByName('vehicles_HAM');
 
     Application.world.camera.setFollowTarget(vehicle);
 
+    const curvePath = this._getCurvePath();
     const up = new THREE.Vector3(0, 0, 1);
     const axis = new THREE.Vector3();
+    const speed = curvePath.getLength() / 100000;
     let lapLocationTotal = 0;
     Application.emitter.on('tick', (delta) => {
       const lapLocation = lapLocationTotal % 1;
-      const newPosition = this._getCurvePath().getPoint(lapLocation);
-      const tangent = this._getCurvePath().getTangent(lapLocation);
-      vehicle.position.copy(newPosition);
-      axis.crossVectors(up, tangent).normalize();
-
+      const positionNew = curvePath.getPoint(lapLocation);
+      const tangent = curvePath.getTangent(lapLocation);
       const radians = Math.acos(up.dot(tangent));
 
+      axis.crossVectors(up, tangent).normalize();
+
+      vehicle.position.copy(positionNew);
       vehicle.quaternion.setFromAxisAngle(axis, radians);
 
-      lapLocationTotal += delta * 0.15;
+      lapLocationTotal += delta * speed;
     });
   }
 
@@ -91,15 +94,15 @@ export default class Circuit {
     const segments: Array<THREE.Curve<THREE.Vector3>> = [];
 
     const anchorPoints = [
-      new THREE.Vector3(-50, 0, 0.1),
-      new THREE.Vector3(20, 0, 0.1),
+      new THREE.Vector3(-200, 0, 200),
+      new THREE.Vector3(200, 0, 200),
     ];
 
     segments.push(
       new THREE.CubicBezierCurve3(
         anchorPoints[0],
-        anchorPoints[0].clone().add(new Vector3(1, 1, 100)),
-        anchorPoints[1].clone().add(new Vector3(1, 1, 100)),
+        anchorPoints[0].clone().add(new Vector3(1, 1, 1000)),
+        anchorPoints[1].clone().add(new Vector3(1, 1, 1000)),
         anchorPoints[1]
       )
     );
@@ -107,8 +110,8 @@ export default class Circuit {
     segments.push(
       new THREE.CubicBezierCurve3(
         anchorPoints[1],
-        anchorPoints[1].clone().add(new Vector3(1, 1, -100)),
-        anchorPoints[0].clone().add(new Vector3(1, 1, -100)),
+        anchorPoints[1].clone().add(new Vector3(1, 1, -1000)),
+        anchorPoints[0].clone().add(new Vector3(1, 1, -1000)),
         anchorPoints[0]
       )
     );

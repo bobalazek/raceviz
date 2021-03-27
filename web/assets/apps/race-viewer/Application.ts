@@ -60,6 +60,7 @@ export default class Application {
       canvas: this.canvasElement,
       antialias: true,
       powerPreference: 'high-performance',
+      logarithmicDepthBuffer: true,
     });
     this.renderer.physicallyCorrectLights = true
     this.renderer.outputEncoding = THREE.sRGBEncoding;

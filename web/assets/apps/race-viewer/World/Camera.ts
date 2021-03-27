@@ -5,6 +5,7 @@ import Application from '../Application';
 
 export default class Camera {
   private followTarget: THREE.Object3D;
+  private targetPickingTolerance: number = 10;
 
   constructor() {
     Application.camera.far = 5000;
@@ -25,7 +26,7 @@ export default class Camera {
     const controls = new OrbitControls(Application.camera, Application.renderer.domElement);
     controls.enableDamping = true;
     controls.minDistance = 4;
-    controls.maxDistance = 128;
+    controls.maxDistance = 256;
     controls.minPolarAngle = -Math.PI;
     controls.maxPolarAngle = (Math.PI / 2) - 0.1; /* so we don't hit into the ground */
 
@@ -50,7 +51,7 @@ export default class Camera {
     window.addEventListener('pointerup', (event) => {
       const pointerEndPoint = new THREE.Vector2(event.clientX, event.clientY);
       const distance = pointerStartPoint.distanceToSquared(pointerEndPoint);
-      if (distance > 5) {
+      if (distance > this.targetPickingTolerance) {
         return;
       }
 

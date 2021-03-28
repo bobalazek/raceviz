@@ -87,13 +87,10 @@ export default class Circuit {
       for (var i = 0; i < vehicles.length; i++) {
         const vehicle = <THREE.Object3D>vehicles[i];
         const key = vehicle.userData.raceDriver.id;
-
         const lap = parseInt(vehiclesLapLocationTotal[key]);
-        if (lap < 1) {
-          return;
-        }
-
+        const lapLocation = vehiclesLapLocationTotal[key] % 1;
         const lapTime = vehicle.userData.laps[lap]?.time;
+
         if (!lapTime) {
           // TODO: this one is obviosuly not working with negative playback
 
@@ -104,7 +101,6 @@ export default class Circuit {
           return;
         }
 
-        const lapLocation = vehiclesLapLocationTotal[key] % 1;
         const positionNew = curvePath.getPoint(lapLocation);
         const tangent = curvePath.getTangent(lapLocation);
         const radians = Math.acos(up.dot(tangent));

@@ -1,7 +1,9 @@
 import * as THREE from 'three';
 import * as dat from 'dat.gui';
 
-import Application from '../Application';
+import Application from './Application';
+
+import './GUI/index';
 
 export default class GUI {
   public gui: dat.GUI;

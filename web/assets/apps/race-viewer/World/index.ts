@@ -4,7 +4,7 @@ import Application from '../Application';
 import ResourceManager from './ResourceManager';
 import Camera from './Camera';
 import Circuit from './Circuit';
-import GUI from './GUI';
+import GUI from '../GUI';
 
 export default class World {
   public camera: Camera;

@@ -22,6 +22,7 @@ export default class ResourceManager {
       const vehicleObject = <THREE.Object3D>gltfData.scene.children[0];
 
       vehicleObject.name = 'vehicles_' + key;
+      vehicleObject.userData.raceDriver = raceDriver;
 
       this.driverVehicles[key] = vehicleObject;
     }

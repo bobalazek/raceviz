@@ -80,7 +80,7 @@ return [
     ],
     [
         'name' => 'Circuit de Spa-Francorchamps',
-        'slug' => 'spa-francorchamps',
+        'slug' => 'spa',
         'location' => 'Stavelot',
         'country_code' => 'BE',
         'url' => 'https://en.wikipedia.org/wiki/Circuit_de_Spa-Francorchamps',
@@ -156,8 +156,8 @@ return [
         'url' => 'https://en.wikipedia.org/wiki/Yas_Marina_Circuit',
     ],
     [
-        'name' => 'Nürburg',
-        'slug' => 'nurburg',
+        'name' => 'Nürburgring',
+        'slug' => 'nurburgring',
         'location' => 'Nürburg',
         'country_code' => 'DE',
         'url' => 'https://en.wikipedia.org/wiki/N%C3%BCrburgring',
@@ -168,5 +168,12 @@ return [
         'location' => 'Tuzla, Istanbul',
         'country_code' => 'TR',
         'url' => 'https://en.wikipedia.org/wiki/Istanbul_Park',
+    ],
+    [
+        'name' => 'Mugello Circuit',
+        'slug' => 'mugello',
+        'location' => 'Scarperia e San Piero, Tuscany',
+        'country_code' => 'IT',
+        'url' => 'https://en.wikipedia.org/wiki/Mugello_Circuit',
     ],
 ];

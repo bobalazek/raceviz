@@ -50,6 +50,7 @@ export default class Circuit {
 
   public _prepareVehicles() {
     let i = 0;
+    const vehicles = [];
     for (const key in Application.world.resourceManager.driverVehicles) {
       const vehicleObject = Application.world.resourceManager.driverVehicles[key];
 
@@ -63,30 +64,43 @@ export default class Circuit {
 
       Application.scene.add(vehicleObject);
 
+      vehicles.push(vehicleObject);
+
       i++;
     }
 
-    const vehicle = Application.scene.getObjectByName('vehicles_HAM');
+    const followTargetVehicle = Application.scene.getObjectByName('vehicles_HAM');
 
-    Application.world.camera.setFollowTarget(vehicle);
+    Application.world.camera.setFollowTarget(followTargetVehicle);
 
     const curvePath = this._getCurvePath();
+    const length = curvePath.getLength();
     const up = new THREE.Vector3(0, 0, 1);
     const axis = new THREE.Vector3();
-    const speed = curvePath.getLength() / 100000;
-    let lapLocationTotal = 0;
+    let vehiclesLapLocationTotal = {};
+    vehicles.map((vehicle, i) => {
+      const key = vehicle.userData.raceDriver.id;
+      vehiclesLapLocationTotal[key] = i * 0.025;
+    });
+
     Application.emitter.on('tick', (delta) => {
-      const lapLocation = lapLocationTotal % 1;
-      const positionNew = curvePath.getPoint(lapLocation);
-      const tangent = curvePath.getTangent(lapLocation);
-      const radians = Math.acos(up.dot(tangent));
+      for (var i = 0; i < vehicles.length; i++) {
+        const vehicle = vehicles[i];
+        const key = vehicle.userData.raceDriver.id;
 
-      axis.crossVectors(up, tangent).normalize();
+        const lapLocation = vehiclesLapLocationTotal[key] % 1;
+        const positionNew = curvePath.getPoint(lapLocation);
+        const tangent = curvePath.getTangent(lapLocation);
+        const radians = Math.acos(up.dot(tangent));
+        const speed = (1 + i) * 0.002;
 
-      vehicle.position.copy(positionNew);
-      vehicle.quaternion.setFromAxisAngle(axis, radians);
+        axis.crossVectors(up, tangent).normalize();
 
-      lapLocationTotal += delta * speed;
+        vehicle.position.copy(positionNew);
+        vehicle.quaternion.setFromAxisAngle(axis, radians);
+
+        vehiclesLapLocationTotal[key] += delta * speed;
+      }
     });
   }
 
@@ -94,15 +108,15 @@ export default class Circuit {
     const segments: Array<THREE.Curve<THREE.Vector3>> = [];
 
     const anchorPoints = [
-      new THREE.Vector3(-200, 0, 200),
-      new THREE.Vector3(200, 0, 200),
+      new THREE.Vector3(-100, 0, 20),
+      new THREE.Vector3(100, 0, 20),
     ];
 
     segments.push(
       new THREE.CubicBezierCurve3(
         anchorPoints[0],
-        anchorPoints[0].clone().add(new Vector3(1, 1, 1000)),
-        anchorPoints[1].clone().add(new Vector3(1, 1, 1000)),
+        anchorPoints[0].clone().multiply(new Vector3(1, 1, 5)),
+        anchorPoints[1].clone().multiply(new Vector3(1, 1, 5)),
         anchorPoints[1]
       )
     );
@@ -110,8 +124,8 @@ export default class Circuit {
     segments.push(
       new THREE.CubicBezierCurve3(
         anchorPoints[1],
-        anchorPoints[1].clone().add(new Vector3(1, 1, -1000)),
-        anchorPoints[0].clone().add(new Vector3(1, 1, -1000)),
+        anchorPoints[1].clone().multiply(new Vector3(1, 1, -5)),
+        anchorPoints[0].clone().multiply(new Vector3(1, 1, -5)),
         anchorPoints[0]
       )
     );

@@ -4,12 +4,14 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import Application from '../Application';
 
 export default class Camera {
+  public controls: OrbitControls;
+
   private followTarget: THREE.Object3D;
   private targetPickingTolerance: number = 10;
 
   constructor() {
     Application.camera.far = 5000;
-    Application.camera.position.set(-16, 8, -16);
+    Application.camera.position.set(32, -32, -32);
     Application.camera.lookAt(0, 0, 0);
 
     this._prepareControls();
@@ -23,12 +25,17 @@ export default class Camera {
   }
 
   private _prepareControls() {
-    const controls = new OrbitControls(Application.camera, Application.renderer.domElement);
+    const controls = new OrbitControls(
+      Application.camera,
+      Application.renderer.domElement
+    );
     controls.enableDamping = true;
     controls.minDistance = 4;
     controls.maxDistance = 256;
     controls.minPolarAngle = -Math.PI;
     controls.maxPolarAngle = (Math.PI / 2) - 0.1; /* so we don't hit into the ground */
+
+    this.controls = controls;
 
     Application.emitter.on('tick', () => {
       if (this.followTarget) {

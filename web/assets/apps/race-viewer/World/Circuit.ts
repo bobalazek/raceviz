@@ -4,6 +4,8 @@ import { Vector3 } from 'three';
 import Application from '../Application';
 
 export default class Circuit {
+  public playbackMultiplier: number = 1;
+
   private curvePath: THREE.CurvePath<THREE.Vector3>;
   private size: number = 8192;
 
@@ -54,9 +56,6 @@ export default class Circuit {
     for (const key in Application.world.resourceManager.driverVehicles) {
       const vehicleObject = Application.world.resourceManager.driverVehicles[key];
 
-      vehicleObject.position.x = (i % 2) * 5;
-      vehicleObject.position.z = -i * 5;
-
       vehicleObject.traverse((child: THREE.Object3D) => {
         child.castShadow = true;
         child.receiveShadow = true;
@@ -74,25 +73,42 @@ export default class Circuit {
     Application.world.camera.setFollowTarget(followTargetVehicle);
 
     const curvePath = this._getCurvePath();
-    const length = curvePath.getLength();
     const up = new THREE.Vector3(0, 0, 1);
     const axis = new THREE.Vector3();
+
+    // Prepare vehicle location total map
     let vehiclesLapLocationTotal = {};
-    vehicles.map((vehicle, i) => {
+    vehicles.map((vehicle) => {
       const key = vehicle.userData.raceDriver.id;
-      vehiclesLapLocationTotal[key] = i * 0.025;
+      vehiclesLapLocationTotal[key] = 1;
     });
 
     Application.emitter.on('tick', (delta) => {
       for (var i = 0; i < vehicles.length; i++) {
-        const vehicle = vehicles[i];
+        const vehicle = <THREE.Object3D>vehicles[i];
         const key = vehicle.userData.raceDriver.id;
+
+        const lap = parseInt(vehiclesLapLocationTotal[key]);
+        if (lap < 1) {
+          return;
+        }
+
+        const lapTime = vehicle.userData.laps[lap]?.time;
+        if (!lapTime) {
+          // TODO: this one is obviosuly not working with negative playback
+
+          vehicle.rotateY(90);
+
+          vehicles.splice(i, 1);
+
+          return;
+        }
 
         const lapLocation = vehiclesLapLocationTotal[key] % 1;
         const positionNew = curvePath.getPoint(lapLocation);
         const tangent = curvePath.getTangent(lapLocation);
         const radians = Math.acos(up.dot(tangent));
-        const speed = (1 + i) * 0.002;
+        const speed = (1 / lapTime) * 10000 * this.playbackMultiplier;
 
         axis.crossVectors(up, tangent).normalize();
 
@@ -100,6 +116,15 @@ export default class Circuit {
         vehicle.quaternion.setFromAxisAngle(axis, radians);
 
         vehiclesLapLocationTotal[key] += delta * speed;
+        if (vehiclesLapLocationTotal[key] < 1) {
+          vehiclesLapLocationTotal[key] = 1;
+        } else if (vehiclesLapLocationTotal[key] + 1 > Application.parameters.race.laps) {
+          vehiclesLapLocationTotal[key] = Application.parameters.race.laps + 0.99999999;
+        }
+
+        vehicle.userData.lap = lap;
+        vehicle.userData.lapLocation = lapLocation;
+        vehicle.userData.position = vehicle.userData.laps[lap].position;
       }
     });
   }

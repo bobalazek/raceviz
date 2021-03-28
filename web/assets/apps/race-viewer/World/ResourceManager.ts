@@ -23,6 +23,7 @@ export default class ResourceManager {
 
       vehicleObject.name = 'vehicles_' + key;
       vehicleObject.userData.raceDriver = raceDriver;
+      vehicleObject.userData.laps = Application.parameters.race_driver_laps[raceDriver.id];
 
       this.driverVehicles[key] = vehicleObject;
     }

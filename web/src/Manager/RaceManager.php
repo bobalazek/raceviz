@@ -4,7 +4,9 @@ namespace App\Manager;
 
 use App\Entity\Race;
 use App\Entity\RaceDriver;
+use App\Entity\RaceDriverRaceLap;
 use App\Entity\SeasonTeam;
+use App\Repository\RaceDriverRaceLapRepository;
 use App\Repository\RaceDriverRepository;
 use App\Repository\SeasonTeamRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -56,6 +58,9 @@ class RaceManager
             'race_drivers' => [],
         ];
 
+        /** @var RaceDriverRaceLapRepository $raceDriverRaceLapRepository */
+        $raceDriverRaceLapRepository = $this->em->getRepository(RaceDriverRaceLap::class);
+
         /** @var RaceDriverRepository $raceDriverRepository */
         $raceDriverRepository = $this->em->getRepository(RaceDriver::class);
         $raceDrivers = $raceDriverRepository
@@ -68,11 +73,38 @@ class RaceManager
             ->getResult()
         ;
         foreach ($raceDrivers as $raceDriver) {
+            /** @var RaceDriver $raceDriver */
             $raceDriverData = $raceDriver->toArray();
 
             $raceDriverData['vehicle_model_url'] = $this->_getVehicleModelUrl($raceDriver);
 
             $data['race_drivers'][] = $raceDriverData;
+
+            // TODO: DO NOT DO QUERIES IN A LOOP!!!
+
+            $id = $raceDriver->getId();
+            $data['race_driver_laps'][$id] = [];
+
+            $raceDriverRaceLaps = $raceDriverRaceLapRepository->findBy([
+                'raceDriver' => $raceDriver,
+            ]);
+            foreach ($raceDriverRaceLaps as $raceDriverRaceLap) {
+                $lap = $raceDriverRaceLap->getLap();
+                $timeDuration = $raceDriverRaceLap->getTimeDuration()->format('H:i:s:u');
+                $timeDurationExploded = explode(':', $timeDuration);
+
+                $timeInMilliseconds = (
+                    ((int) $timeDurationExploded[0] * 3600 * 1000) +
+                    ((int) $timeDurationExploded[1] * 60 * 1000) +
+                    ((int) $timeDurationExploded[2] * 1000) +
+                    ((int) $timeDurationExploded[3] / 1000)
+                );
+
+                $data['race_driver_laps'][$id][$lap] = [
+                    'position' => $raceDriverRaceLap->getPosition(),
+                    'time' => $timeInMilliseconds,
+                ];
+            }
         }
 
         return $data;

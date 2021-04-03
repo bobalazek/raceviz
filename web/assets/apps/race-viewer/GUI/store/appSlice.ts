@@ -5,11 +5,11 @@ import {
 export const slice = createSlice({
   name: 'app',
   initialState: {
-    user: [],
+    positions: [],
   },
   reducers: {
     setPositions: (state, action) => {
-      (<any>state).positions = action.payload; // temporary fix
+      state.positions = action.payload;
     },
   },
 });

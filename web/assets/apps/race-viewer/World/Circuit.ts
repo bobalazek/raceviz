@@ -2,7 +2,10 @@ import * as THREE from 'three';
 import { Vector3 } from 'three';
 
 import Application from '../Application';
-
+import store from '../GUI/store';
+import {
+  setPositions,
+} from '../GUI/store/appSlice';
 export default class Circuit {
   public playbackMultiplier: number = 1;
 
@@ -14,6 +17,7 @@ export default class Circuit {
     this._prepareGround();
     this._prepareLap();
     this._prepareVehicles();
+    this._prepareGuiSync();
   }
 
   private _prepareLights() {
@@ -50,8 +54,11 @@ export default class Circuit {
     Application.scene.add(curveObject);
   }
 
-  public _prepareVehicles() {
-    let i = 0;
+  private _prepareVehicles() {
+    const curvePath = this._getCurvePath();
+    const up = new THREE.Vector3(0, 0, 1);
+    const axis = new THREE.Vector3();
+
     const vehicles = [];
     for (const key in Application.world.resourceManager.driverVehicles) {
       const vehicleObject = Application.world.resourceManager.driverVehicles[key];
@@ -61,20 +68,22 @@ export default class Circuit {
         child.receiveShadow = true;
       });
 
+      vehicleObject.userData.lap = 0;
+      vehicleObject.userData.lapLocation = 0;
+      vehicleObject.userData.position = 0;
+      vehicleObject.userData.retired = false;
+      vehicleObject.userData.finished = false;
+
+      vehicleObject.position.copy(curvePath.getPoint(0));
+
       Application.scene.add(vehicleObject);
 
       vehicles.push(vehicleObject);
-
-      i++;
     }
 
     const followTargetVehicle = Application.scene.getObjectByName('vehicles_HAM');
 
     Application.world.camera.setFollowTarget(followTargetVehicle);
-
-    const curvePath = this._getCurvePath();
-    const up = new THREE.Vector3(0, 0, 1);
-    const axis = new THREE.Vector3();
 
     // Prepare vehicle location total map
     let vehiclesLapLocationTotal = {};
@@ -83,22 +92,35 @@ export default class Circuit {
       vehiclesLapLocationTotal[key] = 1;
     });
 
+    const raceLaps = Application.parameters.race.laps;
+    const retirementPositionVector = new Vector3(10, 0, 0);
     Application.emitter.on('tick', (delta) => {
       for (var i = 0; i < vehicles.length; i++) {
         const vehicle = <THREE.Object3D>vehicles[i];
         const key = vehicle.userData.raceDriver.id;
         const lap = parseInt(vehiclesLapLocationTotal[key]);
         const lapLocation = vehiclesLapLocationTotal[key] % 1;
-        const lapTime = vehicle.userData.laps[lap]?.time;
+        const lapData = vehicle.userData.laps[lap];
+        const lapTime = lapData?.time;
+        const retired = vehicle.userData.retired;
+        const finished = vehicle.userData.finished;
 
-        if (!lapTime) {
-          // TODO: this one is obviosuly not working with negative playback
+        if (
+          retired ||
+          !lapTime
+        ) {
+          continue;
+        }
 
-          vehicle.rotateY(90);
+        if (
+          !retired &&
+          !lapTime &&
+          lap < raceLaps
+        ) {
+          vehicle.userData.retired = true;
+          vehicle.position.add(retirementPositionVector);
 
-          vehicles.splice(i, 1);
-
-          return;
+          continue;
         }
 
         const positionNew = curvePath.getPoint(lapLocation);
@@ -114,15 +136,63 @@ export default class Circuit {
         vehiclesLapLocationTotal[key] += delta * speed;
         if (vehiclesLapLocationTotal[key] < 1) {
           vehiclesLapLocationTotal[key] = 1;
-        } else if (vehiclesLapLocationTotal[key] + 1 > Application.parameters.race.laps) {
-          vehiclesLapLocationTotal[key] = Application.parameters.race.laps + 0.99999999;
+        } else if (vehiclesLapLocationTotal[key] > raceLaps) {
+          vehiclesLapLocationTotal[key] = raceLaps + 0.99999999;
+
+          vehicle.userData.finished = true;
         }
 
         vehicle.userData.lap = lap;
         vehicle.userData.lapLocation = lapLocation;
-        vehicle.userData.position = vehicle.userData.laps[lap].position;
+        vehicle.userData.position = lapData.position;
       }
     });
+  }
+
+  private _prepareGuiSync() {
+    const vehicles = [];
+    Application.scene.traverse((child: THREE.Object3D) => {
+      if (child.name.startsWith('vehicles_')) {
+        vehicles.push(child);
+      }
+    });
+
+    setInterval(() => {
+      this._syncPositionsToGui(vehicles);
+    }, 1000);
+  }
+
+  private _syncPositionsToGui(vehicles: THREE.Object3D[]) {
+    const positions = [];
+    for (var i = 0; i < vehicles.length; i++) {
+      const vehicle = <THREE.Object3D>vehicles[i];
+      const lap = vehicle.userData.lap;
+      const position = vehicle.userData.position;
+      const code = vehicle.userData.raceDriver.season_driver.code;
+      const retired = vehicle.userData.retired;
+      const finished = vehicle.userData.finished;
+
+      positions.push({
+        code,
+        lap,
+        position,
+        retired,
+        finished,
+      });
+    }
+
+    positions.sort((a, b) => {
+      if (a.position === 0) {
+        return 1;
+      }
+      if (b.position === 0) {
+        return -1;
+      }
+
+      return a.position - b.position;
+    });
+
+    store.dispatch(setPositions(positions));
   }
 
   private _getSegments() {

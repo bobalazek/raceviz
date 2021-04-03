@@ -147,8 +147,6 @@ export default class Application {
   }
 
   private static onTick(): void {
-    this.requestAnimationFrame = window.requestAnimationFrame(this.onTick.bind(this));
-
     const delta = this.clock.getDelta();
 
     this.emitter.emit('tick', delta);
@@ -160,5 +158,7 @@ export default class Application {
     if (this.stats) {
       this.stats.update();
     }
+
+    this.requestAnimationFrame = window.requestAnimationFrame(this.onTick.bind(this));
   }
 }

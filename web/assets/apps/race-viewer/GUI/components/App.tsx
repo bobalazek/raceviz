@@ -1,10 +1,10 @@
 import * as React from 'react';
 
+import Positions from './Positions';
+
 function App() {
   return (
-    <div>
-      TODO
-    </div>
+    <Positions />
   );
 }
 

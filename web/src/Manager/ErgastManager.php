@@ -175,6 +175,8 @@ class ErgastManager
         $key = 'ergast_laps_' . str_replace('/', '_', $seriesSeasonAndRound);
 
         return $this->cache->get($key, function (ItemInterface $item) use ($seriesSeasonAndRound) {
+            $item->expiresAfter(3600);
+
             $url = sprintf(
                 'http://ergast.com/api/%s/laps.json?limit=2000',
                 $seriesSeasonAndRound

@@ -55,6 +55,7 @@ export default class Preloader {
     this.containerElement.style.boxSizing = 'border-box';
     this.containerElement.style.display = 'none';
     this.containerElement.style.opacity = '0';
+    this.containerElement.style.zIndex = '9';
     this.containerElement.style.transition = 'opacity 1s ease-in-out';
 
     this.textElement = document.createElement('div');

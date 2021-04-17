@@ -18,10 +18,10 @@ function Positions() {
       <div>Lap {lap}/{appData.race.laps}</div>
       <table>
         <tbody>
-          {positions.map((entry) => {
+          {positions.map((entry, index) => {
             return (
               <tr key={entry.code}>
-                <td className="position">{entry.position}</td>
+                <td className="position">{index + 1}</td>
                 <td className="code">{entry.code}</td>
                 <td className="lap">{!entry.retired ? entry.lap : 'OUT'}</td>
               </tr>

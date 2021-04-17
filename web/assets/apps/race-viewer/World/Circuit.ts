@@ -103,7 +103,6 @@ export default class Circuit {
         const lapData = vehicle.userData.laps[lap];
         const lapTime = lapData?.time;
         const retired = vehicle.userData.retired;
-        const finished = vehicle.userData.finished;
 
         if (
           retired ||
@@ -188,6 +187,8 @@ export default class Circuit {
       if (b.position === 0) {
         return -1;
       }
+
+      // TODO: not working when someone is retired mid-race
 
       return a.position - b.position;
     });

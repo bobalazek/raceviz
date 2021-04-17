@@ -199,8 +199,8 @@ export default class Circuit {
     const segments: Array<THREE.Curve<THREE.Vector3>> = [];
 
     const anchorPoints = [
-      new THREE.Vector3(-100, 0, 20),
-      new THREE.Vector3(100, 0, 20),
+      new THREE.Vector3(-20, 0, 10),
+      new THREE.Vector3(20, 0, 10),
     ];
 
     segments.push(

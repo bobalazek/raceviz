@@ -9,10 +9,13 @@ import {
 
 function Positions() {
   const positions = useSelector(selectPositions);
+  const lap = typeof positions[0] !== 'undefined'
+    ? positions[0].lap
+    : 1;
 
   return (
     <div className="gui-positions-wrapper">
-      <div>LAPS TODO</div>
+      <div>Lap {lap}/{appData.race.laps}</div>
       <table>
         <tbody>
           {positions.map((entry) => {

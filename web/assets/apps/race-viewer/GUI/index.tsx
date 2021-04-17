@@ -7,6 +7,10 @@ import {
 import App from './components/App';
 import store from './store';
 
+declare global {
+  var appData: any;
+}
+
 let container = document.getElementById('gui');
 if (!container) {
   container = document.createElement('div');

@@ -28,6 +28,12 @@ class SeasonTeam implements Interfaces\ArrayInterface, TimestampableInterface
      * @ORM\Column(type="integer")
      */
     private $id;
+    
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     */
+    private $name;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Season", inversedBy="seasonTeams")
@@ -57,6 +63,18 @@ class SeasonTeam implements Interfaces\ArrayInterface, TimestampableInterface
     public function getId(): ?int
     {
         return $this->id;
+    }
+    
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
     }
 
     public function getSeason(): ?Season

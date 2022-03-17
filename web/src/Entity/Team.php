@@ -70,6 +70,17 @@ class Team implements Interfaces\ArrayInterface, TimestampableInterface
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $defunctedAt;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Team", inversedBy="successorTeam")
+     * @ORM\JoinColumn(name="predecessor_parent_id", referencedColumnName="id", nullable=true)
+     */
+    private $predecessorTeam;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Team", mappedBy="predecessorTeam")
+     */
+    private $successorTeam;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\SeasonTeam", mappedBy="team")
@@ -189,6 +200,30 @@ class Team implements Interfaces\ArrayInterface, TimestampableInterface
     public function setDefunctedAt(?\DateTimeInterface $defunctedAt): self
     {
         $this->defunctedAt = $defunctedAt;
+
+        return $this;
+    }
+    
+    public function getPredecessorTeam(): ?Team
+    {
+        return $this->predecessorTeam;
+    }
+
+    public function setPredecessorTeam(?Team $predecessorTeam): self
+    {
+        $this->predecessorTeam = $predecessorTeam;
+
+        return $this;
+    }
+    
+    public function getSuccessorTeam(): ?Team
+    {
+        return $this->successorTeam;
+    }
+
+    public function setSuccessorTeam(?Team $successorTeam): self
+    {
+        $this->successorTeam = $successorTeam;
 
         return $this;
     }
